@@ -10,7 +10,9 @@ from keras import layers
 from keras import models
 from keras import optimizers
 from matplotlib import pyplot 
-import h5py 
+import h5py
+import veraCS 
+from veraCS import VERA_Assembly
 
 class Neural_Network(object):
     """
@@ -129,6 +131,40 @@ def compile_data_library(library_name,output_property,number_files):
 
     for directory in usable_file_list:
         library[directory] = {}
+        vera_case = VERA_Assembly()
+        vera_case.read_data_from_file("full_assembly_library/{}/p6.inp".format(directory))
+        
+        if output_property in main_h5_properties:
+            h5_file = "p6.h5"
+        elif output_property in ctf_h5_properties:
+            h5_file = "p6.ctf.h5"
+        else:
+            ValueError("Invalid property")
+
+        file_name = "full_assembly_library/{}/{}".format(directory,h5_file)
+        state_list = veraCS.return_state_list(file_name)
+        output_dictionary = {}
+        for i,state in vera_case.stateList:
+            output_dictionary[vera_case.stateList[state].depletion] = veraCS.return_h5_property_as_list(file_name,state_list[i],output_property)
+        input_dictionary = {}
+        input_dictionary['pin_list'] = vera_case.lattices['fuel']
+        input_dictionary['power'] = []
+        input_dictionary['flow_rate'] = []
+        input_dictionary['boron'] = []
+        input_dictionary['inlet'] = []
+        input_dictionary['pressure'] = []
+        for state in vera_case.stateList:
+            input_dictionary['power'].append(vera_case.stateList[state].power)
+            input_dictionary['flow_rate'].append(vera_case.stateList[state].flow)
+            input_dictionary['boron'].append(vera_case.stateList[state].boron)
+            input_dictionary['inlet'].append(vera_case.stateList[state].inlet)
+            input_dictionary['pressure'].append(vera_case.stateList[state].pressure)
+        
+        library[directory]['inputs'] = input_dictionary
+        library[directory]['outputs'] = output_dictionary
+
+    with open(library_name,'w') as yaml_file:
+        yaml.dump(yaml_file,library)
 
 def main():
     """
