@@ -3,6 +3,7 @@ import sys
 import json
 import numpy
 import random
+import yaml
 import pickle
 from multiprocessing import Pool
 import keras
@@ -102,7 +103,7 @@ def evaluate(network):
 
     return network
 
-def compile_data_library(library_name,output_property,number_files):
+def compile_data_library(library_name,output_property,number_files,output_name):
     """
     Read all data from the VERA input and output files and turn them into a neural network
     library that can be easily shared or transfered. 
@@ -120,11 +121,11 @@ def compile_data_library(library_name,output_property,number_files):
     library = {}
     usable_file_list = []
     for i in range(number_files):
-        file_name = "full_assembly_library/workdir.{}/p6.inp".format(i)
+        file_name = "full_assembly_library/workdir.{}/{}.inp".format(i,output_name)
         if os.path.isfile(file_name):
-            file_name = "full_assembly_library/workdir.{}/p6.h5".format(i)
+            file_name = "full_assembly_library/workdir.{}/{}.h5".format(i,output_name)
             if os.path.isfile(file_name):
-                file_name = file_name = "full_assembly_library/workdir.{}/p6.ctf.h5".format(i)
+                file_name = file_name = "full_assembly_library/workdir.{}/{}.ctf.h5".format(i,output_name)
                 if os.path.isfile(file_name):
                     file_name = "workdir.{}".format(i)
                     usable_file_list.append(file_name)
@@ -132,12 +133,12 @@ def compile_data_library(library_name,output_property,number_files):
     for directory in usable_file_list:
         library[directory] = {}
         vera_case = VERA_Assembly()
-        vera_case.read_data_from_file("full_assembly_library/{}/p6.inp".format(directory))
+        vera_case.read_data_from_file("full_assembly_library/{}/{}.inp".format(directory,output_name))
         
         if output_property in main_h5_properties:
-            h5_file = "p6.h5"
+            h5_file = "{}.h5".format(output_name)
         elif output_property in ctf_h5_properties:
-            h5_file = "p6.ctf.h5"
+            h5_file = "{}.ctf.h5".format(output_name)
         else:
             ValueError("Invalid property")
 
@@ -166,20 +167,9 @@ def compile_data_library(library_name,output_property,number_files):
     with open(library_name,'w') as yaml_file:
         yaml.dump(yaml_file,library)
 
-def main():
-    """
-    Main function for analyzing the numerous neural networks I plan to investigate.
-    """
-    neural_network_list = []
-    usable_directory_list = []
-
-    for i in range(2000):
-        if os.path.exists("workdir.{}/p6.inp".format(i)):
-            if os.path.exists("workdir.{}/p6.h5".format(i)):
-                usable_directory_list.append("workdir.{}".format(i))
-
-    for directory in usable_directory_list:
-        pass
+if __name__ == "__main__":
+    pass
+        
 
 
 
