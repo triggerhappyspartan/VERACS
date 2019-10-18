@@ -6,10 +6,6 @@ import random
 import yaml
 import pickle
 from multiprocessing import Pool
-import keras
-from keras import layers
-from keras import models
-from keras import optimizers
 from matplotlib import pyplot 
 import h5py
 import veraCS 
@@ -30,6 +26,10 @@ class Neural_Network(object):
                 training_epochs = None,
                 name = None   
                 ):
+        import keras
+        from keras import layers
+        from keras import models
+        from keras import optimizers
 
         self.name = name
         self.training_data = training_data
@@ -50,22 +50,22 @@ class Neural_Network(object):
         self.max_training_error   = None
         self.max_validation_error = None
         
-        def initialize_network(self):
-            """
-            Initialize the neural network for the model. 
-            """
-            self.model = models.Sequential()
-            for i in range(self.number_layers):
-                if(i==0):
-                    self.model.add(layers.Dense(self.nodes_per_layer,
-                                        activation='relu',
-                                        input_shape=(self.training_data.shape[1])))
-                else:
-                    self.model.add(layers.Dense(self.nodes_per_layer,
-                                                activation='relu'))
-            self.model.add(layers.Dense(1))
-            keras.optimizers.RMSprop(lr=self.learning_rate)
-            self.model.compile(optimizer='rmsprop',loss='mse',metrics=['mae'])
+    def initialize_network(self):
+        """
+        Initialize the neural network for the model. 
+        """
+        self.model = models.Sequential()
+        for i in range(self.number_layers):
+            if(i==0):
+                self.model.add(layers.Dense(self.nodes_per_layer,
+                                    activation='relu',
+                                    input_shape=(self.training_data.shape[1])))
+            else:
+                self.model.add(layers.Dense(self.nodes_per_layer,
+                                            activation='relu'))
+        self.model.add(layers.Dense(1))
+        keras.optimizers.RMSprop(lr=self.learning_rate)
+        self.model.compile(optimizer='rmsprop',loss='mse',metrics=['mae'])
 
     def train_network(self):
         """
@@ -103,7 +103,7 @@ def evaluate(network):
 
     return network
 
-def compile_data_library(library_name,output_property,number_files,output_name):
+def compile_data_library(library_name,output_property,lower,upper,output_name):
     """
     Read all data from the VERA input and output files and turn them into a neural network
     library that can be easily shared or transfered. 
@@ -120,7 +120,7 @@ def compile_data_library(library_name,output_property,number_files,output_name):
 
     library = {}
     usable_file_list = []
-    for i in range(number_files):
+    for i in range(lower,upper):
         file_name = "full_assembly_library/workdir.{}/{}.inp".format(i,output_name)
         if os.path.isfile(file_name):
             file_name = "full_assembly_library/workdir.{}/{}.h5".format(i,output_name)
@@ -145,10 +145,11 @@ def compile_data_library(library_name,output_property,number_files,output_name):
         file_name = "full_assembly_library/{}/{}".format(directory,h5_file)
         state_list = veraCS.return_state_list(file_name)
         output_dictionary = {}
-        for i,state in vera_case.stateList:
+        for i,state in enumerate(vera_case.stateList):
             output_dictionary[vera_case.stateList[state].depletion] = veraCS.return_h5_property_as_list(file_name,state_list[i],output_property)
         input_dictionary = {}
-        input_dictionary['pin_list'] = vera_case.lattices['fuel']
+        print(vera_case.lattices.keys())
+        input_dictionary['pin_list'] = vera_case.lattices['FUEL']
         input_dictionary['power'] = []
         input_dictionary['flow_rate'] = []
         input_dictionary['boron'] = []
@@ -158,14 +159,15 @@ def compile_data_library(library_name,output_property,number_files,output_name):
             input_dictionary['power'].append(vera_case.stateList[state].power)
             input_dictionary['flow_rate'].append(vera_case.stateList[state].flow)
             input_dictionary['boron'].append(vera_case.stateList[state].boron)
-            input_dictionary['inlet'].append(vera_case.stateList[state].inlet)
+            input_dictionary['inlet'].append(vera_case.stateList[state].tinlet)
             input_dictionary['pressure'].append(vera_case.stateList[state].pressure)
         
         library[directory]['inputs'] = input_dictionary
         library[directory]['outputs'] = output_dictionary
 
-    with open(library_name,'w') as yaml_file:
-        yaml.dump(yaml_file,library)
+    outfile = open(library_name,'wb')
+    pickle.dump(library,outfile)
+    outfile.close()
 
 if __name__ == "__main__":
     pass

@@ -215,6 +215,14 @@ class VERA_Assembly(object):
   
     state_count = 0
     activate_depletion_state = False
+    analyzing_material = False
+    searching_fuel_lattice = False
+    searching_assy = False
+    searching_grid_axial = False
+    searching_axial_edits = False
+    searching_mpact = False
+    searching_cobra = False
+    searching_shift = False
     self.title = file_name
     for line in file_lines:
       elems = line.strip().split()
@@ -234,35 +242,35 @@ class VERA_Assembly(object):
               activate_depletion_state = False
             current_state = Depletion_State()
             if 'power' in line:
-              position = elems.index['power']
+              position = elems.index('power')
               current_state.power = float(elems[position+2])
             else:
               current_state.power = base_state.power
             if 'flow' in line:
-              position = elems.index['flow']
+              position = elems.index('flow')
               current_state.flow = float(elems[position+2])
             else:
               current_state.flow = base_state.flow
             if 'tinlet' in line:
-              position = elems.index['tinlet']
+              position = elems.index('tinlet')
               current_state.tinlet = float(elems[position+2])
             else:
               current_state.tinlet = base_state.tinlet
             if 'pressure' in line:
-              position = elems.index['pressure']
+              position = elems.index('pressure')
               current_state.pressure = float(elems[position+2])
             else:
               current_state.pressure = base_state.pressure
             if 'boron' in line:
-              position = elems.index['boron']
+              position = elems.index('boron')
               current_state.boron = float(elems[position+2])
             else:
               current_state.boron = base_state.boron
             if 'deplete' in line:
-              position = elems.index['boron']
-              current_state.boron = float(elems[position+2])
+              position = elems.index('deplete')
+              current_state.depletion = float(elems[position+2])
             else:
-              current_state.boron = base_state.boron
+              current_state.depletion = base_state.depletion
             self.stateList[state_count] = current_state
         elif elems[0] == 'rated':
           self.power = float(elems[1])
@@ -295,18 +303,21 @@ class VERA_Assembly(object):
           self.fuel[elems[1]].theory_dense = float(elems[3])
           self.fuel[elems[1]].enrichment = float(elems[5])
           self.fuel[elems[1]].components.append(elems[6])
+          analyzing_material = False
          # fuel_instance.gad_material =
          # fuel_instance.gad_concentration
         elif elems[0] == 'cell':
           self.cells[elems[1]] = {}
           self.cells[elems[1]]['radius'] = []
           slash = elems.index('/')
-          self.cells[elems[1]]['radius'].extend[elems[2:slash]]
+          self.cells[elems[1]]['radius'].extend(elems[2:slash])
           self.cells[elems[1]]['material'] = []
-          self.cells[elems[1]]['material'].extend[elems[(slash+1):]]
+          self.cells[elems[1]]['material'].extend(elems[(slash+1):])
         elif elems[0] == 'lattice':
           current_lattice = elems[1]
+          print(current_lattice)
           self.lattices[current_lattice] = []
+          searching_fuel_lattice = True
         elif elems[0] == 'axial':
           searching_fuel_lattice = False
           searching_assy = True
@@ -319,18 +330,18 @@ class VERA_Assembly(object):
           if elems[1] == 'END':
             self.end_spacer_grid.material = elems[2]
             self.end_spacer_grid.height = float(elems[3])
-            self.end_spacer_grid.mass = float(elems[4])
+            self.end_spacer_grid.mass   = float(elems[4])
             loss = elems[6].replace("loss=","")
             self.end_spacer_grid.loss_coefficient = loss
           elif elems[1] == 'MID':
             self.mid_spacer_grid.material = elems[2]
             self.mid_spacer_grid.height = float(elems[3])
-            self.mid_spacer_grid.mass = float(elems[4])
+            self.mid_spacer_grid.mass   = float(elems[4])
             loss = elems[6].replace("loss=","")
             self.mid_spacer_grid.loss_coefficient = loss
         elif elems[0] == 'grid_axial':
           searching_grid_axial = True
-          self.spacer_grid_locations['order'] = []
+          self.spacer_grid_locations['order']  = []
           self.spacer_grid_locations['height'] = []
         elif elems[0] == 'lower_nozzle':
           searching_grid_axial = False
@@ -340,11 +351,12 @@ class VERA_Assembly(object):
         elif elems[0] == 'upper_nozzle':
           self.lower_nozzle.material = elems[1]
           self.lower_nozzle.height = float(elems[2])
-          self.lower_nozzle.mass = float(elems[3])
+          self.lower_nozzle.mass   = float(elems[3])
         elif elems[0] == 'axial_edit_bounds':
           searching_axial_edits = True
         elif elems[0] == '[MPACT]':
           searching_mpact = True
+          searching_axial_edits = False
         elif elems[0] == ['[COBRATF]']:
           searching_cobra = True
           searching_mpact = False
@@ -366,12 +378,14 @@ class VERA_Assembly(object):
           if elems[0] == 'mat':
             pass
           else:
+            print(elems)
             self.material[material][elems[0]] = float(elems[1])
         if searching_fuel_lattice:
           if elems[0] == 'lattice':
             pass
           else:
             self.lattices[current_lattice].extend(elems)
+            print(self.lattices[current_lattice])
         if searching_assy:
           if elems[0] == 'axial':
             pass
@@ -390,11 +404,20 @@ class VERA_Assembly(object):
           else:
             self.axial_mesh.append(float(elems[0]))
         if searching_mpact:
-          self.MPACT[elems[0]] = elems[1]
+          if len(elems) == 1:
+            pass
+          else:
+            self.MPACT[elems[0]] = elems[1]
         if searching_cobra:
-          self.COBRA[elems[0]] = elems[1]
+          if len(elems) == 1:
+            pass
+          else:
+            self.COBRA[elems[0]] = elems[1]
         if searching_shift:
-          self.SHIFT[elems[0]] = elems[1]
+          if len(elems) == 1:
+            pass
+          else:
+            self.SHIFT[elems[0]] = elems[1]
 
 class Depletion_State(object):
   """
