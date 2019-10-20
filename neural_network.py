@@ -131,6 +131,7 @@ def compile_data_library(library_name,output_property,lower,upper,output_name):
                     usable_file_list.append(file_name)
 
     for directory in usable_file_list:
+        print(directory)
         library[directory] = {}
         vera_case = VERA_Assembly()
         vera_case.read_data_from_file("full_assembly_library/{}/{}.inp".format(directory,output_name))

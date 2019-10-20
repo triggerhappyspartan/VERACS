@@ -243,32 +243,38 @@ class VERA_Assembly(object):
             current_state = Depletion_State()
             if 'power' in line:
               position = elems.index('power')
-              current_state.power = float(elems[position+2])
+              foo = elems[position+2].replace(";","").replace(",",".")
+              current_state.power = float(foo)
             else:
               current_state.power = base_state.power
             if 'flow' in line:
               position = elems.index('flow')
-              current_state.flow = float(elems[position+2])
+              foo = elems[position+2].replace(";","").replace(",",".")
+              current_state.flow = float(foo)
             else:
               current_state.flow = base_state.flow
             if 'tinlet' in line:
               position = elems.index('tinlet')
-              current_state.tinlet = float(elems[position+2])
+              foo = elems[position+2].replace(";","").replace(",",".")
+              current_state.tinlet = float(foo)
             else:
               current_state.tinlet = base_state.tinlet
             if 'pressure' in line:
               position = elems.index('pressure')
-              current_state.pressure = float(elems[position+2])
+              foo = elems[position+2].replace(";","").replace(",",".")
+              current_state.pressure = float(foo)
             else:
               current_state.pressure = base_state.pressure
             if 'boron' in line:
               position = elems.index('boron')
-              current_state.boron = float(elems[position+2])
+              foo = elems[position+2].replace(";","").replace(",",".")
+              current_state.boron = float(foo)
             else:
               current_state.boron = base_state.boron
             if 'deplete' in line:
               position = elems.index('deplete')
-              current_state.depletion = float(elems[position+2])
+              foo = elems[position+2].replace(";","").replace(",",".")
+              current_state.depletion = float(foo)
             else:
               current_state.depletion = base_state.depletion
             self.stateList[state_count] = current_state
