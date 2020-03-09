@@ -4,6 +4,7 @@ import copy
 import yaml
 import numpy
 import random
+import argparse
 import h5py
 
 class VERA_Assembly(object):
@@ -865,6 +866,14 @@ class Spacer_Grid(object):
     self.mass = mass
     self.loss_coefficient = loss_coefficient
 
+class Library_Generator(object):
+  """
+  Generate a library of random VERA-CS cases based on provided settings.
+  """
+  def __init__(self):
+    self.altered_stuff
+    self.constant_stuff
+
 def return_triangular_string(list_,whitespace):
     """
     Returns the genome as a single triangular string
@@ -972,4 +981,17 @@ def return_8th_map_string(list_):
     return ValueError(error_)
 
 if __name__ == "__main__":
-  pass
+  message1 = "The input yaml file containing the settings for the VERA-CS run."
+  message2 = "If random sampling is to occur for creating a VERA-CS data library, this yaml file structures how the random sampling is done."
+
+  parser = argparse.parser()
+  parser.add_argument(input="--settings",required=True,help=message1)
+  parser.add_argument(input="--random",required=False,help=message2)
+
+  args = parser.parse_args()
+
+  if args.random:
+    generator = Library_Generator(args.settings,args.random)
+    generator.create()
+  else:
+    pass
