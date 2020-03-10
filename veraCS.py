@@ -482,7 +482,7 @@ class Core(object):
     def __init__(self):
         self.caseID = None
         self.title = None
-        self.base_state = None
+        self.base_state = Base_Depletion_State()
         self.stateList = {}
         self.apitch = None
         self.height = None
@@ -523,7 +523,6 @@ class Core(object):
         self.detector = None
         self.run = None
         self.axial_edit_bounds = []
-
 
     def write_file(self):
         """
@@ -835,6 +834,39 @@ class Core(object):
         file_.write("\n")
         file_.close()
 
+    def assign_from_dictionary(self,dict_):
+      """
+      assigns class variables based off of a supplied dictionary.
+      """
+      print('AJ is AMAZING')
+      if 'caseID' in dict_:
+        self.caseID = dict_['caseID']
+      if 'title' in dict_:
+        self.title = dict_['title']
+      if 'STATES' in dict_:
+        for i, state in enumerate(dict_['STATES']):
+          if not i:
+            self.base_state.pressure = dict_['STATES'][state]['pressure']
+            self.base_state.power = dict_['STATES'][state]['power']
+            self.base_state.flow = dict_['STATES'][state]['flow']
+            self.base_state.tinlet = dict_['STATES'][state]['tinlet']
+            self.base_state.rodbank_names = dict_['STATES'][state]['rodbank']['names']
+            self.base_state.rodbank_positions = dict_['STATES'][state]['pressure']['positions']
+          else:
+            stator = Depletion_State()
+            stator.pressure = dict_['STATES'][state]['pressure']
+            stator.power = dict_['STATES'][state]['power']
+            stator.flow = dict_['STATES'][state]['flow']
+            stator.tinlet = dict_['STATES'][state]['tinlet']
+            stator.rodbank_names = dict_['STATES'][state]['rodbank']['names']
+            stator.rodbank_positions = dict_['STATES'][state]['pressure']['positions']
+            stator.depletion = dict_['STATES'][state]['depletion']['value']
+            stator.depletion_units = dict_['STATES'][state]['depletion']['unit']
+            
+      if 'MPACT' in dict_:
+        self.MPACT = dict_['MPACT']
+
+
 class Repeating_Section(object):
   """
   Class for sections in VERA-CS files that have a large degree of repeating information.
@@ -899,9 +931,9 @@ class Library_Generator(object):
   """
   Generate a library of random VERA-CS cases based on provided settings.
   """
-  def __init__(self):
-    self.altered_stuff
-    self.constant_stuff
+  def __init__(self, constant, randomness):
+    self.altered_stuff = randomness
+    self.constant_stuff = constant
 
 def return_triangular_string(list_,whitespace):
     """
@@ -1013,7 +1045,7 @@ if __name__ == "__main__":
   message1 = "The input yaml file containing the settings for the VERA-CS run."
   message2 = "If random sampling is to occur for creating a VERA-CS data library, this yaml file structures how the random sampling is done."
 
-  parser = argparse.parser()
+  parser = argparse.ArgumentParser()
   parser.add_argument(input="--settings",required=True,help=message1)
   parser.add_argument(input="--random",required=False,help=message2)
 
