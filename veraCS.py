@@ -522,7 +522,8 @@ class Core(object):
         self.pinpitch = None
         self.detector = None
         self.run = None
-        self.axial_edit_bounds = None
+        self.axial_edit_bounds = []
+
 
     def write_file(self):
         """
@@ -833,6 +834,18 @@ class Core(object):
               file_.write("  {} {}\n".format(key,self.run[key]))
         file_.write("\n")
         file_.close()
+
+class Repeating_Section(object):
+  """
+  Class for sections in VERA-CS files that have a large degree of repeating information.
+  """
+  def __init__(self):
+    self.title = None
+    self.npin = None
+    self.stroke = None
+    self.cells = {}
+    self.lattices = {}
+    self.axial_lattice_dict = None
 
 class Plate(object):
     """
