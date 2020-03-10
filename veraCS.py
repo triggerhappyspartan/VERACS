@@ -507,6 +507,22 @@ class Core(object):
         self.COBRA = {}
         self.SHIFT = {}
         self.INSILICO = {}
+        self.insert = None
+        self.operating_date = None
+        self.size = None
+        self.rated_power = None
+        self.rated_flow = None
+        self.core_shape = None
+        self.maps = {}
+        self.baffle = None
+        self.axial_lattice_dict = {}
+        self.vessel_material = None
+        self.vessel_size = None
+        self.control = None
+        self.pinpitch = None
+        self.detector = None
+        self.run = None
+        self.axial_edit_bounds = None
 
     def write_file(self):
         """
@@ -577,7 +593,7 @@ class Core(object):
         file_.write("  size   {}              ! assemblies across core\n".format(self.size))
         file_.write("  apitch {}\n".format(self.apitch))
         file_.write("  rated  {} {}     ! MW, Mlbs/hr\n".format(self.rated_power,self.rated_flow)) 
-        file_.write("  height {}\n".format(height))
+        file_.write("  height {}\n".format(self.height))
         file_.write("\n")
         file_.write("  xlabel  R P N M L K J H G  F  E  D  C  B  A\n")
         file_.write("  ylabel  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15\n")
@@ -609,7 +625,7 @@ class Core(object):
         file_.write("\n")
         file_.write("  det_map 193*2\n")
         file_.write("\n")
-        file_.write("  baffle {} {} {}\n").format(self.baffle.material,self.baffle.lower,self.baffle.upper)) 
+        file_.write("  baffle {} {} {}\n".format(self.baffle.material,self.baffle.lower,self.baffle.upper)) 
         file_.write("\n")
         count = 0
         for mat,pos in zip(self.vessel_material,self.vessel_size):
@@ -618,7 +634,7 @@ class Core(object):
           else:
             file_.write("           {} {}\n".format(mat,pos))        
         file_.write("\n")
-        file_.write("  pad ss  194.64 201.63 32 45 135 225 315 \n")! neutron pad ID,OD arc lenth (degrees), and angular positions (degrees)
+        file_.write("  pad ss  194.64 201.63 32 45 135 225 315 \n")
         file_.write("\n")
         file_.write("  lower_plate {}  {} {}   ! mat, thickness, vol frac\n".format(self.lower_plate.material,
                                                                                     self.lower_plate.thickness,
@@ -813,8 +829,8 @@ class Core(object):
             file_.write("  {} {}\n".format(key,self.SHIFT[key]))
         file_.write("\n")
         if self.run:
-        for key in self.run:
-            file_.write("  {} {}\n".format(key,self.run[key]))
+          for key in self.run:
+              file_.write("  {} {}\n".format(key,self.run[key]))
         file_.write("\n")
         file_.close()
 
