@@ -871,6 +871,26 @@ class Core(object):
         self.RUN = dict_['RUN']
       if 'maps' in dict_:
         self.maps = dict_['maps']
+      if 'feedback' in dict_:
+        self.base_state.feedback = dict_['feedback']
+      if 'search' in dict_:
+        self.base_state.search = dict_['search']
+      if 'baffle' in dict_:
+        self.baffle.material = dict_['baffle']['material']
+        self.baffle.lower = dict_['baffle']['first_number']
+        self.baffle.upper = dict_['baffle']['second_number']
+      if 'vessel' in dict_:
+        self.vessel_material = dict_['vessel']['materials']
+        self.vessel_size = dict_['vessel']['sizes']
+      if 'plates' in dict_:
+        self.lower_plate.material = dict_['plates']['lower']['material']
+        self.lower_plate.thickness = dict_['plates']['lower']['thickness']
+        self.lower_plate.volume_fraction = dict_['plates']['lower']['volume_fraction']
+        self.upper_plate.material = dict_['plates']['upper']['material']
+        self.upper_plate.thickness = dict_['plates']['upper']['thickness']
+        self.upper_plate.volume_fraction = dict_['plates']['upper']['volume_fraction']
+      if 'fuel' in dict_:
+        for fu in dict_['fuel']:
 
 class Repeating_Section(object):
   """
