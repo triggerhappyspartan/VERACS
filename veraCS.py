@@ -838,34 +838,39 @@ class Core(object):
       """
       assigns class variables based off of a supplied dictionary.
       """
-      print('AJ is AMAZING')
       if 'caseID' in dict_:
         self.caseID = dict_['caseID']
       if 'title' in dict_:
         self.title = dict_['title']
-      if 'STATES' in dict_:
-        for i, state in enumerate(dict_['STATES']):
+      if 'state' in dict_:
+        for i, state in enumerate(dict_['state']):
           if not i:
-            self.base_state.pressure = dict_['STATES'][state]['pressure']
-            self.base_state.power = dict_['STATES'][state]['power']
-            self.base_state.flow = dict_['STATES'][state]['flow']
-            self.base_state.tinlet = dict_['STATES'][state]['tinlet']
-            self.base_state.rodbank_names = dict_['STATES'][state]['rodbank']['names']
-            self.base_state.rodbank_positions = dict_['STATES'][state]['pressure']['positions']
+            self.base_state.pressure = dict_['state'][state]['pressure']
+            self.base_state.power = dict_['state'][state]['power']
+            self.base_state.flow = dict_['state'][state]['flow']
+            self.base_state.tinlet = dict_['state'][state]['tinlet']
+            self.base_state.rodbank_names = dict_['state'][state]['rodbank']['names']
+            self.base_state.rodbank_positions = dict_['state'][state]['pressure']['positions']
           else:
             stator = Depletion_State()
-            stator.pressure = dict_['STATES'][state]['pressure']
-            stator.power = dict_['STATES'][state]['power']
-            stator.flow = dict_['STATES'][state]['flow']
-            stator.tinlet = dict_['STATES'][state]['tinlet']
-            stator.rodbank_names = dict_['STATES'][state]['rodbank']['names']
-            stator.rodbank_positions = dict_['STATES'][state]['pressure']['positions']
-            stator.depletion = dict_['STATES'][state]['depletion']['value']
-            stator.depletion_units = dict_['STATES'][state]['depletion']['unit']
-            
+            stator.pressure = dict_['state'][state]['pressure']
+            stator.power = dict_['state'][state]['power']
+            stator.flow = dict_['state'][state]['flow']
+            stator.tinlet = dict_['state'][state]['tinlet']
+            stator.rodbank_names = dict_['state'][state]['rodbank']['names']
+            stator.rodbank_positions = dict_['state'][state]['pressure']['positions']
+            stator.depletion = dict_['state'][state]['depletion']['value']
+            stator.depletion_units = dict_['state'][state]['depletion']['unit']
+            stator.restart = dict_['state'][state]['restart']
+            self.stateList[state] = stator
+      if 'core_shape' in dict_:
+        self.core_shape = dict_['core_shape']    
       if 'MPACT' in dict_:
         self.MPACT = dict_['MPACT']
-
+      if 'RUN' in dict_:
+        self.RUN = dict_['RUN']
+      if 'maps' in dict_:
+        self.maps = dict_['maps']
 
 class Repeating_Section(object):
   """
