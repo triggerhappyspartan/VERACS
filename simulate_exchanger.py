@@ -21,6 +21,11 @@ def h5_converter(file_name):
     flow = VE.relative_flow(file_lines)
     power = VE.relative_power(file_lines)
     core_inlet_temps = VE.inlet_temperatures(file_lines)
+    keffs = VE.core_keff_list(file_lines)
+    FDH_list = VE.FDH_list(file_lines)
+    thermal_powers = VE.thermal_power(file_lines)
+    core_flows = VE.core_flow(file_lines)
+    Fqs = VE.pin_peaking_list(file_lines)
 
     file_ = h5py.File(file_name.replace(".out",".h5"),'w')
     key_list = list(pin_power_dictionary.keys())
@@ -32,6 +37,15 @@ def h5_converter(file_name):
         g1.create_dataset("pressure",data=pressure[i])
         g1.create_dataset("flow",data=flow[i])
         g1.create_dataset("exposure",data=exposures[i])
+        g1.create_dataset("core_inlet_temp",data=core_inlet_temps[i])
+        g1.create_dataset("tinlet",data=core_inlet_temps[i])
+        g1.create_dataset("power",data=power[i])
+        g1.create_dataset("total_power",data=thermal_powers[i])
+        g1.create_dataset("keff",data=keffs[i])
+        g1.create_dataset("FDH",data=FDH_list[i])
+        g1.create_dataset("Fq",data=Fqs[i])
+
+    file_.close()
 
 if __name__ == "__main__":
     pass    
