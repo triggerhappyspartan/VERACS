@@ -21,7 +21,6 @@ def h5_converter(file_name):
     flow = VE.relative_flow(file_lines)
     power = VE.relative_power(file_lines)
     core_inlet_temps = VE.inlet_temperatures(file_lines)
-    
 
     file_ = h5py.File(file_name.replace(".out",".h5"),'w')
     key_list = list(pin_power_dictionary.keys())
@@ -29,6 +28,10 @@ def h5_converter(file_name):
         g1 = file_.create_group(key)
         g1.create_dataset("pin_powers",data=pin_power_dictionary[key])
         g1.create_dataset("exposure_efpds",data=exposure_efpds[i])
+        g1.create_dataset("boron",data=boron[i])
+        g1.create_dataset("pressure",data=pressure[i])
+        g1.create_dataset("flow",data=flow[i])
+        g1.create_dataset("exposure",data=exposures[i])
 
 if __name__ == "__main__":
     pass    
