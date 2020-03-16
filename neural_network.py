@@ -146,10 +146,18 @@ def compile_data_library(library_name,output_property,lower,upper,output_name):
         file_name = "full_assembly_library/{}/{}".format(directory,h5_file)
         state_list = veraCS.return_state_list(file_name)
         output_dictionary = {}
-        for i,state in enumerate(vera_case.stateList):
-            output_dictionary[vera_case.stateList[state].depletion] = veraCS.return_h5_property_as_list(file_name,state_list[i],output_property)
+        if output_property == 'keff':
+            for i,state in enumerate(vera_case.stateList):
+                file_ = h5py.File(file_name,'r')
+                state_ = file_[state_list[i]]
+                output_dictionary[vera_case.stateList[state].depletion] = state_[output_property][()]
+                print(output_dictionary[vera_case.stateList[state].depletion])
+                file_.close()
+        else:
+            for i,state in enumerate(vera_case.stateList):
+                output_dictionary[vera_case.stateList[state].depletion] = veraCS.return_h5_property_as_list(file_name,state_list[i],output_property)
         input_dictionary = {}
-        print(vera_case.lattices.keys())
+     #   print(vera_case.lattices.keys())
         input_dictionary['pin_list'] = vera_case.lattices['FUEL']
         input_dictionary['power'] = []
         input_dictionary['flow_rate'] = []
@@ -166,7 +174,7 @@ def compile_data_library(library_name,output_property,lower,upper,output_name):
         library[directory]['inputs'] = input_dictionary
         library[directory]['outputs'] = output_dictionary
 
-    outfile = open(library_name,'wb')
+    outfile = h5py.File(output_name)
     pickle.dump(library,outfile)
     outfile.close()
 

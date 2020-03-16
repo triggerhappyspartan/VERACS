@@ -42,7 +42,7 @@ class VERA_Assembly(object):
     """
     Writes VERA-CS input files.
     """
-    print(self.stateList)
+    #print(self.stateList)
     file_ = open(self.title+".inp",'w')
     file_.write("[CASEID] \n")
     file_.write('  title {}\n'.format(self.caseID))
@@ -153,7 +153,6 @@ class VERA_Assembly(object):
     for i,height,layer in zip(range(len(self.axial_lattice_locations['height'])),
                               self.axial_lattice_locations['height'],
                               self.axial_lattice_locations['order']):
-      print(i,height,layer)
       if i==0:
         file_.write("  axial {}   {}\n".format(layer,height))
       else:
@@ -321,7 +320,7 @@ class VERA_Assembly(object):
           self.cells[elems[1]]['material'].extend(elems[(slash+1):])
         elif elems[0] == 'lattice':
           current_lattice = elems[1]
-          print(current_lattice)
+         # print(current_lattice)
           self.lattices[current_lattice] = []
           searching_fuel_lattice = True
         elif elems[0] == 'axial':
@@ -384,14 +383,14 @@ class VERA_Assembly(object):
           if elems[0] == 'mat':
             pass
           else:
-            print(elems)
+       #     print(elems)
             self.material[material][elems[0]] = float(elems[1])
         if searching_fuel_lattice:
           if elems[0] == 'lattice':
             pass
           else:
             self.lattices[current_lattice].extend(elems)
-            print(self.lattices[current_lattice])
+    #        print(self.lattices[current_lattice])
         if searching_assy:
           if elems[0] == 'axial':
             pass
@@ -536,6 +535,7 @@ def return_h5_property_as_list(file_name,state,wanted_property):
     """
     file_ = h5py.File(file_name,'r')
     state_ = file_[state]
+    print(state_)
     property_shape = state_[wanted_property].shape
     shape_list = []
     shape_count = 1
@@ -543,11 +543,16 @@ def return_h5_property_as_list(file_name,state,wanted_property):
       shape_list.append(0)
       shape_count *= shape
     
-    property_ = []
+    property_ = [0] * shape_count
 
-    while len(property_) < shape_count:
+    print(property_shape)
+    print(len(property_))
+    for i in range(shape_count):
+      print(shape_list)
       shape_tuple = tuple(shape_list)
-      property_.append(state_[wanted_property][shape_tuple])
+      print("Fuck Me")
+      print(state_[wanted_property][shape_tuple])
+      property_[i] = state_[wanted_property][shape_tuple]
       iterating_shape = True
       last_val = len(property_shape) - 1
       shape_list[last_val] += 1
