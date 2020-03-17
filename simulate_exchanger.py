@@ -291,38 +291,58 @@ class Simulate_Extractor(object):
 
         Written by Brian Andersen. 1/9/2020
         """
-        linear_power_dictionary = {}
-        for key in key_list:
-            linear_power_dictionary[key] = {}
+        state_count = -1
+        for line in file_lines:
+            if 'DIM.PWR' in line:
+                print(line)
+                elems = line.strip().split()
+                if elems[0] == "'DIM.PWR'":
+                    rows = int(elems[2])
+                    cols = int(elems[3])
+            if 'DIM.CAL' in line:
+                elems = line.strip().split()
+                if elems[0] == "'DIM.CAL'":
+                    axial = int(elems[1])
+                    print(axial)
+            if 'Output Summary' in line:
+                state_count += 1
 
+        power_dict = {}
+        if rows == 15 and cols == 15:
+            number_assemblies = 48
+            core_map = Maps()
+            core_map = core_map.assembly_map_15_15
+        else:
+            errmessage = f"The number of assembly rows {rows} and columns {cols} is unrecognized"
+            return ValueError(errmessage)
+
+        for i in range(state_count):
+            power_dict[f"STATE_{(i+1):04d}"] = numpy.zeros([axial,number_assemblies])
+
+        state_list = list(power_dict.keys())
+        state_count = -1
+        current_state = state_list[state_count]
         searching_powers = False
         for line in file_lines:
-            if "Case" in line and "GWd/MT" in line:
-                elems = line.strip().split()
-                depl = elems[-2]
-
             if "**   H-     G-     F-     E-     D-     C-     B-     A-     **" in line:
                 searching_powers = False
-
             if searching_powers:
                 elems = line.strip().split()
-                if elems[0] == "Renorm":
-                    pass
-                elif elems[0] == "**":
-                    pass
-                else:
-                    for el in elems[1:-1]:
-                        key = key_list[assembly_count]
-                        linear_power_dictionary[key][depl] = float(el) 
-                        assembly_count += 1
-            
-            if "PIN.EDT 2KWF  - Peak Pin Power: (kW/ft)      Assembly 2D" in line:
+                key_list = list(core_map[int(elems[0])])
+                for i,val in enumerate(elems[1:-1]):
+                    assembly = core_map[int(elems[0])][key_list[i]]
+                    power_dict[current_state][axial_position,assembly] = float(val)
+            if "Renorm =" in line and "Axial Plane =" in line:
+                elems = line.strip().split()
+                axial_position = int(elems[-1]) - 1
+            if "**    8      9     10     11     12     13     14     15     **" in line:
                 searching_powers = True
-                assembly_count = 0
-                for key in key_list:
-                    linear_power_dictionary[key][depl] = None
+            if "Output Summary" in line:
+                state_count += 1
+                if state_count < len(state_list):
+                    current_state = state_list[state_count]
 
-        return linear_power_dictionary
+        return power_dict
 
     @staticmethod
     def efpd_list(file_lines):
@@ -699,21 +719,12 @@ class Simulate_Extractor(object):
                     pass
                 else:
                     for i,value in enumerate(elems):
-                        #print("Current State {} {}".format(current_state,type(current_state)))
-                        #print("Row Count {} {}".format(row_count,type(row_count)))
-                        #print("Columns {} {}".format(i,type(i)))
-                        #print("Current Assembly {} {}".format(current_assembly,type(current_assembly)))
-                        #print("Axial Position {} {}".format(axial_position,type(axial_position)))
-                        #print(power_dict[current_state].shape)
                         power_dict[current_state][row_count,i,axial_position,current_assembly] = float(value)
                     row_count += 1
             if "'3PXP' - Pin Power  Distribution:" in line:
                 searching_pin_powers = True
             if "Output Summary" in line:
-                print(state_list)
-                print(current_state)
                 state_count += 1
-                print(state_count)
                 if state_count < len(state_list):
                     current_state = state_list[state_count]
 
