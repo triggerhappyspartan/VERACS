@@ -12,59 +12,59 @@ def h5_converter(file_name):
     file_lines = file_.readlines()
     file_.close()
 
-    VE = VERA_Extractor()
+    SE = Simulate_Extractor()
 
-    pin_power_dictionary = VE.full_core_powers3D(file_lines,17)
-    exposure_efpds = VE.efpd_list(file_lines)
-    exposures = VE.burnup_list(file_lines)
-    boron = VE.boron_list(file_lines)
-    pressure = VE.pressure(file_lines)
-    flow = VE.relative_flow(file_lines)
-    power = VE.relative_power(file_lines)
-    core_inlet_temps = VE.inlet_temperatures(file_lines)
-    keffs = VE.core_keff_list(file_lines)
-    FDH_list = VE.FDH_list(file_lines)
-    thermal_powers = VE.thermal_power(file_lines)
-    core_flows = VE.core_flow(file_lines)
-    Fqs = VE.pin_peaking_list(file_lines)
+    pin_power_dictionary = SE.full_core_powers3D(file_lines,17)
+    exposure_efpds = SE.efpd_list(file_lines)
+    exposures = SE.burnup_list(file_lines)
+    boron = SE.boron_list(file_lines)
+    pressure = SE.pressure(file_lines)
+    flow = SE.relative_flow(file_lines)
+    power = SE.relative_power(file_lines)
+    core_inlet_temps = SE.inlet_temperatures(file_lines)
+    keffs = SE.core_keff_list(file_lines)
+    FDH_list = SE.FDH_list(file_lines)
+    thermal_powers = SE.thermal_power(file_lines)
+    core_flows = SE.core_flow(file_lines)
+    Fqs = SE.pin_peaking_list(file_lines)
+
+    print(f"List of Exposures in EFPD {exposure_efpds} Length {len(exposure_efpds)}")
+    print(f"List of exposures in GWDMTU {exposures} Length {len(exposures)}")
+    print(f"List of boron values {boron} Length {len(boron)}")
+    print(f"List of pressure values {pressure} Length {len(pressure)}")
+    print(f"List of flow values {flow} Length {len(flow)}")
+    print(f"List of power values {power} Length {len(power)}")
+    print(f"List of core inlet temps {core_inlet_temps} Length {len(core_inlet_temps)}")
+    print(f"List of core keff values {keffs} Length {len(keffs)}")
+    print(f"List of FDH values {FDH_list} Length {len(FDH_list)}")
+    print(f"List of actual thermal power {thermal_powers} Length {len(thermal_powers)}")
+    print(f"Core flow rate {core_flows} Length {len(core_flows)}")
+    print(f"List of Fq values {Fqs} Length {len(Fqs)}")
 
     file_ = h5py.File(file_name.replace(".out",".h5"),'w')
     key_list = list(pin_power_dictionary.keys())
     for i,key in enumerate(key_list):
         g1 = file_.create_group(key)
         g1.create_dataset("pin_powers",data=pin_power_dictionary[key])
-        g1.create_dataset("exposure_efpds",data=exposure_efpds[i])
-        g1.create_dataset("boron",data=boron[i])
-        g1.create_dataset("pressure",data=pressure[i])
-        g1.create_dataset("flow",data=flow[i])
-        g1.create_dataset("exposure",data=exposures[i])
-        g1.create_dataset("core_inlet_temp",data=core_inlet_temps[i])
-        g1.create_dataset("tinlet",data=core_inlet_temps[i])
-        g1.create_dataset("power",data=power[i])
-        g1.create_dataset("total_power",data=thermal_powers[i])
-        g1.create_dataset("keff",data=keffs[i])
-        g1.create_dataset("FDH",data=FDH_list[i])
-        g1.create_dataset("Fq",data=Fqs[i])
+        g1.create_dataset("exposure_efpds",data=exposure_efpds[i+1])
+        g1.create_dataset("boron",data=boron[i+1])
+        g1.create_dataset("pressure",data=pressure[i+1])
+        g1.create_dataset("flow",data=flow[i+1])
+        g1.create_dataset("exposure",data=exposures[i+1])
+        g1.create_dataset("core_inlet_temp",data=core_inlet_temps[i+1])
+        g1.create_dataset("tinlet",data=core_inlet_temps[i+1])
+        g1.create_dataset("power",data=power[i+1])
+        g1.create_dataset("total_power",data=thermal_powers[i+1])
+        g1.create_dataset("keff",data=keffs[i+1])
+        g1.create_dataset("FDH",data=FDH_list[i+1])
+        g1.create_dataset("Fq",data=Fqs[i+1])
 
     file_.close()
 
-class VERA_Extractor(object):
+class Maps(object):
     """
-    Class for organizing the functions used to read the output files produced
-    by Simulate.
-
-    Written by Brian Andersen. 1/8/2020
+    Class for the assembly maps used in the simulate extractor.
     """
-    VERA_Extractor.assembly_map_15_15 = {}
-    VERA_Extractor.assembly_map_15_15[8] =  {8: 0,9:1 ,10:2 ,11:3 ,12:4 ,13:5 , 14:6,15:8 }
-    VERA_Extractor.assembly_map_15_15[9] =  {8: 9,9:10,10:11,11:12,12:13,13:14,14:15,15:16}
-    VERA_Extractor.assembly_map_15_15[10] = {8:17,9:18,10:19,11:20,12:21,13:22,14:23}
-    VERA_Extractor.assembly_map_15_15[11] = {8:24,9:25,10:26,11:27,12:28,13:29,14:30}
-    VERA_Extractor.assembly_map_15_15[12] = {8:31,9:32,10:33,11:34,12:35,13:36}
-    VERA_Extractor.assembly_map_15_15[13] = {8:37,9:38,10:39,11:40,12:41}
-    VERA_Extractor.assembly_map_15_15[14] = {8:42,9:43,10:44,11:45}
-    VERA_Extractor.assembly_map_15_15[15] = {8:46,9:47}
-
     def __init__(self):
         self.assembly_map_15_15 = {}
         self.assembly_map_15_15[8] =  {8: 0,9:1 ,10:2 ,11:3 ,12:4 ,13:5 , 14:6,15:8 }
@@ -76,6 +76,13 @@ class VERA_Extractor(object):
         self.assembly_map_15_15[14] = {8:42,9:43,10:44,11:45}
         self.assembly_map_15_15[15] = {8:46,9:47}
 
+class Simulate_Extractor(object):
+    """
+    Class for organizing the functions used to read the output files produced
+    by Simulate.
+
+    Written by Brian Andersen. 1/8/2020
+    """
     @staticmethod
     def core_keff_list(file_lines):
         """
@@ -461,9 +468,14 @@ class VERA_Extractor(object):
         """
         boron_list = []
         for line in file_lines:
-            if "Boron" in line and "(ppm)" in line:
+        #    if "Boron" in line and "(ppm)" in line:
+        #        elems = line.strip().split()
+        #        boron_list.append(float(elems[-1]))
+
+            if "Boron Conc. . . . . . . . . . BOR" in line:
                 elems = line.strip().split()
-                boron_list.append(float(elems[-1]))
+                spot = elems.index("ppm")
+                boron_list.append(float(elems[spot-1]))
 
         return boron_list
 
@@ -625,21 +637,32 @@ class VERA_Extractor(object):
 
         Written by Brian Andersen. 3/13/2020
         """
-        state_count = 0
+        state_count = -1
         for line in file_lines:
             if 'DIM.PWR' in line:
+                print(line)
                 elems = line.strip().split()
-                rows = int(elems[2])
-                cols = int(elems[3])
+                if elems[0] == "'DIM.PWR'":
+                    print(elems[2])
+                    print(elems[3])
+                    rows = int(elems[2])
+                    cols = int(elems[3])
             if 'DIM.CAL' in line:
-                axial = int(elems[2])
+                print(line)
+                elems = line.strip().split()
+                if elems[0] == "'DIM.CAL'":
+                    print("Fuck")
+                    print(elems[1])
+                    axial = int(elems[1])
+                    print(axial)
             if 'Output Summary' in line:
                 state_count += 1
         
         power_dict = {}
         if rows == 15 and cols == 15:
             number_assemblies = 48
-            core_map = VERA_Extractor.assembly_map_15_15
+            core_map = Maps()
+            core_map = core_map.assembly_map_15_15
         else:
             errmessage = f"The number of assembly rows {rows} and columns {cols} is unrecognized"
             return ValueError(errmessage)
@@ -648,8 +671,9 @@ class VERA_Extractor(object):
             power_dict[f"STATE_{(i+1):04d}"] = numpy.zeros([number_pins,number_pins,axial,number_assemblies])
 
         state_list = list(power_dict.keys())
-        state_count = 0
+        state_count = -1
         current_state = state_list[state_count]
+        searching_pin_powers = False
         for line in file_lines:
             if 'Assembly Label' in line:
                 row_count = 0
@@ -660,30 +684,41 @@ class VERA_Extractor(object):
                 section = section.replace("IA","")
                 section = section.replace("JA","")
                 section = section.replace("K","")
+                section = section.replace("=","")
                 elems = section.strip().split()
                 current_assembly = core_map[int(elems[0])][int(elems[1])]
-                axial_position = elems[2]
+                axial_position = int(elems[2]) - 1
             if " Studsvik CMS Steady-State" in line:
                 searching_pin_powers = False
             if searching_pin_powers:
                 line = line.replace(":","")
                 line = line.replace("-","")
-                if not line:
+                line = line.replace("+","")
+                elems = line.strip().split()
+                if not elems:
                     pass
                 else:
-                    elems = line.strip().split()
                     for i,value in enumerate(elems):
+                        #print("Current State {} {}".format(current_state,type(current_state)))
+                        #print("Row Count {} {}".format(row_count,type(row_count)))
+                        #print("Columns {} {}".format(i,type(i)))
+                        #print("Current Assembly {} {}".format(current_assembly,type(current_assembly)))
+                        #print("Axial Position {} {}".format(axial_position,type(axial_position)))
+                        #print(power_dict[current_state].shape)
                         power_dict[current_state][row_count,i,axial_position,current_assembly] = float(value)
                     row_count += 1
             if "'3PXP' - Pin Power  Distribution:" in line:
                 searching_pin_powers = True
             if "Output Summary" in line:
+                print(state_list)
+                print(current_state)
                 state_count += 1
-                current_state = state_list[state_count]
+                print(state_count)
+                if state_count < len(state_list):
+                    current_state = state_list[state_count]
 
         return power_dict
         
-
 if __name__ == "__main__":
     pass    
 
