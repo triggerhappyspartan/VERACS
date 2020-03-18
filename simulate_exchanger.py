@@ -279,13 +279,11 @@ class Simulate_Extractor(object):
         return radial_power_dictionary
 
     @staticmethod
-    def linear_power_rate(key_list,file_lines):
+    def linear_power_rate_3D(,file_lines):
         """
         Extracts the linear power rate from Simulate as a dictionary.
 
         Parameters
-            key_list: List of the assemblies in the reactor core, used as 
-                keys for the linear power rate dictionary.
             file_lines: list
                 All the output lines of the simulate file as a list.
 
@@ -323,24 +321,29 @@ class Simulate_Extractor(object):
         state_count = -1
         current_state = state_list[state_count]
         searching_powers = False
+        in_power_region = False
         for line in file_lines:
-            if "**   H-     G-     F-     E-     D-     C-     B-     A-     **" in line:
-                searching_powers = False
-            if searching_powers:
-                elems = line.strip().split()
-                key_list = list(core_map[int(elems[0])])
-                for i,val in enumerate(elems[1:-1]):
-                    assembly = core_map[int(elems[0])][key_list[i]]
-                    power_dict[current_state][axial_position,assembly] = float(val)
-            if "Renorm =" in line and "Axial Plane =" in line:
-                elems = line.strip().split()
-                axial_position = int(elems[-1]) - 1
-            if "**    8      9     10     11     12     13     14     15     **" in line:
-                searching_powers = True
-            if "Output Summary" in line:
-                state_count += 1
-                if state_count < len(state_list):
-                    current_state = state_list[state_count]
+            if "PIN.EDT 3KWF  - Peak Pin Power:(kW/ft)       Assembly 3D" in line:
+                in_power_region = True
+            if in_power_region:
+                if "**   H-     G-     F-     E-     D-     C-     B-     A-     **" in line:
+                    searching_powers = False
+                    in_power_region = False
+                if searching_powers:
+                    elems = line.strip().split()
+                    key_list = list(core_map[int(elems[0])])
+                    for i,val in enumerate(elems[1:-1]):
+                        assembly = core_map[int(elems[0])][key_list[i]]
+                        power_dict[current_state][axial_position,assembly] = float(val)
+                if "Renorm =" in line and "Axial Plane =" in line:
+                    elems = line.strip().split()
+                    axial_position = int(elems[-1]) - 1
+                if "**    8      9     10     11     12     13     14     15     **" in line:
+                    searching_powers = True
+                if "Output Summary" in line:
+                    state_count += 1
+                    if state_count < len(state_list):
+                        current_state = state_list[state_count]
 
         return power_dict
 
@@ -409,7 +412,7 @@ class Simulate_Extractor(object):
         return list_
 
     @staticmethod
-    def radial_power_dictionary(file_lines):
+    def radial_assembly_power_2D(file_lines):
         """
         Extracts the radial power matrix from the simulate output file and 
         returns them as a dictionary.
@@ -420,60 +423,109 @@ class Simulate_Extractor(object):
 
         Written by Brian Andersen 12/7/2019
         """
-        power_dictionary = {}
-        searching_pin_powers = False
+        state_count = -1
         for line in file_lines:
-            if "Assembly Label:" in line and "Serial =" in line:
-                new_line = line.replace(","," ")
-                elems = new_line.strip().split()
-                assembly_label = elems[3]
-                serial_number = elems[6]
-                planar = elems[13]
-                key_tuple = (assembly_label,serial_number)
-                if key_tuple in power_dictionary:
+            if 'DIM.PWR' in line:
+                print(line)
+                elems = line.strip().split()
+                if elems[0] == "'DIM.PWR'":
+                    print(elems[2])
+                    print(elems[3])
+                    rows = int(elems[2])
+                    cols = int(elems[3])
+            if 'Output Summary' in line:
+                state_count += 1
+        
+        power_dict = {}
+        if rows == 15 and cols == 15:
+            number_assemblies = 48
+            core_map = Maps()
+            core_map = core_map.assembly_map_15_15
+        else:
+            errmessage = f"The number of assembly rows {rows} and columns {cols} is unrecognized"
+            return ValueError(errmessage)
+        
+        for i in range(state_count):
+            power_dict[f"STATE_{(i+1):04d}"] = numpy.zeros([1,number_assemblies])
+
+        state_list = list(power_dict.keys())
+        state_count = -1
+        current_state = state_list[state_count]
+        searching_powers = False
+        for line in file_lines:
+            if "**   H-     G-     F-     E-     D-     C-     B-     A-     **" in line:
+                searching_powers = False
+            if searching_powers:
+                if "**    8      9     10     11     12     13     14     15     **" in line:
                     pass
                 else:
-                    power_dictionary[key_tuple] = {}
-        
-            if "Case" in line and "GWd/MT" in line:
+                    elems = line.strip().split()
+                    key_list = list(core_map[int(elems[0])])
+                    for i,val in enumerate(elems[1:-1]):
+                        assembly = core_map[int(elems[0])][key_list[i]]
+                        power_dict[current_state][0,assembly] = float(val)
+            if "PRI.STA 2RPF  - Assembly 2D Ave RPF - Relative Power Fraction" in line:
+                searching_powers = True
+            
+        return power_dict
+
+    @staticmethod
+    def radial_assembly_exposure_2D(file_lines):
+        """
+        Extracts the radial power matrix from the simulate output file and 
+        returns them as a dictionary.
+
+        Parameters:
+        file_lines: list
+            All the output lines of the simulate file as a list.
+
+        Written by Brian Andersen 12/7/2019
+        """
+        state_count = -1
+        for line in file_lines:
+            if 'DIM.PWR' in line:
+                print(line)
                 elems = line.strip().split()
-                depletion = elems[-2]
+                if elems[0] == "'DIM.PWR'":
+                    print(elems[2])
+                    print(elems[3])
+                    rows = int(elems[2])
+                    cols = int(elems[3])
+            if 'Output Summary' in line:
+                state_count += 1
+        
+        power_dict = {}
+        if rows == 15 and cols == 15:
+            number_assemblies = 48
+            core_map = Maps()
+            core_map = core_map.assembly_map_15_15
+        else:
+            errmessage = f"The number of assembly rows {rows} and columns {cols} is unrecognized"
+            return ValueError(errmessage)
+        
+        for i in range(state_count):
+            power_dict[f"STATE_{(i+1):04d}"] = numpy.zeros([1,number_assemblies])
 
-            if searching_pin_powers:
-                if 'PIN.EDT 3PIN  - Peak Pin Power:              Assembly 3D' in line:
-                    searching_pin_powers = False
-                    if depletion in power_dictionary[key_tuple]:
-                        pass
-                    else:
-                        power_dictionary[key_tuple][depletion] = {}
-                    power_dictionary[key_tuple][depletion][planar] = pin_power_matrix
-                elif '1S I M U L A T E - 3 **' in line:
-                    searching_pin_powers = False
-                    if depletion in power_dictionary[key_tuple]:
-                        pass
-                    else:
-                        power_dictionary[key_tuple][depletion] = {}
-                    power_dictionary[key_tuple][depletion][planar] = pin_power_matrix
+        state_list = list(power_dict.keys())
+        state_count = -1
+        current_state = state_list[state_count]
+        searching_powers = False
+        for line in file_lines:
+            if "**   H-     G-     F-     E-     D-     C-     B-     A-     **" in line:
+                searching_powers = False
+            if searching_powers:
+                if "**    8      9     10     11     12     13     14     15     **" in line:
+                    pass
                 else:
-                    column_count = 0
-                    new_line = line.replace(":","")
-                    new_line = new_line.replace("-","")
-                    new_line = new_line.replace("+","")
-                    elems = new_line.strip().split()
-                    if not elems:
-                        pass
-                    else:
-                        for power in elems:
-                            pin_power_matrix[row_count,column_count] = float(power)
-                            column_count += 1
-                        row_count += 1
-
-            if "'3PXP' - Pin Power  Distribution:" in line:
-                searching_pin_powers = True
-                pin_power_matrix = numpy.zeros([17,17])
-                row_count = 0
-
-        return power_dictionary
+                    elems = line.strip().split()
+                    key_list = list(core_map[int(elems[0])])
+                    for i,val in enumerate(elems[1:-1]):
+                        assembly = core_map[int(elems[0])][key_list[i]]
+                        power_dict[current_state][0,assembly] = float(val)
+            if "PRI.STA 2EXP  - Assembly 2D Ave EXPOSURE  - GWD/T" in line:
+                searching_powers = True
+            
+        return power_dict
 
     @staticmethod
     def boron_list(file_lines):
@@ -729,7 +781,33 @@ class Simulate_Extractor(object):
                     current_state = state_list[state_count]
 
         return power_dict
-        
+
+class Full_Core_Cobra_Writer(object):
+    """
+    Writes input files for a full reactor core in CTF utilizing the CTF preprocessor.
+    """
+    def __init__(self):
+        self.radial_assembly_powers = None #The assembly peaking. Not FdeltaH or Fq.
+        self.linear_powers = None #The linear power rate for each assembly
+        self.pin_powers = None #The three dimensional pin powers of each assembly. 
+
+    def extract_data_from_simulate(self,file_name):
+        """
+        Opens the provided simulate data file and extracts everything needed to write the CTF preprocessor file.
+        """
+        file_ = open(file_name,'r')
+        file_lines = file_.readlines()
+        file_.close()
+
+        self.radial_assembly_powers = Extractor.radial_assembly_power_2D(file_lines)
+        self.linear_powers = Extractor.linear_power_rate_3D(file_lines)
+        self.pin_powers = Extractor.full_core_powers3D(file_lines)
+
+    def write_input_files(self,state):
+        """
+        Function for writing the CTF preprocessor input files.
+        """
+
 if __name__ == "__main__":
     pass    
 
