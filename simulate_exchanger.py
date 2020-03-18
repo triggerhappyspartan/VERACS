@@ -28,6 +28,7 @@ def h5_converter(file_name):
     thermal_powers = SE.thermal_power(file_lines)
     core_flows = SE.core_flow(file_lines)
     Fqs = SE.pin_peaking_list(file_lines)
+    nominal_linear_power_rate = SE.nominal_core_wide_linear_power_rate(file_lines)
 
     print(f"List of Exposures in EFPD {exposure_efpds} Length {len(exposure_efpds)}")
     print(f"List of exposures in GWDMTU {exposures} Length {len(exposures)}")
@@ -280,7 +281,7 @@ class Simulate_Extractor(object):
         return radial_power_dictionary
 
     @staticmethod
-    def linear_power_rate_3D(,file_lines):
+    def linear_power_rate_3D(file_lines):
         """
         Extracts the linear power rate from Simulate as a dictionary.
 
@@ -819,6 +820,49 @@ class Simulate_Extractor(object):
 
         return linear_power_rate
 
+    @staticmethod
+    def axial_mesh_positions(file_lines):
+        axial_positions = []
+        searching_heights = False
+        for line in file_lines:
+            if "** Studsvik CMS Steady-State 3-D Reactor Simulator **" in line:
+                searching_heights = False   #Found the Axial Powers.
+                break                       #Don't need to go through any more of file 
+            if "Grid Location Information" in line:
+                searching_heights = False
+                break
+            if searching_heights:
+                line = line.replace("-","")
+                elems = line.strip().split()
+                if elems:
+                    axial_positions.append(elems[-1])
+            if "Axial Nodal Boundaries (cm)" in line:
+                searching_heights = True
+
+        axial_positions.pop(0)  #I don't care about the axial positions in the reflectors
+        axial_positions.pop(-1) #I only want positions in the active fuel region.
+
+        return axial_positions
+
+class Calculator(object):
+    """
+    General class for performing different calculations.
+    """
+    @staticmethod
+    def convert_tons_to_kg(number):
+        """
+        Multiplies the provided number by 2000 to convert from metric tons
+        to kilograms.
+        """
+        return number*1000.
+
+    @staticmethod
+    def convert_hours_to_seconds(number):
+        """
+        Converts the provided rate from something/hour to something/second.
+        """
+        return number/3600.
+
 class Full_Core_Cobra_Writer(object):
     """
     Writes input files for a full reactor core in CTF utilizing the CTF preprocessor.
@@ -843,9 +887,9 @@ class Full_Core_Cobra_Writer(object):
         file_lines = file_.readlines()
         file_.close()
 
-        self.radial_assembly_powers = Extractor.radial_assembly_power_2D(file_lines)
-        self.linear_powers = Extractor.linear_power_rate_3D(file_lines)
-        self.pin_powers = Extractor.full_core_powers3D(file_lines)
+        self.radial_assembly_powers = Simulate_Extractor.radial_assembly_power_2D(file_lines)
+        self.linear_powers = Simulate_Extractor.linear_power_rate_3D(file_lines)
+        self.pin_powers = Simulate_Extractor.full_core_powers3D(file_lines,17)
 
     def write_input_files(self,state):
         """
