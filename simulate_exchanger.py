@@ -29,6 +29,13 @@ def h5_converter(file_name):
     core_flows = SE.core_flow(file_lines)
     Fqs = SE.pin_peaking_list(file_lines)
     nominal_linear_power_rate = SE.nominal_core_wide_linear_power_rate(file_lines)
+    apitch = SE.assembly_pitch(file_lines)
+    axial_mesh_reverse = SE.axial_mesh_positions(file_lines)
+    axial_mesh = []
+    for axial in axial_mesh_reverse:
+        axial_mesh.insert(0,axial)
+    axial_mesh = [axial + 11.951 for axial in axial_mesh]
+    maps = Maps()
 
     print(f"List of Exposures in EFPD {exposure_efpds} Length {len(exposure_efpds)}")
     print(f"List of exposures in GWDMTU {exposures} Length {len(exposures)}")
@@ -43,7 +50,17 @@ def h5_converter(file_name):
     print(f"Core flow rate {core_flows} Length {len(core_flows)}")
     print(f"List of Fq values {Fqs} Length {len(Fqs)}")
 
+    core_flower = Calculator.convert_tons_to_kg(core_flows[0])
+    core_flower = Calculator.convert_hours_to_seconds(core_flower)
     file_ = h5py.File(file_name.replace(".out",".h5"),'w')
+    g1 = file_.create_group("CORE")
+    g1.create_dataset("apitch",data=apitch)
+    g1.create_dataset("axial_mesh",data=axial_mesh)
+    g1.create_dataset("nominal_linear_heat_rate",data=nominal_linear_power_rate)
+    g1.create_dataset('core_map',data=maps.array_assembly_map_15_15)
+    g1.create_dataset('rated_flow',data=core_flower)
+    g1.create_dataset('rated_flow_units',data="Kg/s")
+    g1.create_dataset('rated_power',data=thermal_powers[0])
     key_list = list(pin_power_dictionary.keys())
     for i,key in enumerate(key_list):
         g1 = file_.create_group(key)
@@ -68,15 +85,24 @@ class Maps(object):
     Class for the assembly maps used in the simulate extractor.
     """
     def __init__(self):
-        self.assembly_map_15_15 = {}
-        self.assembly_map_15_15[8] =  {8: 1,9:2 ,10:3 ,11:4 ,12:5 ,13:6 , 14:7,15:8 }
-        self.assembly_map_15_15[9] =  {8: 9,9:10,10:11,11:12,12:13,13:14,14:15,15:16}
-        self.assembly_map_15_15[10] = {8:17,9:18,10:19,11:20,12:21,13:22,14:23}
-        self.assembly_map_15_15[11] = {8:24,9:25,10:26,11:27,12:28,13:29,14:30}
-        self.assembly_map_15_15[12] = {8:31,9:32,10:33,11:34,12:35,13:36}
-        self.assembly_map_15_15[13] = {8:37,9:38,10:39,11:40,12:41}
-        self.assembly_map_15_15[14] = {8:42,9:43,10:44,11:45}
-        self.assembly_map_15_15[15] = {8:46,9:47}
+        self.dict_assembly_map_15_15 = {}
+        self.dict_assembly_map_15_15[8] =  {8: 1,9:2 ,10:3 ,11:4 ,12:5 ,13:6 , 14:7,15:8 }
+        self.dict_assembly_map_15_15[9] =  {8: 9,9:10,10:11,11:12,12:13,13:14,14:15,15:16}
+        self.dict_assembly_map_15_15[10] = {8:17,9:18,10:19,11:20,12:21,13:22,14:23}
+        self.dict_assembly_map_15_15[11] = {8:24,9:25,10:26,11:27,12:28,13:29,14:30}
+        self.dict_assembly_map_15_15[12] = {8:31,9:32,10:33,11:34,12:35,13:36}
+        self.dict_assembly_map_15_15[13] = {8:37,9:38,10:39,11:40,12:41}
+        self.dict_assembly_map_15_15[14] = {8:42,9:43,10:44,11:45}
+        self.dict_assembly_map_15_15[15] = {8:46,9:47}
+
+        self.array_assembly_map_15_15 = numpy.array([[ 1, 2, 3, 4, 5, 6, 7, 8],
+                                                     [ 9,10,11,12,13,14,15,16],
+                                                     [17,18,19,20,21,22,23],
+                                                     [24,25,26,27,28,29,30],
+                                                     [31,32,33,34,35,36],
+                                                     [37,38,39,40,41],
+                                                     [42,43,44,45],
+                                                     [46,47]])
 
 class Simulate_Extractor(object):
     """
@@ -311,7 +337,7 @@ class Simulate_Extractor(object):
         if rows == 15 and cols == 15:
             number_assemblies = 48
             core_map = Maps()
-            core_map = core_map.assembly_map_15_15
+            core_map = core_map.dict_assembly_map_15_15
         else:
             errmessage = f"The number of assembly rows {rows} and columns {cols} is unrecognized"
             return ValueError(errmessage)
@@ -442,7 +468,7 @@ class Simulate_Extractor(object):
         if rows == 15 and cols == 15:
             number_assemblies = 48
             core_map = Maps()
-            core_map = core_map.assembly_map_15_15
+            core_map = core_map.dict_assembly_map_15_15
         else:
             errmessage = f"The number of assembly rows {rows} and columns {cols} is unrecognized"
             return ValueError(errmessage)
@@ -500,7 +526,7 @@ class Simulate_Extractor(object):
         if rows == 15 and cols == 15:
             number_assemblies = 48
             core_map = Maps()
-            core_map = core_map.assembly_map_15_15
+            core_map = core_map.dict_assembly_map_15_15
         else:
             errmessage = f"The number of assembly rows {rows} and columns {cols} is unrecognized"
             return ValueError(errmessage)
@@ -736,7 +762,7 @@ class Simulate_Extractor(object):
         if rows == 15 and cols == 15:
             number_assemblies = 48
             core_map = Maps()
-            core_map = core_map.assembly_map_15_15
+            core_map = core_map.dict_assembly_map_15_15
         else:
             errmessage = f"The number of assembly rows {rows} and columns {cols} is unrecognized"
             return ValueError(errmessage)
@@ -901,7 +927,7 @@ class Full_Core_Cobra_Writer(object):
         self.write_control_file()
         self.write_geometry_file()
 
-    def write_power_file(self):
+    def write_power_file(self,state):
         """
         Function for writing the power file for the CTF preprocessor.
         """
