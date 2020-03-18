@@ -2,6 +2,7 @@ import os
 import sys
 import h5py
 import numpy
+import argparse
 from matplotlib import pyplot as plt
 
 def h5_converter(file_name):
@@ -67,7 +68,7 @@ class Maps(object):
     """
     def __init__(self):
         self.assembly_map_15_15 = {}
-        self.assembly_map_15_15[8] =  {8: 0,9:1 ,10:2 ,11:3 ,12:4 ,13:5 , 14:6,15:8 }
+        self.assembly_map_15_15[8] =  {8: 1,9:2 ,10:3 ,11:4 ,12:5 ,13:6 , 14:7,15:8 }
         self.assembly_map_15_15[9] =  {8: 9,9:10,10:11,11:12,12:13,13:14,14:15,15:16}
         self.assembly_map_15_15[10] = {8:17,9:18,10:19,11:20,12:21,13:22,14:23}
         self.assembly_map_15_15[11] = {8:24,9:25,10:26,11:27,12:28,13:29,14:30}
@@ -782,14 +783,57 @@ class Simulate_Extractor(object):
 
         return power_dict
 
+    @staticmethod
+    def assembly_pitch(file_lines):
+        """
+        Extracts the assembly pitch from the provided simulate output file lines
+        """
+        for line in file_lines:
+            if "Assembly Pitch (Cold)" in line:
+                elems = line.strip().split()
+                assembly_pitch = float(elems[-2])
+                break
+
+        return assembly_pitch
+
+    @staticmethod
+    def nominal_core_wide_linear_power_rate(file_lines):
+        """
+        Returns the nominal core wide linear power rate. Its a derived property,
+        so what the function really returns is the core rated power divided by the 
+        total fuel rod length in the core.
+        """
+        core_power = None
+        fuel_length = None
+        for line in file_lines:
+            if "Thermal Power . . . . . . . .CTP" in line:
+                elems = line.strip().split()
+                spot = elems.index("MWt")
+                core_power = float(elems[spot-1])* 1.e3
+            elif "Total Fuel Rod Length in Core" in line:
+                elems = line.strip().split()
+                fuel_length = float(elems[-2])
+            if fuel_length and core_power:
+                linear_power_rate = core_power/fuel_length
+                break
+
+        return linear_power_rate
+
 class Full_Core_Cobra_Writer(object):
     """
     Writes input files for a full reactor core in CTF utilizing the CTF preprocessor.
     """
     def __init__(self):
+        self.directory = None
         self.radial_assembly_powers = None #The assembly peaking. Not FdeltaH or Fq.
         self.linear_powers = None #The linear power rate for each assembly
-        self.pin_powers = None #The three dimensional pin powers of each assembly. 
+        self.pin_powers = None    #The three dimensional pin powers of each assembly. 
+        self.rated_powers = None  #The rated power of the reactor core.
+        self.flow_rates = None    #The rated flow rate for the core.
+        self.percent_of_power = None #The percent of rated power the core operated at.
+        self.percent_of_flow = None #The percent of the rated flow which cooled teh core.
+        self.axial_powers = None
+        self.state_list = None
 
     def extract_data_from_simulate(self,file_name):
         """
@@ -807,6 +851,85 @@ class Full_Core_Cobra_Writer(object):
         """
         Function for writing the CTF preprocessor input files.
         """
+        os.system(f"cd {self.directory} ; mkdir {state}")
+        self.write_power_file()
+        self.write_assembly_file()
+        self.write_control_file()
+        self.write_geometry_file()
+
+    def write_power_file(self):
+        """
+        Function for writing the power file for the CTF preprocessor.
+        """
+        f = open(f"{self.directory}/{state}/power.inp",'w')
+        f.write("*************************************************\n")
+        f.write("*       TOTAL POWER AND POWER PROFILES          *\n")
+        f.write("*************************************************\n")
+        f.write("*\n")
+        f.write("******************\n")
+        f.write("*   Total power  *\n")
+        f.write("******************\n")
+        f.write("*\n")
+        f.write("* Power in MWth\n")
+        f.write(f"{self.power.power}\n")
+        f.write("*\n")
+        f.write("************************\n")
+        f.write("*    Power profiles    *\n")
+        f.write("************************\n")
+        f.write("*\n")
+        ###NEed to enter axial height information.
+        f.write()
+        f.write("*******************************\n")
+        f.write("*Core Radial Power Factors\n")
+        f.write("*******************************\n")
+        f.write("**This specifies the power factors to be\n")
+        f.write("**applied to each whole assembly.  Values\n")
+        f.write("**must normalize to one.\n")
+        a = self.radial_assembly_powers[state]
+        f.write(f"0.000   0.000   0.000   0.000   0.000   0.000   {a[0,47]}   {a[0,46]}   {a[0,47]}   0.000   0.000   0.000   0.000   0.000   0.000\n")           
+        f.write(f"0.000   0.000   0.000   0.000   {a[0,45]}   {a[0,44]}   {a[0,43]}   {a[0,42]}   {a[0,43]}   {a[0,44]}   {a[0,45]}   0.000   0.000   0.000   0.000\n")           
+        f.write(f"0.000   0.000   0.000   {a[0,41]}   {a[0,40]}   {a[0,39]}   {a[0,38]}   {a[0,37]}   {a[0,38]}   {a[0,39]}   {a[0,40]}   {a[0,41]}   0.000   0.000   0.000\n")           
+        f.write(f"0.000   0.000   {a[0,36]}   {a[0,35]}   {a[0,34]}   {a[0,33]}   {a[0,32]}   {a[0,31]}   {a[0,32]}   {a[0,33]}   {a[0,34]}   {a[0,35]}   {a[0,36]}   0.000   0.000\n")           
+        f.write(f"0.000   {a[0,30]}   {a[0,29]}   {a[0,28]}   {a[0,27]}   {a[0,26]}   {a[0,25]}   {a[0,24]}   {a[0,25]}   {a[0,26]}   {a[0,27]}   {a[0,28]}   {a[0,29]}   {a[0,30]}   0.000\n")       
+        f.write(f"0.000   {a[0,23]}   {a[0,22]}   {a[0,21]}   {a[0,20]}   {a[0,19]}   {a[0,18]}   {a[0,17]}   {a[0,18]}   {a[0,19]}   {a[0,20]}   {a[0,21]}   {a[0,22]}   {a[0,23]}   0.000\n")       
+        f.write(f"{a[0,16]}   {a[0,15]}   {a[0,14]}   {a[0,13]}   {a[0,12]}   {a[0,11]}   {a[0,10]}   {a[0,9]}   {a[0,10]}   {a[0,11]}   {a[0,12]}   {a[0,13]}   {a[0,14]}   {a[0,15]}   {a[0,16]}\n")  
+        f.write(f"{a[0,8]}   {a[0,7]}   {a[0,6]}   {a[0,5]}   {a[0,4]}   {a[0,3]}   {a[0,2]}   {a[0,1]}   {a[0,2]}   {a[0,3]}   {a[0,4]}   {a[0,5]}   {a[0,6]}   {a[0,7]}   {a[0,8]}\n")  
+        f.write(f"{a[0,16]}   {a[0,15]}   {a[0,14]}   {a[0,13]}   {a[0,12]}   {a[0,11]}   {a[0,10]}   {a[0,9]}   {a[0,10]}   {a[0,11]}   {a[0,12]}   {a[0,13]}   {a[0,14]}   {a[0,15]}   {a[0,16]}\n")  
+        f.write(f"0.000   {a[0,23]}   {a[0,22]}   {a[0,21]}   {a[0,20]}   {a[0,19]}   {a[0,18]}   {a[0,17]}   {a[0,18]}   {a[0,19]}   {a[0,20]}   {a[0,21]}   {a[0,22]}   {a[0,23]}   0.000\n")  
+        f.write(f"0.000   {a[0,30]}   {a[0,29]}   {a[0,28]}   {a[0,27]}   {a[0,26]}   {a[0,25]}   {a[0,24]}   {a[0,25]}   {a[0,26]}   {a[0,27]}   {a[0,28]}   {a[0,29]}   {a[0,30]}   0.000\n")  
+        f.write(f"0.000   0.000   {a[0,36]}   {a[0,35]}   {a[0,34]}   {a[0,33]}   {a[0,32]}   {a[0,31]}   {a[0,32]}   {a[0,33]}   {a[0,34]}   {a[0,35]}   {a[0,36]}   0.000   0.000\n")      
+        f.write(f"0.000   0.000   0.000   {a[0,41]}   {a[0,40]}   {a[0,39]}   {a[0,38]}   {a[0,37]}   {a[0,38]}   {a[0,39]}   {a[0,40]}   {a[0,41]}   0.000   0.000   0.000\n")      
+        f.write(f"0.000   0.000   0.000   0.000   {a[0,45]}   {a[0,44]}   {a[0,43]}   {a[0,42]}   {a[0,43]}   {a[0,44]}   {a[0,45]}   0.000   0.000   0.000   0.000\n")      
+        f.write(f"0.000   0.000   0.000   0.000   0.000   0.000   {a[0,47]}   {a[0,46]}   {a[0,47]}   0.000   0.000   0.000   0.000   0.000   0.000\n")      
+        f.write("{number of assembly maps}\n")
+        f.write("47\n")
+        f.write("{assembly power factor index map}\n")
+        f.write('0    0    0    0    0    0    47   46   47   0    0    0    0    0    0 \n')     
+        f.write('0    0    0    0    45   44   43   42   43   44   45   0    0    0    0 \n')     
+        f.write('0    0    0    41   40   39   38   37   38   39   40   41   0    0    0 \n')     
+        f.write('0    0    36   35   34   33   32   31   32   33   34   35   36   0    0 \n')     
+        f.write('0    30   29   28   27   26   25   24   25   26   27   28   29   30   0 \n')     
+        f.write('0    23   22   21   20   19   18   17   18   19   20   21   22   23   0 \n')     
+        f.write('16   15   14   13   12   11   10   9    10   11   12   13   14   15   16\n')  
+        f.write('8    7    6    5    4    3    2    1    2    3    4    5    6    7    8 \n') 
+        f.write('16   15   14   13   12   11   10   9    10   11   12   13   14   15   16\n')  
+        f.write('0    23   22   21   20   19   18   17   18   19   20   21   22   23   0 \n')     
+        f.write('0    30   29   28   27   26   25   24   25   26   27   28   29   30   0 \n')     
+        f.write('0    0    36   35   34   33   32   31   32   33   34   35   36   0    0 \n')     
+        f.write('0    0    0    41   40   39   38   37   38   39   40   41   0    0    0 \n')     
+        f.write('0    0    0    0    45   44   43   42   43   44   45   0    0    0    0 \n')     
+        f.write('0    0    0    0    0    0    47   46   47   0    0    0    0    0    0 \n')
+        for i in range(47):
+            two_d_power_map = calculate_2d_average(self.power.assembly_powers[:,:,:,i])
+            f.write("{"+str(i+1)+"}\n")
+            f.write(two_d_power_map)
+        f.close()
+
+
+class Factory(object):
+    """
+    Class for reading and interpreting the commands entered by ARGPARSE.
+    """
 
 if __name__ == "__main__":
     pass    
