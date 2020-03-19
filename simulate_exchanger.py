@@ -915,6 +915,7 @@ class Full_Core_Cobra_Writer(object):
 
         self.state_list = list(file_.keys())
 
+
     def write_input_files(self,state):
         """
         Function for writing the CTF preprocessor input files.
@@ -1389,12 +1390,12 @@ class Power(object):
 
         return power_list
 
-class Factory(object):
-    """
-    Class for reading and interpreting the commands entered by ARGPARSE.
-    """
-    def __init__(**kwargs):
-        if 
+#class Factory(object):
+#    """
+#    Class for reading and interpreting the commands entered by ARGPARSE.
+#    """
+#    def __init__(**kwargs):
+#        if 
 
 if __name__ == "__main__":
     pass    
