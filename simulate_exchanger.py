@@ -907,17 +907,13 @@ class Full_Core_Cobra_Writer(object):
         self.axial_powers = None
         self.state_list = None
 
-    def extract_data_from_simulate(self,file_name):
+    def extract_h5_data(self,file_name,state):
         """
         Opens the provided simulate data file and extracts everything needed to write the CTF preprocessor file.
         """
-        file_ = open(file_name,'r')
-        file_lines = file_.readlines()
-        file_.close()
+        file_ = h5py.File(file_name,'r')
 
-        self.radial_assembly_powers = Simulate_Extractor.radial_assembly_power_2D(file_lines)
-        self.linear_powers = Simulate_Extractor.linear_power_rate_3D(file_lines)
-        self.pin_powers = Simulate_Extractor.full_core_powers3D(file_lines,17)
+        self.state_list = list(file_.keys())
 
     def write_input_files(self,state):
         """
@@ -1311,11 +1307,11 @@ class Full_Core_Cobra_Writer(object):
         f.write("*Number of spacer grids\n")
         f.write(f"{self.assembly.number_spacer_grids}\n")
         f.write("*Sp.grid  Initial height (mm)  Final height (mm)   Minor loss coefficient /Heights refered to the beginning of active fuel (BAF)/\n")
-        for i in range(self.numberSpacerGrids):
-            f.write("     {}".format(i+1))
-            f.write("     {}".format(self.spacergridInitialheight[i]))
-            f.write("	  {}".format(self.spacergridFinalHeight[i]))
-            f.write("     {}\n".format(self.spacerGridLossCoeff[i]))
+        for i in range(self.assembly.number_spacer_grids):
+            f.write(f"     {i+1}")
+            f.write(f"     {self.assembly.spacer_grid_initial_height[i]}")
+            f.write(f"	   {self.assembly.spacer_grid_final_height[i]}")
+            f.write(f"     {self.assembly.spacer_grid_}\n".format(self.spacerGridLossCoeff[i]))
         f.write("\n")
         f.close()
 
