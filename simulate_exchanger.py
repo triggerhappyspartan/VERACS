@@ -61,6 +61,8 @@ def h5_converter(file_name):
     g1.create_dataset('rated_flow',data=core_flower)
     g1.create_dataset('rated_flow_units',data="Kg/s")
     g1.create_dataset('rated_power',data=thermal_powers[0])
+    g1.create_dataset('xlabels',data=["A","B","C",'D','E','F','G','H'])
+    g1.create_dataset('ylabels',data=[1,2,3,4,5,6,7,8])
     key_list = list(pin_power_dictionary.keys())
     for i,key in enumerate(key_list):
         g1 = file_.create_group(key)
@@ -947,8 +949,12 @@ class Full_Core_Cobra_Writer(object):
         f.write("*    Power profiles    *\n")
         f.write("************************\n")
         f.write("*\n")
-        ###NEed to enter axial height information.
-        f.write()
+        f.write("* Number of pairs (height/relative power) of axial profile /Heights refered to the beginning of active fuel (BAF)/\n")
+        axial_power_list = self.power.calculate_axial_powers(self.power.assembly_powers)
+        f.write(len(axial_power_list))
+        f.write("*  Height (mm)     Relative power\n")
+        for h,p in zip(self.axial_heights,axial_power_list):
+            f.write(f"{round(h,2)}   {round(p,2)}\n")
         f.write("*******************************\n")
         f.write("*Core Radial Power Factors\n")
         f.write("*******************************\n")
@@ -990,16 +996,409 @@ class Full_Core_Cobra_Writer(object):
         f.write('0    0    0    0    45   44   43   42   43   44   45   0    0    0    0 \n')     
         f.write('0    0    0    0    0    0    47   46   47   0    0    0    0    0    0 \n')
         for i in range(47):
-            two_d_power_map = calculate_2d_average(self.power.assembly_powers[:,:,:,i])
+            two_d_power_map = self.power.calculate_2d_average(self.power.assembly_powers[:,:,:,i])
             f.write("{"+str(i+1)+"}\n")
             f.write(two_d_power_map)
         f.close()
 
+    def write_control_file(self,state):
+        """
+        Writes the control.inp file for the CTF preprocessor.
+        """
+        f = open(f"{self.directory}/{state}/control.inp",'w')
+        f.write("*****************************************************\n")
+        f.write("*                  Main control data                *\n")
+        f.write("*****************************************************\n")
+        f.write("*Title for deck (max 30 characters)\n")
+        f.write("Full Core Training Library\n")
+        f.write("{parallel}\n")
+        f.write("yes\n")
+        f.write("**\n")
+        f.write("*Print Rod/Channel map data to Group 17 on deck.inp?\n")
+        f.write("** MAPS = 1 -- yes\n")
+        f.write("** MAPS = 0 -- no\n")
+        f.write("** MAPS\n")
+        f.write("1\n")
+        f.write("** Name for the HDF5 file - enter if MAPS=1\n")
+        f.write("PWR_FA\n")
+        f.write("** Name for the VTK file - enter if MAPS=1\n")
+        f.write("PWR_FA\n")
+        f.write("**\n")
+        f.write("*Units options\n")
+        f.write("**1 - SI output*\n")
+        f.write("**3 - US output*\n")
+        f.write("1\n")
+        f.write("* EPSO\n")
+        f.write("0.001\n")
+        f.write("* OITMAX\n")
+        f.write("5\n")
+        f.write("* IITMAX\n")
+        f.write("40\n")
+        f.write("* COURANT\n")
+        f.write("0.8\n")
+        f.write("***************************\n")
+        f.write("*        MODELS           *\n")
+        f.write("***************************\n")
+        f.write("*\n")
+        f.write("*******************************************\n")
+        f.write("*     Rod friction factor correlation     *\n")
+        f.write("*******************************************\n")
+        f.write("**1 -- original correlation               \n")
+        f.write("**2 -- COBRA-3C                           \n")
+        f.write("**3 -- FLICA-4                            \n")
+        f.write("2\n")
+        f.write("*******************************************\n")
+        f.write("*    Entrainment and deposition model     *\n")
+        f.write("*******************************************\n")
+        f.write("**0 -- neither entrainment nor deposition \n")
+        f.write("**1 -- original model                     \n")
+        f.write("*******************************************\n")
+        f.write("1\n")
+        f.write("********************************************************************\n")
+        f.write("*                  Mixing and void drift model                     *\n")
+        f.write("********************************************************************\n")
+        f.write("**0 -- neither mixing nor void drift                               \n")
+        f.write("**1 -- user specified constant (two-phase)turbulent mixing coeff.   \n")
+        f.write("**2 -- single-phase mixing coeff. according to Rogers and Rosehart \n")
+        f.write("**3 -- user specified constant single-phase turbulent mixing coeff.\n")
+        f.write("********************************************************************\n")
+        f.write("*IMIX\n")
+        f.write("3\n")
+        f.write("********************************************************************\n")
+        f.write("*        MIXING/VOID DRIFT PARAMETERS - skip if IMIX=0             *\n")
+        f.write("********************************************************************\n")
+        f.write("**AAAK - Equilibrium distribution weighting factor Km in \n")
+        f.write("**void drift model (0.0 void drift inactive / 1.4 suggested value)\n")
+        f.write("**Enter for IMIX=1, 2, and 3\n")
+        f.write("1.4\n")
+        f.write("**BETA  - Constant mixing coefficient, Enter for IMIX=1 and 3\n")
+        f.write("**Mixing coefficient for two-phase if IMIX=1\n")
+        f.write("**Mixing coefficient for single-phase if IMIX=3\n")
+        f.write("0.05\n")
+        f.write("**DFROD - Outside rod diameter, Enter only for IMIX=2\n")
+        f.write("*9.5e-3\n")
+        f.write("**THETM - Ratio between maximun two-phase turbulent mixing coeff. \n")
+        f.write("**and single-phase turbulent mixing coeff. \n")
+        f.write("**Enter only for IMIX=2 and 3\n")
+        f.write("5.0\n")
+        f.write("*\n")
+        f.write("***************************************\n")
+        f.write("*             Solver                  *\n")
+        f.write("***************************************\n")
+        f.write("**0 -- Direct Gaussian                \n")
+        f.write("**1 -- BSGS with ILUT preconditioner  \n")
+        f.write("**2 -- GMRES with no preconditioner   \n")
+        f.write("**3 -- BSGS with no preconditioner    \n")
+        f.write("**4 -- GMRES with ILUT preconditioner \n")
+        f.write("***************************************\n")
+        f.write("5\n")
+        f.write("*\n")
+        f.write("*****************************************\n")
+        f.write("*         INITIAL CONDITIONS            *   \n")
+        f.write("*****************************************\n")
+        f.write("*Initialization mass flow rate (kg/s)\n")
+        f.write("{}\n".format(self.mass_flux))
+        f.write("*Initialization temperature for the rods (C)\n")
+        f.write("{}\n".format(self.rod_temperature))
+        f.write("*Reference pressure (bar)\n")
+        f.write("{}\n".format(self.pressure))
+        f.write("*Reference Temperature [C]\n")
+        f.write("-{}\n".format(self.inlet_temp))
+        f.write("*Reference enthalpy for noncondesables (kJ/kg)\n")
+        f.write("288.42\n")
+        f.write("*Fraction of heat produced by rods that is\n")
+        f.write("*released directly to the coolant (direct heat)\n")
+        f.write("0.02\n")
+        f.write("*****************************************\n")
+        f.write("*      GLOBAL BOUNDARY CONDITIONS       *\n")
+        f.write("*****************************************\n")
+        f.write("**\n")
+        f.write("*************************************\n")
+        f.write("*      BOUNDARY CONDITION TYPE      *\n")
+        f.write("*************************************\n")
+        f.write("**1 -- pressure and enthalpy        \n")
+        f.write("**2 -- mass flow rate and enthalpy  \n")
+        f.write("**3 -- mass flow rate only          \n")
+        f.write("**4 -- mass source                  \n")
+        f.write("**5 -- pressure sink                \n")
+        f.write("*************************************\n")
+        f.write("*Inlet boundary condition type\n")
+        f.write("2\n")
+        f.write("*Outlet boundaty condition type\n")
+        f.write("3\n")
+        f.write("***************************************\n")
+        f.write("*      BOUNDARY CONDITION VALUES      *\n")
+        f.write("***************************************\n")
+        f.write("*Total inlet mass flow rate (kg/s) \n")
+        f.write("*Only if BC type is 2 or 3 at inlet (0.0 otherwise)\n")
+        f.write("{}\n".format(self.mass_flux))
+        f.write("*Inlet Temperature [C]\n")
+        f.write("*Only if BC type is 1 or 2 at inlet (0.0 otherwise)\n")
+        f.write("-{}\n".format(self.inlet_temp))
+        f.write("*Outlet Temperature [C]\n")
+        f.write("*Only if BC type is 1 or 2 at outlet (0.0 otherwise)\n")
+        f.write("0.0\n")
+        f.write("*Inlet Pressure (bar)\n")
+        f.write("*Only if BC type is 1 or 5 at inlet (0.0 otherwise)\n")
+        f.write("0.0\n")
+        f.write("*Outlet Pressure (bar)\n")
+        f.write("*Only if BC type is 1 or 5 at outlet (0.0 otherwise)\n")
+        f.write("0.0\n")
+        f.write("***************************************\n")
+        f.write("*      Time Domain Data               *\n")
+        f.write("***************************************\n")
+        f.write("*DTMIN\n")
+        f.write("0.000001\n")
+        f.write("*DTMAX\n")
+        f.write("0.1\n")
+        f.write("*TEND\n")
+        f.write("0.1\n")
+        f.write("*RTWFP\n")
+        f.write("1000.0\n")
+        f.write("*MAXITS\n")
+        f.write("10000\n")
+        f.write("{convergence criteria}\n")
+        f.write(f"{self.control.convergence}\n")
+        f.write(f"{self.control.convergence}\n")
+        f.write(f"{self.control.convergence}\n")
+        f.write(f"{self.control.convergence}\n")
+        f.write(f"{self.control.convergence}\n")
+        f.write("{edit channels}\n")
+        f.write("1\n")
+        f.write("{edit gaps}\n")
+        f.write("1\n")
+        f.write("{edit rods}\n")
+        f.write("1\n")
+        f.write("{edit dnb}\n")
+        f.write("1\n")
+        f.close()
+
+    def write_geo_file(self,state):
+        """
+        WRites the geo.inp file for the CTF preprocessor
+        """
+        f = open(f"{self.directory}/{state}/geo.inp",'w')
+        f.write("*0 represnets void\n")
+        f.write("*number of fuel assemblies\n")
+        f.write("157\n")
+        f.write("*NUMBER OF FUEL ASSEMBLY TYPES:  \n")
+        f.write("1\n")
+        f.write("*DIMENSION OF CORE MESH (columns (x),rows (y)): \n")
+        f.write("15  15\n")
+        f.write("*OPTION FOR CORE MODELING\n")
+        f.write("** 1 = Model as shown in the following map\n")
+        f.write("** 4 = Model using quarter core symmetry\n")
+        f.write("** 8 = Model using eighth core symmetry\n")
+        f.write("** Note: If using options 4 or 8, make a map of \n")
+        f.write("**       the full core and the preprocessor will\n")
+        f.write("**       take care of breaking it down into quarter\n")
+        f.write("**       or eighth symmetry\n")
+        f.write("{symmetry option}\n")
+        f.write("4\n")
+        f.write("*FUEL ASSEMBLY MAP\n")
+        f.write("** Note: Do not pad this map with zeros around the\n")
+        f.write("**  1   2   3   4   5   6   7   8   9   10  11  12  13  14  15\n")
+        f.write("1   0   0   0   0   0   0   1   1   1   0   0   0   0   0   0 \n")
+        f.write("2   0   0   0   0   1   1   1   1   1   1   1   0   0   0   0 \n")
+        f.write("3   0   0   0   1   1   1   1   1   1   1   1   1   0   0   0 \n")
+        f.write("4   0   0   1   1   1   1   1   1   1   1   1   1   1   0   0 \n")
+        f.write("5   0   1   1   1   1   1   1   1   1   1   1   1   1   1   0 \n")
+        f.write("6   0   1   1   1   1   1   1   1   1   1   1   1   1   1   0 \n")
+        f.write("7   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1\n")
+        f.write("8   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1 \n")
+        f.write("9   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1\n")
+        f.write("10  0   1   1   1   1   1   1   1   1   1   1   1   1   1   0 \n")
+        f.write("11  0   1   1   1   1   1   1   1   1   1   1   1   1   1   0 \n")
+        f.write("12  0   0   1   1   1   1   1   1   1   1   1   1   1   0   0 \n")
+        f.write("13  0   0   0   1   1   1   1   1   1   1   1   1   0   0   0 \n")
+        f.write("14  0   0   0   0   1   1   1   1   1   1   1   0   0   0   0 \n")
+        f.write("15  0   0   0   0   0   0   1   1   1   0   0   0   0   0   0 \n")
+        f.write("*AXIAL MESH INFORMATION\n")
+        f.write("*Number of axial groups\n")
+        f.write("1\n")
+        f.write("*Z(mm) top of group   Number of Scalar Cells from last zone to this point\n")
+        f.write("3657.6    24\n")
+        f.write("*Note that you must put the top of the model as the last group\n")
+        f.write("*ALLOCATION OF FUEL TYPES\n")
+        f.write("assem.inp\n")
+        f.close()
+
+    def write_assembly_file(self,state):
+        """
+        Writest the assembly.inp file for the CTF preprocessor
+        """
+        f = open(f"{self.directory}/{state}/assembly.inp",'w')
+        f.write("**********************************************\n")
+        f.write("*          FUEL ASSEMBLY PARAMETERS          *\n")
+        f.write("**********************************************\n")
+        f.write("*\n")
+        f.write("****************************************\n")
+        f.write("*  General parameter of fuel assembly  *\n")
+        f.write("****************************************\n")
+        f.write("*\n")
+        f.write("*Numer of fuel rods\n")
+        f.write(f"{self.assembly.number_fuel_rods}\n")
+        f.write("*Size of fuel array\n")
+        f.write(f"{self.assembly.size}\n")
+        f.write("*Number of guide tubes/water rods\n")
+        f.write(f"{self.assembly.number_water_rods}\n")
+        f.write("*Active length (mm)\n")
+        f.write(f"{self.assembly.length}\n")
+        f.write("*Start of active length(mm)\n")
+        f.write("*{active region start}\n")
+        f.write(f"*{self.assembly.active_start}\n")
+        f.write("*Bundle pitch (mm)\n")
+        f.write(f"{self.assembly.pitch}\n")
+        f.write("*Walls around bundle?\n")
+        f.write("**0=No\n")
+        f.write("**1=Yes\n")
+        f.write("0\n")
+        f.write("**\n")
+        f.write("*Type of heated elements\n")
+        f.write("**0=Nuclear Fuel Rods\n")
+        f.write("**1=Electric Heater Tubes\n")
+        f.write("0\n")
+        f.write("*Conduction Model Flag\n")
+        f.write("** 0 - No conduction\n")
+        f.write("** 1 - Radial conduction\n")
+        f.write("** 2 - Radial and axial conduction\n")
+        f.write("** 3 - Radial, axial, and azimuthal conduction\n")
+        f.write("1\n")
+        f.write("**\n")
+        f.write("***************************************************\n")
+        f.write("**           Heater Tube Parameters               *\n")
+        f.write("***************************************************\n")
+        f.write("*{heater types}\n")
+        f.write("***************************************************\n")
+        f.write("*        Cladding and fuel pellet parameters      *\n")
+        f.write("**DO NOT ENTER IF THERE ARE NO NUCLEAR FUEL RODS  *\n")
+        f.write("***************************************************\n")
+        f.write("***Fuel pellet diameter (mm)\n")
+        f.write(f"{self.assembly.pin_diameter}\n")
+        f.write("***Radial nodes in the fuel pellet\n")
+        f.write("8\n")
+        f.write("***Cladding inner diameter (mm)\n")
+        f.write(f"{self.assembly.cladding_ID}\n")
+        f.write("***Cladding outer diameter (mm)\n")
+        f.write(f"{self.assembly.cladding_OD}\n")
+        f.write("***Pin pitch (mm)\n")
+        f.write(f"{self.assembly.pin_pitch}\n")
+        f.write("***Therical density of the fuel pellet (%) (/ i.e.: 95%)\n")
+        f.write(f"{self.assembly.theoretical_density}\n")
+        f.write("***Constant gap conductance of the gas (W/m**2-K)\n")
+        f.write(f"{self.assembly.gap_conductance}\n")
+        f.write("***Cladding material\n")
+        f.write("Zircaloy\n")
+        f.write("******************************************\n")
+        f.write("*   Guide tubes / water rods parameters  *\n")
+        f.write("**DO NOT ENTER IF NO GUIDE TUBES         *\n")
+        f.write("******************************************\n")
+        f.write("***Inner diameter of guide tube/water rod (mm)\n")
+        f.write(f"{self.assembly.water_rod_diameter}\n")
+        f.write("***Outer diameter of guide tube/water rod  (mm)\n")
+        f.write(f"{self.assembly.outer_water_diameter}\n")
+        f.write("***Guide tube/water rod material\n")
+        f.write("Zircaloy\n")
+        f.write("**********************************************\n")
+        f.write("***Guide tube positions in the fuel lattice starting from lower left corner\n")
+        f.write("***Use X Y format\n")
+        for x,y in zip(self.assembly.guide_tube_rows,self.assembly.guide_tube_columns):
+            f.write(f" {x}   {y}\n")
+        f.write("******************************\n")
+        f.write("*      Spacer grids data     *\n")
+        f.write("******************************\n")
+        f.write("*\n")
+        f.write("*Number of spacer grids\n")
+        f.write(f"{self.assembly.number_spacer_grids}\n")
+        f.write("*Sp.grid  Initial height (mm)  Final height (mm)   Minor loss coefficient /Heights refered to the beginning of active fuel (BAF)/\n")
+        for i in range(self.numberSpacerGrids):
+            f.write("     {}".format(i+1))
+            f.write("     {}".format(self.spacergridInitialheight[i]))
+            f.write("	  {}".format(self.spacergridFinalHeight[i]))
+            f.write("     {}\n".format(self.spacerGridLossCoeff[i]))
+        f.write("\n")
+        f.close()
+
+class Assembly(object):
+    """
+    Class to store values for the CTF preprocessor assembly file.
+    """
+    def __init__(self):
+        self.number_fuel_rods = 264
+        self.size = None
+        self.number_water_rods = None
+        self.length = None
+        self.active_start = None
+        self.pitch = None
+        self.pin_diameter = None
+        self.cladding_ID = None        
+        self.cladding_OD = None    
+        self.pin_pitch = None
+        self.theoretical_density = None
+        self.gap_conductance = None
+        self.inner_water_rod_diameter = None
+        self.outer_water_rod_diameter = None    
+        self.guide_tube_columns = None
+        self.guide_tube_rows = None
+        self.number_spacer_grids = None
+        self.spacer_grid_initial_height = None
+        self.spacer_grid_final_height = None
+        self.spacer_grid_loss_ceofficient = None
+
+class Control(object):
+    """
+    Class for the values to store the inputs used to write the control file for the CTF preprocessor.
+    """
+    def __init__(self):
+        self.convergence = None
+        self.inlet_temp = None
+        self.mass_flux = None
+
+class Power(object):
+    """
+    Class for calculating the linear power rate.
+    """
+    def __init__(self):
+        self.assembly_powers = None
+
+    @staticmethod
+    def calculate_2d_average(powers):
+        """
+        Returns the two dimensional string map of averaged assembly
+        powers to be written into the CTF preprocessor.
+        """
+        rows,columns,heights = powers.shape
+        planar_sum = numpy.sum(powers,axis=2)
+        total_average = numpy.average(planar_sum)
+        total_average *= 264./289.
+        map_string = ""
+        for r in range(rows):
+            for c in range(columns):
+                rod_sum = numpy.sum(powers[r,c,:])
+                map_string += "{}  ".format(round(rod_sum/total_average,4))
+            map_string += "\n"
+
+        return map_string
+
+    def calculate_axial_powers(powers):
+        """
+        Calculates the axial power distribution for the core.
+        """
+        rows,columns,heights,assemblies = powers.shape
+        power_list = []
+        for h in heights:
+            power_list.append(numpy.sum(powers[:,:,h,:]))
+        ave_ = numpy.average(power_list)
+        power_list = [power/ave_ for power in power_list]
+
+        return power_list
 
 class Factory(object):
     """
     Class for reading and interpreting the commands entered by ARGPARSE.
     """
+    def __init__(**kwargs):
+        if 
 
 if __name__ == "__main__":
     pass    
