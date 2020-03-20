@@ -833,6 +833,21 @@ class Core(object):
         file_.write("\n")
         file_.close()
 
+    def build_from_yaml(self,file_):
+      """
+      Assigns all variables to a VERA class object based off of a provided yaml file.
+      All values can come from the supplied yaml file, or simulate output files and HDF5 files may be 
+      provided as well.
+      """
+      with open(file_) as yaml_file:
+        dict_ = yaml.safe_load(yaml_file)
+
+      if 'simulate_file' in dict_:
+        self._assign_from_simulate_output(dict_['simulate_file'])
+      if 'h5_file' in dict_:
+        self._assign_from_h5(dict_['h5_file'])
+
+
     def assign_from_dictionary(self,dict_):
       """
       assigns class variables based off of a supplied dictionary.
