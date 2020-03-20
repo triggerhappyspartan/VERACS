@@ -57,12 +57,12 @@ def h5_converter(file_name):
     g1.create_dataset("apitch",data=apitch)
     g1.create_dataset("axial_mesh",data=axial_mesh)
     g1.create_dataset("nominal_linear_heat_rate",data=nominal_linear_power_rate)
-    g1.create_dataset('core_map',data=maps.array_assembly_map_15_15)
+    g1.create_dataset('core_map',data=maps.array_assembly_map_15_15.astype(int))
     g1.create_dataset('rated_flow',data=core_flower)
     g1.create_dataset('rated_flow_units',data="Kg/s")
     g1.create_dataset('rated_power',data=thermal_powers[0])
-    g1.create_dataset('xlabels',data=["A","B","C",'D','E','F','G','H'])
-    g1.create_dataset('ylabels',data=[1,2,3,4,5,6,7,8])
+ #   g1.create_dataset('xlabel',data=numpy.array['H','G','F','E','D',"C","B","A"].astype(str))
+ #   g1.create_dataset('ylabel',data=numpy.array['1','2','3','4','5','6','7','8'].astype(str))
     key_list = list(pin_power_dictionary.keys())
     for i,key in enumerate(key_list):
         g1 = file_.create_group(key)
@@ -97,15 +97,27 @@ class Maps(object):
         self.dict_assembly_map_15_15[14] = {8:42,9:43,10:44,11:45}
         self.dict_assembly_map_15_15[15] = {8:46,9:47}
 
-        self.array_assembly_map_15_15 = numpy.array([[ 1, 2, 3, 4, 5, 6, 7, 8],
-                                                     [ 9,10,11,12,13,14,15,16],
-                                                     [17,18,19,20,21,22,23],
-                                                     [24,25,26,27,28,29,30],
-                                                     [31,32,33,34,35,36],
-                                                     [37,38,39,40,41],
-                                                     [42,43,44,45],
-                                                     [46,47]])
+        array_dict = {47:((0,6),(0,8),(14,6),(14,8)), 46:((0,7),(14,7)), 45:((1,4),(1,10),(13,4),(13,10)), 44:((1,5),(1,9),(13,5),(13,9)), 
+                      43:((1,6),(1,8),(13,6),(13,8)),    
+                      42:((1,7),(13,7)), 41:((2,3),(2,11),(12,3),(12,11)), 40:((2,4),(2,10),(12,4),(12,10)), 39:((2,5),(2,9),(12,5),(12,9)),    
+                      38:((2,6),(2,8),(12,6),(12,8)), 37:((2,7),(12,7)), 36:((3,2),(3,12),(11,2),(11,12)), 35:((3,3),(3,11),(11,3),(11,11)),    
+                      34:((3,4),(3,10),(11,4),(11,10)), 33:((3,5),(3,9),(11,5),(11,9)), 32:((3,6),(3,8),(11,6),(11,8)), 31:((3,7),(11,7)),  
+                      30:((4,1),(4,13),(10,1),(10,13)), 29:((4,2),(4,12),(10,2),(10,12)), 28:((4,3),(4,11),(10,3),(10,11)), 27:((4,4),(4,10),(10,4),(10,10)),    
+                      26:((4,5),(4,9),(10,5),(10,9)), 25:((4,6),(4,8),(10,6),(10,8)), 24:((4,7),(10,7)), 23:((5,1),(5,13),(9,1),(9,13)),    
+                      22:((5,2),(5,12),(9,2),(9,12)), 21:((5,3),(5,11),(9,3),(9,11)), 20:((5,4),(5,10),(9,4),(9,10)), 19:((5,5),(5,9),(9,9),(9,5)),    
+                      18:((5,6),(5,8),(9,6),(9,8)), 17:((5,7),(9,7)), 16:((6,0),(6,14),(8,0),(8,14)), 15:((6,1),(6,13),(8,1),(8,13)), 
+                      14:((6,2),(6,12),(8,2),(8,12)), 13:((6,3),(6,11),(8,3),(8,11)), 12:((6,4),(6,10),(8,4),(8,10)), 
+                      11:((6,5),(6,9),(8,5),(8,9)), 10:((6,6),(6,8),(8,6),(8,8)), 9:((6,7),(8,7)),  8:((7,0),(7,14)), 7:((7,1),(7,13)), 
+                      6:((7,2),(7,12)), 5:((7,3),(7,11)), 4:((7,4),(7,10)), 3:((7,5),(7,9)), 2:((7,6),(7,8)), 1:((7,7))}
 
+        self.array_assembly_map_15_15 = numpy.zeros([15,15])
+        for key in array_dict:
+            if key == 1:
+                self.array_assembly_map_15_15[7,7] = key
+            else:
+                for tuple_ in array_dict[key]:
+                    self.array_assembly_map_15_15[tuple_[0],tuple_[1]] = key
+        
 class Simulate_Extractor(object):
     """
     Class for organizing the functions used to read the output files produced
@@ -322,7 +334,6 @@ class Simulate_Extractor(object):
         state_count = -1
         for line in file_lines:
             if 'DIM.PWR' in line:
-                print(line)
                 elems = line.strip().split()
                 if elems[0] == "'DIM.PWR'":
                     rows = int(elems[2])
@@ -331,7 +342,6 @@ class Simulate_Extractor(object):
                 elems = line.strip().split()
                 if elems[0] == "'DIM.CAL'":
                     axial = int(elems[1])
-                    print(axial)
             if 'Output Summary' in line:
                 state_count += 1
 
@@ -456,11 +466,8 @@ class Simulate_Extractor(object):
         state_count = -1
         for line in file_lines:
             if 'DIM.PWR' in line:
-                print(line)
                 elems = line.strip().split()
                 if elems[0] == "'DIM.PWR'":
-                    print(elems[2])
-                    print(elems[3])
                     rows = int(elems[2])
                     cols = int(elems[3])
             if 'Output Summary' in line:
@@ -514,11 +521,8 @@ class Simulate_Extractor(object):
         state_count = -1
         for line in file_lines:
             if 'DIM.PWR' in line:
-                print(line)
                 elems = line.strip().split()
                 if elems[0] == "'DIM.PWR'":
-                    print(elems[2])
-                    print(elems[3])
                     rows = int(elems[2])
                     cols = int(elems[3])
             if 'Output Summary' in line:
@@ -742,21 +746,14 @@ class Simulate_Extractor(object):
         state_count = -1
         for line in file_lines:
             if 'DIM.PWR' in line:
-                print(line)
                 elems = line.strip().split()
                 if elems[0] == "'DIM.PWR'":
-                    print(elems[2])
-                    print(elems[3])
                     rows = int(elems[2])
                     cols = int(elems[3])
             if 'DIM.CAL' in line:
-                print(line)
                 elems = line.strip().split()
                 if elems[0] == "'DIM.CAL'":
-                    print("Fuck")
-                    print(elems[1])
                     axial = int(elems[1])
-                    print(axial)
             if 'Output Summary' in line:
                 state_count += 1
         
@@ -855,15 +852,16 @@ class Simulate_Extractor(object):
         for line in file_lines:
             if "** Studsvik CMS Steady-State 3-D Reactor Simulator **" in line:
                 searching_heights = False   #Found the Axial Powers.
-                break                       #Don't need to go through any more of file 
+                                       #Don't need to go through any more of file 
             if "Grid Location Information" in line:
                 searching_heights = False
                 break
             if searching_heights:
+                print(line)
                 line = line.replace("-","")
                 elems = line.strip().split()
                 if elems:
-                    axial_positions.append(elems[-1])
+                    axial_positions.append(float(elems[-1]))
             if "Axial Nodal Boundaries (cm)" in line:
                 searching_heights = True
 
@@ -921,10 +919,10 @@ class Full_Core_Cobra_Writer(object):
         Function for writing the CTF preprocessor input files.
         """
         os.system(f"cd {self.directory} ; mkdir {state}")
-        self.write_power_file()
-        self.write_assembly_file()
-        self.write_control_file()
-        self.write_geometry_file()
+        self.write_power_file(state)
+        self.write_assembly_file(state)
+        self.write_control_file(state)
+        self.write_geometry_file(state)
 
     def write_power_file(self,state):
         """
