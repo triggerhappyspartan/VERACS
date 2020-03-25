@@ -82,6 +82,11 @@ def h5_converter(file_name):
 
     file_.close()
 
+def simulateh5_2_veraH5(vera_name,simulate_file,template_h5):
+    """
+    Correctly sets up the VERA H5 file for runs.
+    """
+
 class Maps(object):
     """
     Class for the assembly maps used in the simulate extractor.
@@ -870,6 +875,40 @@ class Simulate_Extractor(object):
 
         return axial_positions
 
+    @staticmethod
+    def core_size(file_lines):
+        """
+        Extracts the number of rows and columns in the reactor core.
+        """
+        for line in file_lines:
+            if 'DIM.PWR' in line:
+                elems = line.strip().split()
+                if elems[0] == "'DIM.PWR'":
+                    rows = int(elems[2])
+                    cols = int(elems[3])
+                    break
+        
+        return rows,cols
+
+    @staticmethod
+    def count_number_assemblies(file_lines):
+        """
+        Counts the number of assemblies utilized in the reactor core.
+        """
+        assembly_count = 0
+        in_core_map = False
+        for line in file_lines:
+            if in_core_map:
+                elems = line.strip().split()
+                if elems[0] == "0" and elems[1] == '0':
+                    in_core_map = False
+                else:
+                    assembly_count += len(elems) - 2
+            if "'FUE.LAB'" in line:
+                in_core_map = True
+
+        return assembly_count
+
 class Calculator(object):
     """
     General class for performing different calculations.
@@ -888,6 +927,35 @@ class Calculator(object):
         Converts the provided rate from something/hour to something/second.
         """
         return number/3600.
+
+    @staticmethod
+    def interpolate_powers_between_meshes(simulate_mesh,VERA_mesh,simulate_powers):
+        rows,columns,meshes,assemblies = simulate_powers.shape
+        number_new_meshes = len(VERA_mesh) - 1
+        VERA_powers = numpy.zeros([rows,columns,number_new_meshes,assemblies]) 
+        simulate_midpoints = []
+        VERA_midpoints = []
+        for i,value in enumerate(simulate_mesh[:-1]):
+            simulate_midpoints.append((value + simulate_mesh[i+1])/2.)
+        for i,value in enumerate(VERA_mesh[:-1]):
+            VERA_midpoints.append((value + VERA_mesh[i+1])/2.)
+        for i,mid in enumerate(VERA_midpoints):
+            if mid < simulate_midpoints[0]:
+                VERA_powers[:,:,i,:] = numpy.divide(simulate_powers[:,:,0,:],simulate_midpoints[0])
+                VERA_powers[:,:,i,:] *= mid
+            elif mid > simulate_midpoints[-1]:
+                VERA_powers[:,:,i,:] = numpy.divide(simulate_powers[:,:,-1,:],simulate_mesh[-1]-simulate_midpoints[-1])
+                VERA_powers[:,:,i,:] *= mid
+            else:
+                for j,value in enumerate(simulate_midpoints):
+                    if value < mid and mid < simulate_midpoints[j+1]:
+                        VERA_powers[:,:,i,:] = simulate_powers[:,:,j+1,:]
+                        VERA_powers[:,:,i,:] -= simulate_powers[:,:,j,:]
+                        VERA_powers[:,:,i,:] = numpy.divide(VERA_powers[:,:,i,:],simulate_midpoints[j+1]-value)
+                        VERA_powers[:,:,i,:] *= mid
+                        VERA_powers[:,:,i,:] += simulate_powers[:,:,j,:]
+
+        return VERA_powers
 
 class Full_Core_Cobra_Writer(object):
     """
