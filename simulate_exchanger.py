@@ -99,6 +99,7 @@ def quantum_converter(output_file,file_list):
     excel['Sheet'][f"{L2}1"] = "Fq"
     for row,folder in enumerate(file_lines):
         folder = folder.strip().split()
+        folder = folder[0]
         in_file = open(f'{folder}/{folder}_sim.inp','r') #Simulate input file
         in_lines = in_file.readlines()
         in_file.close()
