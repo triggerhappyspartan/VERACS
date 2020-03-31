@@ -3,6 +3,7 @@ import sys
 import h5py
 import numpy
 import argparse
+import openpyxl
 from matplotlib import pyplot as plt
 
 def h5_converter(file_name):
@@ -82,10 +83,86 @@ def h5_converter(file_name):
 
     file_.close()
 
+def quantum_converter(output_file,file_list):
+    file_ = open(file_list,'r')
+    file_lines = file_.readlines()
+    file_.close()
+    
+    excel = openpyxl.Workbook()
+    excel.save(f'{output_file}.xlsx')
+
+    excel['Sheet1']["A1"] = "Assemblies"
+    L1 = get_cell_column(70)
+    L2 = get_cell_column(71)
+    excel['Sheet1'][f"{L1}1"] = "EFPD"
+    excel['Sheet1'][f"{L2}1"] = "Fq"
+    for row,folder in enumerate(file_lines):
+        folder = folder.strip().split()
+        in_file = open(f'{folder}/{folder}_sim.inp','r') #Simulate input file
+        in_lines = in_file.readlines()
+        in_file.close()
+
+        out_file = open(f'{folder}/{folder}_sim.out','r') #Simulate output file
+        out_lines = in_file.readlines()
+        out_file.close()
+
+        Fq_list = Simulate_Extractor.pin_peaking_list(out_lines)
+        efpd_list = Simulate_Extractor.efpd_list(out_lines)
+
+        loading_pattern = []
+        for line in in_lines:
+            elems = line.strip().split()
+            if not elems:
+                pass
+            else:
+                for el in elems:
+                    if el == '5':
+                        loading_pattern.append(0)
+                    elif el == '15':
+                        loading_pattern.append(1)
+                    
+        for i,assem in enumerate(loading_pattern):
+            col = get_cell_column(i)
+            excel['Sheet1'][f"{col}{row+2}"] = assem
+        excel['Sheet1'][f"{L1}{row+2}"] = efpd_list[-1]
+        excel['Sheet1'][f"{L2}{row+2}"] = max(Fq_list)
+
+    excel.save(f'{output_file}.xlsx')
+
 def simulateh5_2_veraH5(vera_name,simulate_file,template_h5):
     """
     Correctly sets up the VERA H5 file for runs.
     """
+    sim = h5py.File(simulate_file,'r')
+    vera = h5py.File(vera_name,'w')
+    template = h5py.File(vera_name,'r')
+
+    vera_mesh = [11.951,15.817,24.028,32.239,40.45,48.662,56.873,65.084,73.295,77.105,
+                 85.17,93.235,101.3,109.365,117.43,125.495,129.305,137.37,145.435,153.5,
+                 161.565,169.63,177.695,181.505,189.57,197.635,205.7,213.765,221.83,229.895,
+                 233.705,241.77,249.835,257.9,265.965,274.03,282.095,285.905,293.97,302.035,
+                 310.1,318.165,326.23,334.295,338.105,346.0262,353.9474,361.8686,369.7898,377.711]
+
+    key_list = list(sim.keys())
+    for key in key_list:
+        if key == 'CORE':
+            g1.create_group('CORE')
+            for cool in template['CORE']:
+                g1.create_dataset(cool,data=template['CORE'][cool])
+        else:
+            g1.create_group(key)
+            for cool in sim[key]:
+                if cool == 'pin_powers':
+                    vera_powers = Calculator.interpolate_powers_between_meshes(sim['CORE']['axial_mesh'],
+                                                                               template['CORE']['axial_mesh'],
+                                                                               sim[key]['pin_powers'])
+                    g1.create_dataset('pin_powers',data=vera_powers)
+                else:
+                    g1.create_dataset(cool,data=sim['CORE'][cool])
+
+    sim.close()
+    vera.close()
+    template.close()
 
 class Maps(object):
     """
@@ -1456,12 +1533,37 @@ class Power(object):
 
         return power_list
 
-#class Factory(object):
-#    """
-#    Class for reading and interpreting the commands entered by ARGPARSE.
-#    """
-#    def __init__(**kwargs):
-#        if 
+def get_cell_column(number):
+    """
+    For a specified number returns the corresponding alphabetic value, i.e. 26=AA,
+    B=1, etc.
+    """
+    alphabet = ['','A','B','C','D','E','F','G','H','I','J','K','L','M','N',
+               'O','P','Q','R','S','T','U','V','W','X','Y','Z']
+    first_count = 1
+    second_count = 0
+    third_count = 0
+    fourth_count = 0
+    fifth_count = 0
+    for i in range(number):
+        first_count += 1
+        if first_count == len(alphabet):
+            first_count = 1
+            second_count +=1
+        if second_count == len(alphabet):
+            second_count = 1
+            third_count += 1
+        if third_count == len(alphabet):
+            third_count = 1
+            fourth_count += 1
+        if fourth_count == len(alphabet):
+            fourth_count = 1
+            fifth_count += 1
+
+    column = alphabet[fifth_count] + alphabet[fourth_count] + alphabet[third_count]
+    column += alphabet[second_count] + alphabet[first_count]
+
+    return column
 
 if __name__ == "__main__":
     pass    

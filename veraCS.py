@@ -590,8 +590,7 @@ class Core(object):
               file_.write("   pressure {}\n".format(self.stateList[state].pressure))
             if self.stateList[state].restart:
               file_.write("   restart_write {} {}".format(self.stateList[state].restart_file,state))
-            file_.write("   deplete {} {} \n".format(self.stateList[state].depletion,
-                                                       self.stateList[state].depletion_units))
+            file_.write(f"   deplete {self.stateList[state].depletion_units} {self.stateList[state].depletion} \n")
         
         file_.write("        op_date {}\n".format(self.operating_date))
         file_.write("\n")
@@ -806,8 +805,13 @@ class Core(object):
           pass
         else:
           file_.write("[MPACT]\n")
+          print(self.MPACT)
+          print(type(self.MPACT))
+          print(self.MPACT.keys())
           for key in self.MPACT:
-            file_.write("  {} {}\n".format(key,self.MPACT[key]))
+            print(key)
+            print(self.MPACT[key])
+            file_.write(f"  {key} {self.MPACT[key]}\n")
         file_.write("\n")
         if not self.COBRA:
           pass
