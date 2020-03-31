@@ -105,7 +105,7 @@ def quantum_converter(output_file,file_list):
         in_file.close()
 
         out_file = open(f'{folder}/{folder}_sim.out','r') #Simulate output file
-        out_lines = in_file.readlines()
+        out_lines = out_file.readlines()
         out_file.close()
 
         Fq_list = Simulate_Extractor.pin_peaking_list(out_lines)
