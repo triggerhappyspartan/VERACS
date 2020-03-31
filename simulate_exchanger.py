@@ -117,7 +117,7 @@ def quantum_converter(output_file,file_list):
             if not elems:
                 pass
             else:
-                for el in elems:
+                for el in elems[2:]:
                     if el == '5':
                         loading_pattern.append(0)
                     elif el == '15':
