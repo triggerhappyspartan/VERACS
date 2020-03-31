@@ -89,13 +89,14 @@ def quantum_converter(output_file,file_list):
     file_.close()
     
     excel = openpyxl.Workbook()
+    print(excel.sheetnames)
     excel.save(f'{output_file}.xlsx')
 
-    excel['Sheet1']["A1"] = "Assemblies"
+    excel['Sheet']["A1"] = "Assemblies"
     L1 = get_cell_column(70)
     L2 = get_cell_column(71)
-    excel['Sheet1'][f"{L1}1"] = "EFPD"
-    excel['Sheet1'][f"{L2}1"] = "Fq"
+    excel['Sheet'][f"{L1}1"] = "EFPD"
+    excel['Sheet'][f"{L2}1"] = "Fq"
     for row,folder in enumerate(file_lines):
         folder = folder.strip().split()
         in_file = open(f'{folder}/{folder}_sim.inp','r') #Simulate input file
@@ -123,9 +124,9 @@ def quantum_converter(output_file,file_list):
                     
         for i,assem in enumerate(loading_pattern):
             col = get_cell_column(i)
-            excel['Sheet1'][f"{col}{row+2}"] = assem
-        excel['Sheet1'][f"{L1}{row+2}"] = efpd_list[-1]
-        excel['Sheet1'][f"{L2}{row+2}"] = max(Fq_list)
+            excel['Sheet'][f"{col}{row+2}"] = assem
+        excel['Sheet'][f"{L1}{row+2}"] = efpd_list[-1]
+        excel['Sheet'][f"{L2}{row+2}"] = max(Fq_list)
 
     excel.save(f'{output_file}.xlsx')
 
