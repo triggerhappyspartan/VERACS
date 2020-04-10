@@ -38,19 +38,6 @@ def h5_converter(file_name):
     axial_mesh = [axial + 11.951 for axial in axial_mesh]
     maps = Maps()
 
-    print(f"List of Exposures in EFPD {exposure_efpds} Length {len(exposure_efpds)}")
-    print(f"List of exposures in GWDMTU {exposures} Length {len(exposures)}")
-    print(f"List of boron values {boron} Length {len(boron)}")
-    print(f"List of pressure values {pressure} Length {len(pressure)}")
-    print(f"List of flow values {flow} Length {len(flow)}")
-    print(f"List of power values {power} Length {len(power)}")
-    print(f"List of core inlet temps {core_inlet_temps} Length {len(core_inlet_temps)}")
-    print(f"List of core keff values {keffs} Length {len(keffs)}")
-    print(f"List of FDH values {FDH_list} Length {len(FDH_list)}")
-    print(f"List of actual thermal power {thermal_powers} Length {len(thermal_powers)}")
-    print(f"Core flow rate {core_flows} Length {len(core_flows)}")
-    print(f"List of Fq values {Fqs} Length {len(Fqs)}")
-
     core_flower = Calculator.convert_tons_to_kg(core_flows[0])
     core_flower = Calculator.convert_hours_to_seconds(core_flower)
     file_ = h5py.File(file_name.replace(".out",".h5"),'w')
@@ -144,23 +131,22 @@ def simulateh5_2_veraH5(vera_name,simulate_file,template_h5):
                  161.565,169.63,177.695,181.505,189.57,197.635,205.7,213.765,221.83,229.895,
                  233.705,241.77,249.835,257.9,265.965,274.03,282.095,285.905,293.97,302.035,
                  310.1,318.165,326.23,334.295,338.105,346.0262,353.9474,361.8686,369.7898,377.711]
-
     key_list = list(sim.keys())
     for key in key_list:
         if key == 'CORE':
-            g1.create_group('CORE')
+            g1 = vera.create_group('CORE')
             for cool in template['CORE']:
                 g1.create_dataset(cool,data=template['CORE'][cool])
         else:
-            g1.create_group(key)
+            g1 = vera.create_group(key)
             for cool in sim[key]:
                 if cool == 'pin_powers':
                     vera_powers = Calculator.interpolate_powers_between_meshes(sim['CORE']['axial_mesh'],
-                                                                               template['CORE']['axial_mesh'],
+                                                                               vera_mesh,
                                                                                sim[key]['pin_powers'])
                     g1.create_dataset('pin_powers',data=vera_powers)
                 else:
-                    g1.create_dataset(cool,data=sim['CORE'][cool])
+                    g1.create_dataset(cool,data=sim[key][cool])
 
     sim.close()
     vera.close()
@@ -828,16 +814,29 @@ class Simulate_Extractor(object):
         Written by Brian Andersen. 3/13/2020
         """
         state_count = -1
+        rows = 0
+        cols = 0
+        axial = 0
         for line in file_lines:
             if 'DIM.PWR' in line:
                 elems = line.strip().split()
                 if elems[0] == "'DIM.PWR'":
                     rows = int(elems[2])
                     cols = int(elems[3])
+            if "Full Core Assembly Map Width" in line:
+                if not rows:
+                    elems = line.strip().split()
+                    rows = int(elems[-1])
+                    cols = int(elems[-1])
             if 'DIM.CAL' in line:
                 elems = line.strip().split()
                 if elems[0] == "'DIM.CAL'":
                     axial = int(elems[1])
+            if "Fueled Axial Nodes" in line:
+                if not axial:
+                    elems = line.strip().split()
+                    spot = elems.index("Fueled")
+                    axial = int(elems[spot-1])
             if 'Output Summary' in line:
                 state_count += 1
         
@@ -966,6 +965,9 @@ class Simulate_Extractor(object):
                     rows = int(elems[2])
                     cols = int(elems[3])
                     break
+                elif "IAFULL" in elems:
+                    rows = int(elems[-1])
+                    cols = int(elems[-1])
         
         return rows,cols
 
