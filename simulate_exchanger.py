@@ -18,17 +18,29 @@ def h5_converter(file_name):
 
     pin_power_dictionary = SE.full_core_powers3D(file_lines,17)
     exposure_efpds = SE.efpd_list(file_lines)
+    print(f"Exposure efpds {exposure_efpds}")
     exposures = SE.burnup_list(file_lines)
+    print(f"Exposures {exposures}")
     boron = SE.boron_list(file_lines)
+    print(f"boron {boron}")
     pressure = SE.pressure(file_lines)
+    print(f"pressure {pressure}")
     flow = SE.relative_flow(file_lines)
+    print(f"flow {flow}")
     power = SE.relative_power(file_lines)
+    print(f"power {power}")
     core_inlet_temps = SE.inlet_temperatures(file_lines)
+    print(f"core_inlet_temps {core_inlet_temps}")
     keffs = SE.core_keff_list(file_lines)
+    print(f"keffs {keffs}")
     FDH_list = SE.FDH_list(file_lines)
+    print(f"FDH_list {FDH_list}")
     thermal_powers = SE.thermal_power(file_lines)
+    print(f"thermal_powers {thermal_powers}")
     core_flows = SE.core_flow(file_lines)
+    print(f"core_flows {core_flows}")
     Fqs = SE.pin_peaking_list(file_lines)
+    print(f"Fqs {Fqs}")
     nominal_linear_power_rate = SE.nominal_core_wide_linear_power_rate(file_lines)
     apitch = SE.assembly_pitch(file_lines)
     axial_mesh_reverse = SE.axial_mesh_positions(file_lines)
@@ -38,36 +50,715 @@ def h5_converter(file_name):
     axial_mesh = [axial + 11.951 for axial in axial_mesh]
     maps = Maps()
 
+    
     core_flower = Calculator.convert_tons_to_kg(core_flows[0])
     core_flower = Calculator.convert_hours_to_seconds(core_flower)
+    vera_mesh = [11.951,15.817,24.028,32.239,40.45,48.662,56.873,65.084,73.295,77.105,
+                 85.17,93.235,101.3,109.365,117.43,125.495,129.305,137.37,145.435,153.5,
+                 161.565,169.63,177.695,181.505,189.57,197.635,205.7,213.765,221.83,229.895,
+                 233.705,241.77,249.835,257.9,265.965,274.03,282.095,285.905,293.97,302.035,
+                 310.1,318.165,326.23,334.295,338.105,346.0262,353.9474,361.8686,369.7898,377.711]
     file_ = h5py.File(file_name.replace(".out",".h5"),'w')
     g1 = file_.create_group("CORE")
     g1.create_dataset("apitch",data=apitch)
-    g1.create_dataset("axial_mesh",data=axial_mesh)
-    g1.create_dataset("nominal_linear_heat_rate",data=nominal_linear_power_rate)
+    g1.create_dataset("axial_mesh",data=vera_mesh)
+    #g1.create_dataset("nominal_linear_heat_rate",data=nominal_linear_power_rate)
     g1.create_dataset('core_map',data=maps.array_assembly_map_15_15.astype(int))
-    g1.create_dataset('rated_flow',data=core_flower)
-    g1.create_dataset('rated_flow_units',data="Kg/s")
+    #g1.create_dataset('rated_flow',data=core_flower)
+    #g1.create_dataset('rated_flow_units',data="Kg/s")
     g1.create_dataset('rated_power',data=thermal_powers[0])
  #   g1.create_dataset('xlabel',data=numpy.array['H','G','F','E','D',"C","B","A"].astype(str))
  #   g1.create_dataset('ylabel',data=numpy.array['1','2','3','4','5','6','7','8'].astype(str))
     key_list = list(pin_power_dictionary.keys())
     for i,key in enumerate(key_list):
         g1 = file_.create_group(key)
-        g1.create_dataset("pin_powers",data=pin_power_dictionary[key])
-        g1.create_dataset("exposure_efpds",data=exposure_efpds[i+1])
-        g1.create_dataset("boron",data=boron[i+1])
-        g1.create_dataset("pressure",data=pressure[i+1])
-        g1.create_dataset("flow",data=flow[i+1])
-        g1.create_dataset("exposure",data=exposures[i+1])
-        g1.create_dataset("core_inlet_temp",data=core_inlet_temps[i+1])
-        g1.create_dataset("tinlet",data=core_inlet_temps[i+1])
-        g1.create_dataset("power",data=power[i+1])
-        g1.create_dataset("total_power",data=thermal_powers[i+1])
-        g1.create_dataset("keff",data=keffs[i+1])
-        g1.create_dataset("FDH",data=FDH_list[i+1])
-        g1.create_dataset("Fq",data=Fqs[i+1])
+        vera_powers = Calculator.interpolate_powers_between_meshes(axial_mesh,
+                                                                   vera_mesh,
+                                                                   pin_power_dictionary[key])
+        g1.create_dataset("pin_powers",data=vera_powers)
+        g1.create_dataset("exposure_efpds",data=exposure_efpds[i])
+        g1.create_dataset("boron",data=boron[i])
+        g1.create_dataset("pressure",data=pressure[i])
+        g1.create_dataset("flow",data=flow[i])
+        g1.create_dataset("exposure",data=exposures[i])
+        g1.create_dataset("core_inlet_temp",data=core_inlet_temps[i])
+        g1.create_dataset("tinlet",data=core_inlet_temps[i])
+        g1.create_dataset("power",data=power[i])
+        g1.create_dataset("total_power",data=thermal_powers[i])
+        g1.create_dataset("keff",data=keffs[i])
+        g1.create_dataset("FDH",data=FDH_list[i])
+        g1.create_dataset("Fq",data=Fqs[i])
 
+    file_.close()
+
+    file_ = open("vera_"+file_name.replace(".out",".inp"),'w')
+    file_.write("[CASEID]\n")
+    file_.write("    title 'VERA Test Writer'\n")
+    file_.write("\n")
+    current_tinlet = None
+    current_flow = None
+    current_pressure = None
+    current_power = None
+    first_state = True
+    for i,key in enumerate(list(pin_power_dictionary.keys())):
+        if key == "CORE":
+            pass
+        else:
+            if first_state:
+                first_state = False
+                current_tinlet =   core_inlet_temps[i]
+                current_flow =     flow[i]
+                current_pressure = pressure[i]
+                current_power =    power[i]
+                file_.write("[STATE]\n")
+                file_.write("    title 'VERAtest'\n")
+                file_.write(f"    pressure {current_pressure}\n")
+                file_.write("    sym      qtr\n")
+                file_.write("    feedback    on\n")
+                file_.write("    crud        on\n")
+                file_.write("    search   boron\n")
+                file_.write("    cool_chem 35E-6  2.2  0.19  3.5  1.8\n")
+                file_.write("\n")
+                file_.write("    rodbank SB 230\n")
+                file_.write("            SC 230\n")
+                file_.write("            SD 230\n")
+                file_.write("            A 230\n")
+                file_.write("            B 230\n")
+                file_.write("            C 230\n")
+                file_.write("            D 230\n")
+                file_.write("\n")
+                file_.write("    thexp       off\n")
+                file_.write("\n")
+                file_.write(f"    power {current_power}\n")
+                file_.write(f"    flow {current_flow}\n")  
+                file_.write(f"    tinlet {current_tinlet} F\n")
+                file_.write("[STATE] deplete EFPD 0.0\n")
+            else:
+                file_.write("[STATE]  ")
+                if current_tinlet == core_inlet_temps[i]:
+                    pass
+                else:
+                    current_tinlet = core_inlet_temps[i]
+                    file_.write(f"tinlet {current_tinlet} F; ")
+                if current_flow == flow[i]:
+                    pass
+                else:
+                    current_flow = flow[i]
+                    file_.write(f"flow {current_flow} ; ")
+                if current_pressure == pressure[i]:
+                    pass
+                else:
+                    current_pressure = pressure[i]
+                    file_.write(f"pressure {current_pressure} ; ")
+                if current_power == power[i]:
+                    pass
+                else:
+                    current_power = power[i]
+                    file_.write(f"power {current_power} ; ")
+                file_.write(f" deplete EFPD {exposure_efpds[i]} \n")
+
+    file_.write("[CORE]\n")
+    file_.write("  name   WBN\n")
+    file_.write("  unit   1\n")
+    file_.write("  size   15              ! assemblies across core\n")
+    file_.write(f"  apitch {apitch}\n")
+    file_.write(f"  rated  {thermal_powers[0]} {core_flows[0]}     ! MW, Mlbs/hr\n")
+    file_.write("  height 406.337\n")
+    file_.write("\n")
+    file_.write("  xlabel  R P N M L K J H G  F  E  D  C  B  A\n")
+    file_.write("  ylabel  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15\n")
+    file_.write("\n")
+    file_.write("  core_shape\n")
+    file_.write("    0 0 0 0 0 0 1 1 1 0 0 0 0 0 0\n")
+    file_.write("    0 0 0 0 1 1 1 1 1 1 1 0 0 0 0\n")
+    file_.write("    0 0 0 1 1 1 1 1 1 1 1 1 0 0 0\n")
+    file_.write("    0 0 1 1 1 1 1 1 1 1 1 1 1 0 0\n")
+    file_.write("    0 1 1 1 1 1 1 1 1 1 1 1 1 1 0\n")
+    file_.write("    0 1 1 1 1 1 1 1 1 1 1 1 1 1 0\n")
+    file_.write("    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1\n")
+    file_.write("    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1\n")
+    file_.write("    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1\n")
+    file_.write("    0 1 1 1 1 1 1 1 1 1 1 1 1 1 0\n")
+    file_.write("    0 1 1 1 1 1 1 1 1 1 1 1 1 1 0\n")
+    file_.write("    0 0 1 1 1 1 1 1 1 1 1 1 1 0 0\n")
+    file_.write("    0 0 0 1 1 1 1 1 1 1 1 1 0 0 0\n")
+    file_.write("    0 0 0 0 1 1 1 1 1 1 1 0 0 0 0\n")
+    file_.write("    0 0 0 0 0 0 1 1 1 0 0 0 0 0 0\n")
+    file_.write("\n")
+    file_.write("  assm_map\n")
+    file_.write("    1\n")
+    file_.write("    1 1\n")
+    file_.write("    1 1 1\n")
+    file_.write("    1 1 1 1\n")
+    file_.write("    1 1 1 1 1 \n")
+    file_.write("    1 1 1 1 1\n")
+    file_.write("    1 1 1 1\n")
+    file_.write("    1 1\n")
+    file_.write("\n")
+    file_.write("  insert_map\n")
+    file_.write("    -\n")
+    file_.write("    - -\n")
+    file_.write("    - - -\n")
+    file_.write("    - - - -\n")
+    file_.write("    - - - - -\n")
+    file_.write("    - - - - - \n")
+    file_.write("    - - - - \n")
+    file_.write("    - - \n")
+    file_.write("\n")
+    file_.write("  crd_map\n")
+    file_.write("     1\n")
+    file_.write("    - -\n")
+    file_.write("    1 - 1\n")
+    file_.write("    - - - 1\n")
+    file_.write("    1 - - - 1\n")
+    file_.write("    - 1 - 1 - \n")
+    file_.write("    1 - 1 - \n")
+    file_.write("    - - \n")
+    file_.write("\n")
+    file_.write("  crd_bank\n")
+    file_.write("    D  -  A  -  D  -  C  -\n")
+    file_.write("    -  -  -  -  - SB  -  -\n")
+    file_.write("    A  -  C  -  -  -  B\n")
+    file_.write("    -  -  -  A  - SC  -\n")
+    file_.write("    D  -  -  -  D  - \n")
+    file_.write("    - SB  - SD  - \n")
+    file_.write("    C  -  B  -  \n")
+    file_.write("    -  -\n")
+    file_.write("\n")
+    file_.write("  det_map 157*2\n")
+    file_.write("! det_map\n")
+    file_.write("!           - - 1 - - 1 - \n")
+    file_.write("!       1 - - 1 - 1 - - - - - \n")
+    file_.write("!     - - - - - - 1 - 1 - 1 - 1\n")
+    file_.write("!     1 1 - - - - 1 - - - - - -\n")
+    file_.write("!   - - - - 1 - - - 1 - 1 - 1 - -\n")
+    file_.write("!   1 - 1 - - 1 - 1 - - - - - 1 -\n")
+    file_.write("!   - - - 1 - - 1 - - 1 - - 1 - -\n")
+    file_.write("!   1 - 1 - 1 - 1 - - 1 - 1 1 1 -\n")
+    file_.write("!   - 1 - - - - - - 1 - 1 - - - 1\n")
+    file_.write("!   - - - - 1 - 1 - - - - 1 - - -\n")
+    file_.write("!   1 - - - 1 - - 1 - - 1 - - - 1\n")
+    file_.write("!     - - - - 1 - - 1 - - 1 - - \n")
+    file_.write("!     - 1 - 1 - - 1 - - - - - 1 \n")
+    file_.write("!       1 - - - 1 - - 1 - 1 - \n")
+    file_.write("!           1 - - 1 - - - \n")
+    file_.write("\n")
+    file_.write("  baffle ss 0.19 2.85\n") 
+    file_.write('\n')
+    file_.write("  vessel  mod 187.96        ! barrel IR (cm)\n")
+    file_.write("           ss 193.68        ! barrel OR (cm)\n")
+    file_.write("          mod 219.15        ! vessel liner IR (cm)\n")
+    file_.write("           ss 219.71        ! vessel liner OR / vessel IR (cm)\n")
+    file_.write("           cs 241.70        ! vessel OR (cm)\n")
+    file_.write("\n")
+    file_.write("  pad ss  194.64 201.63 32 45 135 225 315 ! neutron pad ID,OD arc lenth (degrees), and angular positions (degrees)\n")
+    file_.write("\n")
+    file_.write("  lower_plate ss  5.0 0.5   ! mat, thickness, vol frac\n")
+    file_.write("  upper_plate ss  7.6 0.5   ! mat, thickness, vol frac\n")
+    file_.write("\n")
+    file_.write("! lower_ref  mod 20.0 1.0   ! not needed\n")
+    file_.write("! upper_ref  mod 20.0 1.0   !\n")
+    file_.write('\n')
+    file_.write("  xlabel  R P N M L K J H G  F  E  D  C  B  A\n")
+    file_.write("  ylabel  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15\n")
+    file_.write("\n")
+    file_.write("[ASSEMBLY]\n")
+    file_.write('  title "Westinghouse 17x17"\n')
+    file_.write("  npin   17\n")
+    file_.write("  ppitch 1.26\n")
+    file_.write("\n")
+    file_.write("  mat gad5 7.407 gd-152 -0.0008\n")
+    file_.write("                 gd-154 -0.00872\n")
+    file_.write("                 gd-155 -0.0592\n")
+    file_.write("                 gd-156 -0.082\n")
+    file_.write("                 gd-157 -0.0628\n")
+    file_.write("                 gd-158 -0.0992\n")
+    file_.write("                 gd-160 -0.0876\n")
+    file_.write("                 o-16   -0.599968\n")
+    file_.write("\n")
+    file_.write("  mat ifba 3.85  zr-90   4.12271E-01\n")
+    file_.write("                 zr-91   9.09074E-02\n")
+    file_.write("                 zr-92   1.40481E-01\n")
+    file_.write("                 zr-94   1.45465E-01\n")
+    file_.write("                 zr-96   2.39348E-02\n")
+    file_.write("                 b-10    0.09347\n")
+    file_.write("                 b-11    0.09347  \n")
+    file_.write("\n")
+    file_.write("  fuel U25   10.257 94.5 / 2.5  u-234=0.026347\n")
+    file_.write("  fuel U27   10.257 94.5 / 2.75 u-234=0.026347\n")
+    file_.write("  fuel U29   10.257 94.5 / 2.95 u-234=0.026347\n")
+    file_.write("  fuel G2U25 10.257 94.5 / 2.5 u-234=0.026347 / gad5=0.02\n")
+    file_.write("  fuel G3U25 10.257 94.5 / 2.5 u-234=0.026347 / gad5=0.03\n")
+    file_.write("  fuel U35   10.257 94.5 / 3.15  u-234=0.026347\n")
+    file_.write("  fuel U37   10.257 94.5 / 3.175 u-234=0.026347\n")
+    file_.write("  fuel U39   10.257 94.5 / 3.195 u-234=0.026347\n")
+    file_.write("\n")
+    file_.write("  cell 1    0.4096 0.418 0.475 / U25 he zirc4 \n")
+    file_.write("  cell 2    0.4096 0.418 0.475 / U27 he zirc4 \n")
+    file_.write("  cell 3    0.4096 0.418 0.475 / U29 he zirc4 \n")
+    file_.write("  cell 4    0.561 0.602 / mod zirc4 \n")
+    file_.write("  cell 5    0.418 0.475 / he zirc4 \n")
+    file_.write("  cell 6    0.475 / zirc4 \n")
+    file_.write("  cell 7    0.475 / mod \n")
+    file_.write("\n")
+    file_.write("  lattice fuel\n")
+    file_.write("       4  \n")
+    file_.write("       1  3  \n")
+    file_.write("       1  1  1  \n")
+    file_.write("       4  1  1  4  \n")
+    file_.write("       1  1  1  1  1  \n")
+    file_.write("       1  1  1  2  2  4  \n")
+    file_.write("       4  1  1  4  1  1  3  \n")
+    file_.write("       1  1  1  1  1  1  3  3  \n")
+    file_.write("       3  3  3  3  3  3  3  3  3  \n")
+    file_.write('\n')
+    file_.write("  lattice PLEN\n")
+    file_.write("       4  \n")
+    file_.write("       5  5  \n")
+    file_.write("       5  5  5  \n")
+    file_.write("       4  5  5  4  \n")
+    file_.write("       5  5  5  5  5  \n")
+    file_.write("       5  5  5  5  5  4  \n")
+    file_.write("       4  5  5  4  5  5  5  \n")
+    file_.write("       5  5  5  5  5  5  5  5  \n")
+    file_.write("       5  5  5  5  5  5  5  5  5  \n")
+    file_.write("\n")
+    file_.write("  lattice PLUG\n")
+    file_.write("       4  \n")
+    file_.write("       6  6  \n")
+    file_.write("       6  6  6  \n")
+    file_.write("       4  6  6  4  \n")
+    file_.write("       6  6  6  6  6  \n")
+    file_.write("       6  6  6  6  6  4  \n")
+    file_.write("       4  6  6  4  6  6  6  \n")
+    file_.write("       6  6  6  6  6  6  6  6  \n")
+    file_.write("       6  6  6  6  6  6  6  6  6  \n")
+    file_.write("\n")
+    file_.write("  lattice GAP\n")
+    file_.write("       4  \n")
+    file_.write("       7  7  \n")
+    file_.write("       7  7  7  \n")
+    file_.write("       4  7  7  4  \n")
+    file_.write("       7  7  7  7  7  \n")
+    file_.write("       7  7  7  7  7  4  \n")
+    file_.write("       4  7  7  4  7  7  7  \n")
+    file_.write("       7  7  7  7  7  7  7  7  \n")
+    file_.write("       7  7  7  7  7  7  7  7  7  \n")
+    file_.write("\n")
+    file_.write("  axial  1  6.053  GAP  10.281  PLUG  11.951  fuel  377.711  PLEN  393.711  PLUG  395.381  GAP  397.51\n")
+    file_.write('\n')
+    file_.write("  grid END inc    3.866 1017\n")
+    file_.write("  grid MID zirc4  3.81 875\n")
+    file_.write("\n")
+    file_.write("  grid_axial\n")
+    file_.write("      END  13.884\n")
+    file_.write("      MID  75.2\n")
+    file_.write("      MID  127.4\n")
+    file_.write("      MID  179.6\n")
+    file_.write("      MID  231.8\n")
+    file_.write("      MID  284.0\n")
+    file_.write("      MID  336.2\n")
+    file_.write("      END  388.2\n")
+    file_.write("\n")
+    file_.write("  lower_nozzle  ss 6.053 6250.0  ! mat, height, mass (g)\n")
+    file_.write("  upper_nozzle  ss 8.827 6250.0  ! mat, height, mass (g)\n")
+    file_.write("\n")
+    file_.write("[INSERT]\n")
+    file_.write('  title "Pyrex"\n')
+    file_.write("  npin 17\n")
+    file_.write("\n")
+    file_.write("  cell X  0.214 0.231 0.241 0.427 0.437 0.484 / he ss he pyrex-vera he ss ! pyrex\n")
+    file_.write("  cell P                          0.437 0.484 /                     he ss ! plenum\n")
+    file_.write("  cell G                                0.484 /                        ss ! plug/cap\n")
+    file_.write("  cell T                                0.538 /                        ss ! thimble plug\n")
+    file_.write("\n")
+    file_.write("  rodmap  PY8 \n")
+    file_.write("     -\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     X - - -\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - X\n")
+    file_.write("     - - - - - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  rodmap  PY12 \n")
+    file_.write("     -\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     X - - -\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - -\n")
+    file_.write("     - - - X - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  rodmap  PY16\n")
+    file_.write("     -\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     X - - -\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - X\n")
+    file_.write("     - - - X - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  rodmap  PY20\n")
+    file_.write("     -\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     X - - -\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - X\n")
+    file_.write("     X - - X - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  rodmap  PY24  \n")
+    file_.write("     -\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     X - - X\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - X\n")
+    file_.write("     X - - X - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  rodmap  PL8 \n")
+    file_.write("     -\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     P - - -\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - P\n")
+    file_.write("     - - - - - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  rodmap  PL12 \n")
+    file_.write("     -\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     P - - -\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - -\n")
+    file_.write("     - - - P - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  rodmap  PL16\n")
+    file_.write("     -\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     P - - -\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - P\n")
+    file_.write("     - - - P - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  rodmap  PL20\n")
+    file_.write("     -\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     P - - -\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - P\n")
+    file_.write("     P - - P - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  rodmap  PL24  \n")
+    file_.write("     -\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     P - - P\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - P\n")
+    file_.write("     P - - P - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  rodmap  PG8 \n")
+    file_.write("     -\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     G - - -\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - G\n")
+    file_.write("     - - - - - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  rodmap  PG12 \n")
+    file_.write("     -\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     G - - -\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - -\n")
+    file_.write("     - - - G - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  rodmap  PG16\n")
+    file_.write("     -\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     G - - -\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - G\n")
+    file_.write("     - - - G - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  rodmap  PG20\n")
+    file_.write("     -\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     G - - -\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - G\n")
+    file_.write("     G - - G - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  rodmap  PG24  \n")
+    file_.write("     -\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     G - - G\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - G\n")
+    file_.write("     G - - G - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  rodmap  TP8 \n")
+    file_.write("     -\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     P - - T\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - P\n")
+    file_.write("     T - - T - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  rodmap  TP12 \n")
+    file_.write("     -\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     P - - T\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - T\n")
+    file_.write("     T - - P - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  rodmap  TP16\n")
+    file_.write("     -\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     P - - T\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - P\n")
+    file_.write("     T - - P - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  rodmap  TP20\n")
+    file_.write("     -\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     P - - T\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - P\n")
+    file_.write("     P - - P - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  rodmap  TP24  \n")
+    file_.write("     -\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     T - - T\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - T\n")
+    file_.write("     T - - T - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  axial   8  13.221 PG8  15.761 PY8  376.441 PL8  383.31 TP8  398.641\n")
+    file_.write("  axial  12  13.221 PG12 15.761 PY12 376.441 PL12 383.31 TP12 398.641\n")
+    file_.write("  axial  16  13.221 PG16 15.761 PY16 376.441 PL16 383.31 TP16 398.641\n")
+    file_.write("  axial  20  13.221 PG20 15.761 PY20 376.441 PL20 383.31 TP20 398.641\n")
+    file_.write("  axial  24  13.221 PG24 15.761 PY24 376.441 PL24             398.641\n")
+    file_.write("  axial  TP                                       383.31 TP24 394.31\n")
+    file_.write("\n")
+    file_.write("[CONTROL]\n")
+    file_.write('  title "B4C with AIC tips"\n')
+    file_.write("  npin 17\n")
+    file_.write("  stroke  365.125 230     ! approx for 1.5875 step sizes and 230 max stroke\n")
+    file_.write("\n")
+    file_.write("  cell A  0.382 0.386 0.484 / aic he ss\n")
+    file_.write("  cell B  0.373 0.386 0.484 / b4c he ss\n")
+    file_.write("  cell P        0.386 0.484 /     he ss ! plenum\n")
+    file_.write("  cell G              0.484 /        ss ! plug   \n")
+    file_.write("\n")
+    file_.write("  rodmap AIC\n")
+    file_.write("     -\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     A - - A\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - A\n")
+    file_.write("     A - - A - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  rodmap B4C\n")
+    file_.write("     -\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     B - - B\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - B\n")
+    file_.write("     B - - B - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  rodmap PLEN\n")
+    file_.write("     -\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     P - - P\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - P\n")
+    file_.write("     P - - P - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  rodmap PLUG\n")
+    file_.write("     -\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     G - - G\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - G\n")
+    file_.write("     G - - G - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  axial  1    15.131\n")
+    file_.write("        PLUG  17.031 \n")
+    file_.write("         AIC 118.631 \n")
+    file_.write("         B4C 377.711 \n")
+    file_.write("        PLEN 388.411\n")
+    file_.write("        PLUG 390.311\n")
+    file_.write("\n")
+    file_.write("[DETECTOR]\n")
+    file_.write('  title "Incore instrument thimble"\n')
+    file_.write("  npin 17\n")
+    file_.write("\n")
+    file_.write("  cell 1  0.258 0.382 / he ss\n")
+    file_.write("  cell 2        0.382 /   mod\n")
+    file_.write("\n")
+    file_.write("  rodmap  LAT1\n")
+    file_.write("     1\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     - - - -\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - -\n")
+    file_.write("     - - - - - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  rodmap  LAT2\n")
+    file_.write("     2\n")
+    file_.write("     - -\n")
+    file_.write("     - - -\n")
+    file_.write("     - - - -\n")
+    file_.write("     - - - - -\n")
+    file_.write("     - - - - - -\n")
+    file_.write("     - - - - - - -\n")
+    file_.write("     - - - - - - - -\n")
+    file_.write("     - - - - - - - - -\n")
+    file_.write("\n")
+    file_.write("  axial 1  0.0 LAT1 397.51 \n")
+    file_.write("  axial 2  0.0 LAT2 397.51 \n")
+    file_.write("\n")
+    file_.write("[EDITS]\n")
+    file_.write("  axial_edit_bounds \n")
+    file_.write("      11.951\n")
+    file_.write("      15.817 \n")
+    file_.write("      24.028 \n")
+    file_.write("      32.239 \n")
+    file_.write("      40.45 \n")
+    file_.write("      48.662 \n")
+    file_.write("      56.873 \n")
+    file_.write("      65.084 \n")
+    file_.write("      73.295 \n")
+    file_.write("      77.105 \n")
+    file_.write("      85.17 \n")
+    file_.write("      93.235 \n")
+    file_.write("      101.3 \n")
+    file_.write("      109.365 \n")
+    file_.write("      117.43 \n")
+    file_.write("      125.495 \n")
+    file_.write("      129.305 \n")
+    file_.write("      137.37 \n")
+    file_.write("      145.435 \n")
+    file_.write("      153.5 \n")
+    file_.write("      161.565 \n")
+    file_.write("      169.63 \n")
+    file_.write("      177.695 \n")
+    file_.write("      181.505 \n")
+    file_.write("      189.57 \n")
+    file_.write("      197.635 \n")
+    file_.write("      205.7 \n")
+    file_.write("      213.765 \n")
+    file_.write("      221.83 \n")
+    file_.write("      229.895 \n")
+    file_.write("      233.705 \n")
+    file_.write("      241.77 \n")
+    file_.write("      249.835 \n")
+    file_.write("      257.9 \n")
+    file_.write("      265.965 \n")
+    file_.write("      274.03 \n")
+    file_.write("      282.095 \n")
+    file_.write("      285.905 \n")
+    file_.write("      293.97 \n")
+    file_.write("      302.035 \n")
+    file_.write("      310.1 \n")
+    file_.write("      318.165 \n")
+    file_.write("      326.23 \n")
+    file_.write("      334.295 \n")
+    file_.write("      338.105 \n")
+    file_.write("      346.0262 \n")
+    file_.write("      353.9474 \n")
+    file_.write("      361.8686 \n")
+    file_.write("      369.7898 \n")
+    file_.write("      377.711\n")
+    file_.write("\n")
+    file_.write("[MPACT]\n")
+    file_.write("  num_space   464\n")
+    file_.write("\n")
+    file_.write("\n")
+    file_.write("[COBRATF]\n")
+    file_.write("  proc_per_assem 4\n")
+    file_.write("  crud_details   1           \n")       
+    file_.write("  model_corrosion 1\n")
+    file_.write("\n")
+    file_.write("[MAMBA]\n")
+    file_.write("! ----- settings to generate sufficient CRUD for CIPS demonstration\n")
+    file_.write("  ksnb_Fe2O4  4.0E-3\n")
+    file_.write("  chimney_htc 50.0\n")
+    file_.write("  chimney_vf  0.90\n")
     file_.close()
 
 def quantum_converter(output_file,file_list):
@@ -123,8 +814,6 @@ def simulateh5_2_veraH5(vera_name,simulate_file,template_h5):
     Correctly sets up the VERA H5 file for runs.
     """
     sim = h5py.File(simulate_file,'r')
-    vera = h5py.File(vera_name,'w')
-    template = h5py.File(vera_name,'r')
 
     vera_mesh = [11.951,15.817,24.028,32.239,40.45,48.662,56.873,65.084,73.295,77.105,
                  85.17,93.235,101.3,109.365,117.43,125.495,129.305,137.37,145.435,153.5,
@@ -132,11 +821,14 @@ def simulateh5_2_veraH5(vera_name,simulate_file,template_h5):
                  233.705,241.77,249.835,257.9,265.965,274.03,282.095,285.905,293.97,302.035,
                  310.1,318.165,326.23,334.295,338.105,346.0262,353.9474,361.8686,369.7898,377.711]
     key_list = list(sim.keys())
+    print(f"copy {template_h5} {vera_name}")
+    os.system(f"copy {template_h5} {vera_name}")
+    vera = h5py.File(vera_name,'a')
+    map_ = Maps()
     for key in key_list:
+        print(key)
         if key == 'CORE':
-            g1 = vera.create_group('CORE')
-            for cool in template['CORE']:
-                g1.create_dataset(cool,data=template['CORE'][cool])
+            pass
         else:
             g1 = vera.create_group(key)
             for cool in sim[key]:
@@ -150,7 +842,16 @@ def simulateh5_2_veraH5(vera_name,simulate_file,template_h5):
 
     sim.close()
     vera.close()
-    template.close()
+
+def vera_writer(sim_file,vera_template):
+    """
+    Does the full VERA input analysis
+    """
+    h5_converter(sim_file)
+    simulateh5_2_veraH5("vera_"+sim_file.replace(".out",".h5"),sim_file.replace(".out",".h5"),vera_template)
+
+
+
 
 class Maps(object):
     """
@@ -167,27 +868,30 @@ class Maps(object):
         self.dict_assembly_map_15_15[14] = {8:42,9:43,10:44,11:45}
         self.dict_assembly_map_15_15[15] = {8:46,9:47}
 
-        array_dict = {47:((0,6),(0,8),(14,6),(14,8)), 46:((0,7),(14,7)), 45:((1,4),(1,10),(13,4),(13,10)), 44:((1,5),(1,9),(13,5),(13,9)), 
-                      43:((1,6),(1,8),(13,6),(13,8)),    
-                      42:((1,7),(13,7)), 41:((2,3),(2,11),(12,3),(12,11)), 40:((2,4),(2,10),(12,4),(12,10)), 39:((2,5),(2,9),(12,5),(12,9)),    
-                      38:((2,6),(2,8),(12,6),(12,8)), 37:((2,7),(12,7)), 36:((3,2),(3,12),(11,2),(11,12)), 35:((3,3),(3,11),(11,3),(11,11)),    
-                      34:((3,4),(3,10),(11,4),(11,10)), 33:((3,5),(3,9),(11,5),(11,9)), 32:((3,6),(3,8),(11,6),(11,8)), 31:((3,7),(11,7)),  
-                      30:((4,1),(4,13),(10,1),(10,13)), 29:((4,2),(4,12),(10,2),(10,12)), 28:((4,3),(4,11),(10,3),(10,11)), 27:((4,4),(4,10),(10,4),(10,10)),    
-                      26:((4,5),(4,9),(10,5),(10,9)), 25:((4,6),(4,8),(10,6),(10,8)), 24:((4,7),(10,7)), 23:((5,1),(5,13),(9,1),(9,13)),    
-                      22:((5,2),(5,12),(9,2),(9,12)), 21:((5,3),(5,11),(9,3),(9,11)), 20:((5,4),(5,10),(9,4),(9,10)), 19:((5,5),(5,9),(9,9),(9,5)),    
-                      18:((5,6),(5,8),(9,6),(9,8)), 17:((5,7),(9,7)), 16:((6,0),(6,14),(8,0),(8,14)), 15:((6,1),(6,13),(8,1),(8,13)), 
-                      14:((6,2),(6,12),(8,2),(8,12)), 13:((6,3),(6,11),(8,3),(8,11)), 12:((6,4),(6,10),(8,4),(8,10)), 
-                      11:((6,5),(6,9),(8,5),(8,9)), 10:((6,6),(6,8),(8,6),(8,8)), 9:((6,7),(8,7)),  8:((7,0),(7,14)), 7:((7,1),(7,13)), 
-                      6:((7,2),(7,12)), 5:((7,3),(7,11)), 4:((7,4),(7,10)), 3:((7,5),(7,9)), 2:((7,6),(7,8)), 1:((7,7))}
+        array_dict = {0 :{0:None, 1:None,  2:None,  3:None,  4:None,  5:None,  6:47,  7:46,  8:16,  9:None,  10:None  , 11:None, 12:None, 13:None, 14:None},
+                      1 :{0:None, 1:None,  2:None,  3:None,  4:45,    5:44,    6:43,  7:42,  8:15,  9:23,    10:30,     11:None, 12:None, 13:None, 14:None},
+                      2 :{0:None, 1:None,  2:None,  3:41,    4:40,    5:39,    6:38,  7:37,  8:14,  9:22,    10:29,     11:36,   12:None, 13:None, 14:None},
+                      3 :{0:None, 1:None,  2:36,    3:35,    4:34,    5:33,    6:32,  7:31,  8:13,  9:21,    10:28,     11:35,   12:41,   13:None, 14:None},
+                      4 :{0:None, 1:30,    2:29,    3:28,    4:27,    5:26,    6:25,  7:24,  8:12,  9:20,    10:27,     11:34,   12:40,   13:45,   14:None},
+                      5 :{0:None, 1:23,    2:22,    3:21,    4:20,    5:19,    6:18,  7:17,  8:11,  9:19,    10:26,     11:33,   12:39,   13:44,   14:None},
+                      6 :{0:16,   1:15,    2:14,    3:13,    4:12,    5:11,    6:10,  7:9,   8:10,  9:18,    10:25,     11:32,   12:38,   13:43,   14:47},
+                      7 :{0:8,    1:7,     2:6,     3:5,     4:4,     5:3,     6:2,   7:1,   8:2,   9:3,     10:4,      11:5,    12:6,    13:7,    14:8},
+                      8 :{0:47,   1:43,    2:38,    3:32,    4:25,    5:18,    6:10,  7:9,   8:10,  9:11,    10:12,     11:13,   12:14,   13:15,   14:16},                                                           
+                      9 :{0:None, 1:44,    2:39,    3:33,    4:26,    5:19,    6:11,  7:17,  8:18,  9:19,    10:20,     11:21,   12:22,   13:23,   14:None},
+                      10:{0:None, 1:45,    2:40,    3:34,    4:27,    5:20,    6:12,  7:24,  8:25,  9:26,    10:27,     11:28,   12:29,   13:30,   14:None},
+                      11:{0:None, 1:None,  2:41,    3:35,    4:28,    5:21,    6:13,  7:31,  8:32,  9:33,    10:34,     11:35,   12:36,   13:None, 14:None},
+                      12:{0:None, 1:None,  2:None,  3:36,    4:29,    5:22,    6:14,  7:37,  8:38,  9:39,    10:40,     11:41,   12:None, 13:None, 14:None},
+                      13:{0:None, 1:None,  2:None,  3:None,  4:30,    5:23,    6:15,  7:42,  8:43,  9:44,    10:45,     11:None, 12:None, 13:None, 14:None},
+                      14:{0:None, 1:None,  2:None,  3:None,  4:None,  5:None,  6:16,  7:46,  8:47,  9:None,  10:None  , 11:None, 12:None, 13:None, 14:None}} 
 
         self.array_assembly_map_15_15 = numpy.zeros([15,15])
-        for key in array_dict:
-            if key == 1:
-                self.array_assembly_map_15_15[7,7] = key
-            else:
-                for tuple_ in array_dict[key]:
-                    self.array_assembly_map_15_15[tuple_[0],tuple_[1]] = key
-        
+        for i in range(15):
+            for j in range(15):
+                if not array_dict[i][j]:
+                    pass
+                else:
+                    self.array_assembly_map_15_15[i][j] = array_dict[i][j]
+
 class Simulate_Extractor(object):
     """
     Class for organizing the functions used to read the output files produced
@@ -403,6 +1107,9 @@ class Simulate_Extractor(object):
         """
         state_count = -1
         for line in file_lines:
+            if "Fuel Assemblies . . ." in line:
+                elems = line.strip().split()
+                number_assemblies = int(elems[-1])
             if 'DIM.PWR' in line:
                 elems = line.strip().split()
                 if elems[0] == "'DIM.PWR'":
@@ -419,7 +1126,7 @@ class Simulate_Extractor(object):
         if rows == 15 and cols == 15:
             number_assemblies = 48
             core_map = Maps()
-            core_map = core_map.dict_assembly_map_15_15
+            core_map = core_map.dict_assembly_map_157
         else:
             errmessage = f"The number of assembly rows {rows} and columns {cols} is unrecognized"
             return ValueError(errmessage)
@@ -818,17 +1525,14 @@ class Simulate_Extractor(object):
         cols = 0
         axial = 0
         for line in file_lines:
-            if 'DIM.PWR' in line:
-                elems = line.strip().split()
-                if elems[0] == "'DIM.PWR'":
-                    rows = int(elems[2])
-                    cols = int(elems[3])
             if "Full Core Assembly Map Width" in line:
                 if not rows:
                     elems = line.strip().split()
                     rows = int(elems[-1])
                     cols = int(elems[-1])
             if 'DIM.CAL' in line:
+                line = line.replace(",","")
+                line = line.replace("/","")
                 elems = line.strip().split()
                 if elems[0] == "'DIM.CAL'":
                     axial = int(elems[1])
@@ -842,9 +1546,9 @@ class Simulate_Extractor(object):
         
         power_dict = {}
         if rows == 15 and cols == 15:
-            number_assemblies = 48
+            number_assemblies = 47
             core_map = Maps()
-            core_map = core_map.dict_assembly_map_15_15
+            core_map = core_map.dict_assembly_map_157
         else:
             errmessage = f"The number of assembly rows {rows} and columns {cols} is unrecognized"
             return ValueError(errmessage)
@@ -868,9 +1572,9 @@ class Simulate_Extractor(object):
                 section = section.replace("K","")
                 section = section.replace("=","")
                 elems = section.strip().split()
-                current_assembly = core_map[int(elems[0])][int(elems[1])]
+                current_assembly = core_map[int(elems[0])][int(elems[1])] - 1
                 axial_position = int(elems[2]) - 1
-            if " Studsvik CMS Steady-State" in line:
+            if " Studsvik CMS Steady-State" in line or "PIN.EDT 3PIN  - Peak Pin Power:              Assembly 3D" in line:
                 searching_pin_powers = False
             if searching_pin_powers:
                 line = line.replace(":","")
@@ -1025,16 +1729,17 @@ class Calculator(object):
                 VERA_powers[:,:,i,:] = numpy.divide(simulate_powers[:,:,0,:],simulate_midpoints[0])
                 VERA_powers[:,:,i,:] *= mid
             elif mid > simulate_midpoints[-1]:
-                VERA_powers[:,:,i,:] = numpy.divide(simulate_powers[:,:,-1,:],simulate_mesh[-1]-simulate_midpoints[-1])
-                VERA_powers[:,:,i,:] *= mid
+                temp = mid - simulate_midpoints[-1]
+                temp /= (simulate_mesh[-1]-simulate_midpoints[-1])
+                VERA_powers[:,:,i,:] = simulate_powers[:,:,-1,:] - simulate_powers[:,:,-1,:]*temp
             else:
                 for j,value in enumerate(simulate_midpoints):
                     if value < mid and mid < simulate_midpoints[j+1]:
-                        VERA_powers[:,:,i,:] = simulate_powers[:,:,j+1,:]
-                        VERA_powers[:,:,i,:] -= simulate_powers[:,:,j,:]
-                        VERA_powers[:,:,i,:] = numpy.divide(VERA_powers[:,:,i,:],simulate_midpoints[j+1]-value)
-                        VERA_powers[:,:,i,:] *= mid
+                        temp = mid - value
+                        temp /= (simulate_midpoints[j+1]-value)
+                        VERA_powers[:,:,i,:] = (simulate_powers[:,:,j+1,:] - simulate_powers[:,:,j,:])*temp
                         VERA_powers[:,:,i,:] += simulate_powers[:,:,j,:]
+                        break
 
         return VERA_powers
 
@@ -1570,5 +2275,9 @@ def get_cell_column(number):
     return column
 
 if __name__ == "__main__":
-    pass    
+    input_message = "The simulate file you want to analyze and convert to VERA input."
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--file",help=input_message,required=True,type=str)
 
+    arg = parser.parse_args()
+    h5_converter(arg.file)
