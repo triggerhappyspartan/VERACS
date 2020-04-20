@@ -67,6 +67,7 @@ def h5_converter(file_name):
     #g1.create_dataset('rated_flow',data=core_flower)
     #g1.create_dataset('rated_flow_units',data="Kg/s")
     g1.create_dataset('rated_power',data=thermal_powers[0])
+    g1.create_dataset('core_sym',data=4)
  #   g1.create_dataset('xlabel',data=numpy.array['H','G','F','E','D',"C","B","A"].astype(str))
  #   g1.create_dataset('ylabel',data=numpy.array['1','2','3','4','5','6','7','8'].astype(str))
     key_list = list(pin_power_dictionary.keys())
@@ -858,15 +859,15 @@ class Maps(object):
     Class for the assembly maps used in the simulate extractor.
     """
     def __init__(self):
-        self.dict_assembly_map_15_15 = {}
-        self.dict_assembly_map_15_15[8] =  {8: 1,9:2 ,10:3 ,11:4 ,12:5 ,13:6 , 14:7,15:8 }
-        self.dict_assembly_map_15_15[9] =  {8: 9,9:10,10:11,11:12,12:13,13:14,14:15,15:16}
-        self.dict_assembly_map_15_15[10] = {8:17,9:18,10:19,11:20,12:21,13:22,14:23}
-        self.dict_assembly_map_15_15[11] = {8:24,9:25,10:26,11:27,12:28,13:29,14:30}
-        self.dict_assembly_map_15_15[12] = {8:31,9:32,10:33,11:34,12:35,13:36}
-        self.dict_assembly_map_15_15[13] = {8:37,9:38,10:39,11:40,12:41}
-        self.dict_assembly_map_15_15[14] = {8:42,9:43,10:44,11:45}
-        self.dict_assembly_map_15_15[15] = {8:46,9:47}
+        self.dict_assembly_map_157 = {}
+        self.dict_assembly_map_157[8] =  {8: 1,9:2 ,10:3 ,11:4 ,12:5 ,13:6 , 14:7,15:8 }
+        self.dict_assembly_map_157[9] =  {8: 9,9:10,10:11,11:12,12:13,13:14,14:15,15:16}
+        self.dict_assembly_map_157[10] = {8:17,9:18,10:19,11:20,12:21,13:22,14:23}
+        self.dict_assembly_map_157[11] = {8:24,9:25,10:26,11:27,12:28,13:29,14:30}
+        self.dict_assembly_map_157[12] = {8:31,9:32,10:33,11:34,12:35,13:36}
+        self.dict_assembly_map_157[13] = {8:37,9:38,10:39,11:40,12:41}
+        self.dict_assembly_map_157[14] = {8:42,9:43,10:44,11:45}
+        self.dict_assembly_map_157[15] = {8:46,9:47}
 
         array_dict = {0 :{0:None, 1:None,  2:None,  3:None,  4:None,  5:None,  6:47,  7:46,  8:16,  9:None,  10:None  , 11:None, 12:None, 13:None, 14:None},
                       1 :{0:None, 1:None,  2:None,  3:None,  4:45,    5:44,    6:43,  7:42,  8:15,  9:23,    10:30,     11:None, 12:None, 13:None, 14:None},
