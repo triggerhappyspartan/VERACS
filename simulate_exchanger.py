@@ -18,37 +18,25 @@ def h5_converter(file_name):
 
     pin_power_dictionary = SE.full_core_powers3D(file_lines,17)
     exposure_efpds = SE.efpd_list(file_lines)
-    print(f"Exposure efpds {exposure_efpds}")
     exposures = SE.burnup_list(file_lines)
-    print(f"Exposures {exposures}")
     boron = SE.boron_list(file_lines)
-    print(f"boron {boron}")
     pressure = SE.pressure(file_lines)
-    print(f"pressure {pressure}")
     flow = SE.relative_flow(file_lines)
-    print(f"flow {flow}")
     power = SE.relative_power(file_lines)
-    print(f"power {power}")
     core_inlet_temps = SE.inlet_temperatures(file_lines)
-    print(f"core_inlet_temps {core_inlet_temps}")
     keffs = SE.core_keff_list(file_lines)
-    print(f"keffs {keffs}")
     FDH_list = SE.FDH_list(file_lines)
-    print(f"FDH_list {FDH_list}")
     thermal_powers = SE.thermal_power(file_lines)
-    print(f"thermal_powers {thermal_powers}")
     core_flows = SE.core_flow(file_lines)
-    print(f"core_flows {core_flows}")
     Fqs = SE.pin_peaking_list(file_lines)
-    print(f"Fqs {Fqs}")
-    nominal_linear_power_rate = SE.nominal_core_wide_linear_power_rate(file_lines)
+   # nominal_linear_power_rate = SE.nominal_core_wide_linear_power_rate(file_lines)
     apitch = SE.assembly_pitch(file_lines)
     axial_mesh_reverse = SE.axial_mesh_positions(file_lines)
     axial_mesh = []
     for axial in axial_mesh_reverse:
         axial_mesh.insert(0,axial)
     axial_mesh = [axial + 11.951 for axial in axial_mesh]
-    maps = Maps()
+    maps = Maps(193)
 
     
     core_flower = Calculator.convert_tons_to_kg(core_flows[0])
@@ -76,6 +64,11 @@ def h5_converter(file_name):
         vera_powers = Calculator.interpolate_powers_between_meshes(axial_mesh,
                                                                    vera_mesh,
                                                                    pin_power_dictionary[key])
+        print(axial_mesh)
+        print(pin_power_dictionary[key][0,0,:,9])
+        print(vera_mesh)
+        print(vera_powers[0,0,:,9])
+        #g1.create_dataset("pin_powers",data=pin_power_dictionary[key])
         g1.create_dataset("pin_powers",data=vera_powers)
         g1.create_dataset("exposure_efpds",data=exposure_efpds[i])
         g1.create_dataset("boron",data=boron[i])
@@ -91,6 +84,7 @@ def h5_converter(file_name):
         g1.create_dataset("Fq",data=Fqs[i])
 
     file_.close()
+
 
     file_ = open("vera_"+file_name.replace(".out",".inp"),'w')
     file_.write("[CASEID]\n")
@@ -170,79 +164,79 @@ def h5_converter(file_name):
     file_.write("  ylabel  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15\n")
     file_.write("\n")
     file_.write("  core_shape\n")
-    file_.write("    0 0 0 0 0 0 1 1 1 0 0 0 0 0 0\n")
     file_.write("    0 0 0 0 1 1 1 1 1 1 1 0 0 0 0\n")
-    file_.write("    0 0 0 1 1 1 1 1 1 1 1 1 0 0 0\n")
     file_.write("    0 0 1 1 1 1 1 1 1 1 1 1 1 0 0\n")
     file_.write("    0 1 1 1 1 1 1 1 1 1 1 1 1 1 0\n")
     file_.write("    0 1 1 1 1 1 1 1 1 1 1 1 1 1 0\n")
     file_.write("    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1\n")
     file_.write("    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1\n")
     file_.write("    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1\n")
+    file_.write("    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1\n")
+    file_.write("    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1\n")
+    file_.write("    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1\n")
+    file_.write("    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1\n")
     file_.write("    0 1 1 1 1 1 1 1 1 1 1 1 1 1 0\n")
     file_.write("    0 1 1 1 1 1 1 1 1 1 1 1 1 1 0\n")
     file_.write("    0 0 1 1 1 1 1 1 1 1 1 1 1 0 0\n")
-    file_.write("    0 0 0 1 1 1 1 1 1 1 1 1 0 0 0\n")
     file_.write("    0 0 0 0 1 1 1 1 1 1 1 0 0 0 0\n")
-    file_.write("    0 0 0 0 0 0 1 1 1 0 0 0 0 0 0\n")
     file_.write("\n")
     file_.write("  assm_map\n")
     file_.write("    1\n")
-    file_.write("    1 1\n")
-    file_.write("    1 1 1\n")
-    file_.write("    1 1 1 1\n")
-    file_.write("    1 1 1 1 1 \n")
-    file_.write("    1 1 1 1 1\n")
-    file_.write("    1 1 1 1\n")
-    file_.write("    1 1\n")
+    file_.write("    2 1\n")
+    file_.write("    1 2 1\n")
+    file_.write("    2 1 2 1\n")
+    file_.write("    1 2 1 2 2\n")
+    file_.write("    2 1 2 1 2 3\n")
+    file_.write("    1 3 1 3 3 3 \n")
+    file_.write("    3 3 3 3 \n")
     file_.write("\n")
     file_.write("  insert_map\n")
-    file_.write("    -\n")
-    file_.write("    - -\n")
-    file_.write("    - - -\n")
-    file_.write("    - - - -\n")
-    file_.write("    - - - - -\n")
-    file_.write("    - - - - - \n")
-    file_.write("    - - - - \n")
-    file_.write("    - - \n")
+    file_.write("     -     \n")
+    file_.write("    20 TP    \n")
+    file_.write("     - 24  -   \n")
+    file_.write("    20 TP 20  -  \n")
+    file_.write("     - 20 TP 20  - \n")
+    file_.write("    20  - 16  - 24 12\n")
+    file_.write("     - 24  - 16  - TP\n")
+    file_.write("    12 TP  8 TP\n")
     file_.write("\n")
     file_.write("  crd_map\n")
-    file_.write("     1\n")
-    file_.write("    - -\n")
-    file_.write("    1 - 1\n")
-    file_.write("    - - - 1\n")
-    file_.write("    1 - - - 1\n")
-    file_.write("    - 1 - 1 - \n")
-    file_.write("    1 - 1 - \n")
+    file_.write("    1 \n")
     file_.write("    - - \n")
+    file_.write("    1 - 1 \n")
+    file_.write("    - - - 1 \n")
+    file_.write("    1 - - - 1 \n")
+    file_.write("    - 1 - 1 - - \n")
+    file_.write("    1 - 1 - 1 - \n")
+    file_.write("    - - - - \n")
     file_.write("\n")
     file_.write("  crd_bank\n")
-    file_.write("    D  -  A  -  D  -  C  -\n")
-    file_.write("    -  -  -  -  - SB  -  -\n")
-    file_.write("    A  -  C  -  -  -  B\n")
-    file_.write("    -  -  -  A  - SC  -\n")
-    file_.write("    D  -  -  -  D  - \n")
-    file_.write("    - SB  - SD  - \n")
-    file_.write("    C  -  B  -  \n")
-    file_.write("    -  -\n")
+    file_.write("     D  -  A  -  D  -  C  -\n")
+    file_.write("     -  -  -  -  - SB  -  -\n")
+    file_.write("     A  -  C  -  -  -  B  -\n")
+    file_.write("     -  -  -  A  - SC  -  -\n")
+    file_.write("     D  -  -  -  D  - SA \n")
+    file_.write("     - SB  - SD  -  -  - \n")
+    file_.write("     C  -  B  - SA  - \n")
+    file_.write("     -  -  -  -\n")
     file_.write("\n")
-    file_.write("  det_map 157*2\n")
-    file_.write("! det_map\n")
-    file_.write("!           - - 1 - - 1 - \n")
-    file_.write("!       1 - - 1 - 1 - - - - - \n")
-    file_.write("!     - - - - - - 1 - 1 - 1 - 1\n")
-    file_.write("!     1 1 - - - - 1 - - - - - -\n")
-    file_.write("!   - - - - 1 - - - 1 - 1 - 1 - -\n")
-    file_.write("!   1 - 1 - - 1 - 1 - - - - - 1 -\n")
-    file_.write("!   - - - 1 - - 1 - - 1 - - 1 - -\n")
-    file_.write("!   1 - 1 - 1 - 1 - - 1 - 1 1 1 -\n")
-    file_.write("!   - 1 - - - - - - 1 - 1 - - - 1\n")
-    file_.write("!   - - - - 1 - 1 - - - - 1 - - -\n")
-    file_.write("!   1 - - - 1 - - 1 - - 1 - - - 1\n")
-    file_.write("!     - - - - 1 - - 1 - - 1 - - \n")
-    file_.write("!     - 1 - 1 - - 1 - - - - - 1 \n")
-    file_.write("!       1 - - - 1 - - 1 - 1 - \n")
-    file_.write("!           1 - - 1 - - - \n")
+    file_.write("  det_map 193*2\n")
+    file_.write("!# det_map\n")
+    file_.write("!#           - - 1 - - 1 - \n")
+    file_.write("!#       1 - - 1 - 1 - - - - - \n")
+    file_.write("!#     - - - - - - 1 - 1 - 1 - 1\n")
+    file_.write("!#     1 1 - - - - 1 - - - - - -\n")
+    file_.write("!#   - - - - 1 - - - 1 - 1 - 1 - -\n")
+    file_.write("!#   1 - 1 - - 1 - 1 - - - - - 1 -\n")
+    file_.write("!#   - - - 1 - - 1 - - 1 - - 1 - -\n")
+    file_.write("!#   1 - 1 - 1 - 1 - - 1 - 1 1 1 -\n")
+    file_.write("!#   - 1 - - - - - - 1 - 1 - - - 1\n")
+    file_.write("!#   - - - - 1 - 1 - - - - 1 - - -\n")
+    file_.write("!#   1 - - - 1 - - 1 - - 1 - - - 1\n")
+    file_.write("!#     - - - - 1 - - 1 - - 1 - - \n")
+    file_.write("!#     - 1 - 1 - - 1 - - - - - 1 \n")
+    file_.write("!#       1 - - - 1 - - 1 - 1 - \n")
+    file_.write("!#           1 - - 1 - - - \n")
     file_.write("\n")
     file_.write("  baffle ss 0.19 2.85\n") 
     file_.write('\n')
@@ -265,101 +259,103 @@ def h5_converter(file_name):
     file_.write("\n")
     file_.write("[ASSEMBLY]\n")
     file_.write('  title "Westinghouse 17x17"\n')
-    file_.write("  npin   17\n")
-    file_.write("  ppitch 1.26\n")
+    file_.write("  npin 17 \n")
+    file_.write("  ppitch 1.260\n")
+    file_.write("  \n")
+    file_.write("  fuel U21 10.257 94.5 / 2.110 u-234 0.017364\n")
+    file_.write("  fuel U26 10.257 94.5 / 2.619 u-234 0.021947\n")
+    file_.write("  fuel U31 10.257 94.5 / 3.100 u-234 0.026347 \n")
     file_.write("\n")
-    file_.write("  mat gad5 7.407 gd-152 -0.0008\n")
-    file_.write("                 gd-154 -0.00872\n")
-    file_.write("                 gd-155 -0.0592\n")
-    file_.write("                 gd-156 -0.082\n")
-    file_.write("                 gd-157 -0.0628\n")
-    file_.write("                 gd-158 -0.0992\n")
-    file_.write("                 gd-160 -0.0876\n")
-    file_.write("                 o-16   -0.599968\n")
+    file_.write("  cell 1     0.4096 0.418 0.475 / U21 he zirc4\n")
+    file_.write("  cell 2     0.4096 0.418 0.475 / U26 he zirc4\n")
+    file_.write("  cell 3     0.4096 0.418 0.475 / U31 he zirc4\n")
+    file_.write("  cell 4            0.561 0.602 / mod    zirc4      ! guide/instrument tube\n")
+    file_.write("  cell 5            0.418 0.475 /     he zirc4      ! plenum\n")
+    file_.write("  cell 6                  0.475 /        zirc4      ! plug\n")
+    file_.write("  cell 7                  0.475 /        mod        ! empty\n")
     file_.write("\n")
-    file_.write("  mat ifba 3.85  zr-90   4.12271E-01\n")
-    file_.write("                 zr-91   9.09074E-02\n")
-    file_.write("                 zr-92   1.40481E-01\n")
-    file_.write("                 zr-94   1.45465E-01\n")
-    file_.write("                 zr-96   2.39348E-02\n")
-    file_.write("                 b-10    0.09347\n")
-    file_.write("                 b-11    0.09347  \n")
+    file_.write("  lattice LAT21 \n")
+    file_.write("       4\n")
+    file_.write("       1 1\n")
+    file_.write("       1 1 1\n")
+    file_.write("       4 1 1 4\n")
+    file_.write("       1 1 1 1 1\n")
+    file_.write("       1 1 1 1 1 4\n")
+    file_.write("       4 1 1 4 1 1 1\n")
+    file_.write("       1 1 1 1 1 1 1 1\n")
+    file_.write("       1 1 1 1 1 1 1 1 1\n")
     file_.write("\n")
-    file_.write("  fuel U25   10.257 94.5 / 2.5  u-234=0.026347\n")
-    file_.write("  fuel U27   10.257 94.5 / 2.75 u-234=0.026347\n")
-    file_.write("  fuel U29   10.257 94.5 / 2.95 u-234=0.026347\n")
-    file_.write("  fuel G2U25 10.257 94.5 / 2.5 u-234=0.026347 / gad5=0.02\n")
-    file_.write("  fuel G3U25 10.257 94.5 / 2.5 u-234=0.026347 / gad5=0.03\n")
-    file_.write("  fuel U35   10.257 94.5 / 3.15  u-234=0.026347\n")
-    file_.write("  fuel U37   10.257 94.5 / 3.175 u-234=0.026347\n")
-    file_.write("  fuel U39   10.257 94.5 / 3.195 u-234=0.026347\n")
+    file_.write("  lattice LAT26  \n")
+    file_.write("       4\n")
+    file_.write("       2 2\n")
+    file_.write("       2 2 2\n")
+    file_.write("       4 2 2 4\n")
+    file_.write("       2 2 2 2 2\n")
+    file_.write("       2 2 2 2 2 4\n")
+    file_.write("       4 2 2 4 2 2 2\n")
+    file_.write("       2 2 2 2 2 2 2 2\n")
+    file_.write("       2 2 2 2 2 2 2 2 2\n")
     file_.write("\n")
-    file_.write("  cell 1    0.4096 0.418 0.475 / U25 he zirc4 \n")
-    file_.write("  cell 2    0.4096 0.418 0.475 / U27 he zirc4 \n")
-    file_.write("  cell 3    0.4096 0.418 0.475 / U29 he zirc4 \n")
-    file_.write("  cell 4    0.561 0.602 / mod zirc4 \n")
-    file_.write("  cell 5    0.418 0.475 / he zirc4 \n")
-    file_.write("  cell 6    0.475 / zirc4 \n")
-    file_.write("  cell 7    0.475 / mod \n")
+    file_.write("  lattice LAT31 \n")
+    file_.write("       4\n")
+    file_.write("       3 3\n")
+    file_.write("       3 3 3\n")
+    file_.write("       4 3 3 4\n")
+    file_.write("       3 3 3 3 3\n")
+    file_.write("       3 3 3 3 3 4\n")
+    file_.write("       4 3 3 4 3 3 3\n")
+    file_.write("       3 3 3 3 3 3 3 3\n")
+    file_.write("       3 3 3 3 3 3 3 3 3\n")
     file_.write("\n")
-    file_.write("  lattice fuel\n")
-    file_.write("       4  \n")
-    file_.write("       1  3  \n")
-    file_.write("       1  1  1  \n")
-    file_.write("       4  1  1  4  \n")
-    file_.write("       1  1  1  1  1  \n")
-    file_.write("       1  1  1  2  2  4  \n")
-    file_.write("       4  1  1  4  1  1  3  \n")
-    file_.write("       1  1  1  1  1  1  3  3  \n")
-    file_.write("       3  3  3  3  3  3  3  3  3  \n")
-    file_.write('\n')
     file_.write("  lattice PLEN\n")
-    file_.write("       4  \n")
-    file_.write("       5  5  \n")
-    file_.write("       5  5  5  \n")
-    file_.write("       4  5  5  4  \n")
-    file_.write("       5  5  5  5  5  \n")
-    file_.write("       5  5  5  5  5  4  \n")
-    file_.write("       4  5  5  4  5  5  5  \n")
-    file_.write("       5  5  5  5  5  5  5  5  \n")
-    file_.write("       5  5  5  5  5  5  5  5  5  \n")
+    file_.write("       4\n")
+    file_.write("       5 5\n")
+    file_.write("       5 5 5\n")
+    file_.write("       4 5 5 4\n")
+    file_.write("       5 5 5 5 5\n")
+    file_.write("       5 5 5 5 5 4\n")
+    file_.write("       4 5 5 4 5 5 5\n")
+    file_.write("       5 5 5 5 5 5 5 5\n")
+    file_.write("       5 5 5 5 5 5 5 5 5\n")
     file_.write("\n")
     file_.write("  lattice PLUG\n")
-    file_.write("       4  \n")
-    file_.write("       6  6  \n")
-    file_.write("       6  6  6  \n")
-    file_.write("       4  6  6  4  \n")
-    file_.write("       6  6  6  6  6  \n")
-    file_.write("       6  6  6  6  6  4  \n")
-    file_.write("       4  6  6  4  6  6  6  \n")
-    file_.write("       6  6  6  6  6  6  6  6  \n")
-    file_.write("       6  6  6  6  6  6  6  6  6  \n")
+    file_.write("       4\n")
+    file_.write("       6 6\n")
+    file_.write("       6 6 6\n")
+    file_.write("       4 6 6 4\n")
+    file_.write("       6 6 6 6 6\n")
+    file_.write("       6 6 6 6 6 4\n")
+    file_.write("       4 6 6 4 6 6 6\n")
+    file_.write("       6 6 6 6 6 6 6 6\n")
+    file_.write("       6 6 6 6 6 6 6 6 6\n")
     file_.write("\n")
-    file_.write("  lattice GAP\n")
-    file_.write("       4  \n")
-    file_.write("       7  7  \n")
-    file_.write("       7  7  7  \n")
-    file_.write("       4  7  7  4  \n")
-    file_.write("       7  7  7  7  7  \n")
-    file_.write("       7  7  7  7  7  4  \n")
-    file_.write("       4  7  7  4  7  7  7  \n")
-    file_.write("       7  7  7  7  7  7  7  7  \n")
-    file_.write("       7  7  7  7  7  7  7  7  7  \n")
+    file_.write("  lattice GAP \n")
+    file_.write("       4\n")
+    file_.write("       7 7\n")
+    file_.write("       7 7 7\n")
+    file_.write("       4 7 7 4\n")
+    file_.write("       7 7 7 7 7\n")
+    file_.write("       7 7 7 7 7 4\n")
+    file_.write("       4 7 7 4 7 7 7\n")
+    file_.write("       7 7 7 7 7 7 7 7\n")
+    file_.write("       7 7 7 7 7 7 7 7 7\n")
     file_.write("\n")
-    file_.write("  axial  1  6.053  GAP  10.281  PLUG  11.951  fuel  377.711  PLEN  393.711  PLUG  395.381  GAP  397.51\n")
-    file_.write('\n')
-    file_.write("  grid END inc    3.866 1017\n")
-    file_.write("  grid MID zirc4  3.81 875\n")
+    file_.write("  axial  1  6.053 GAP 10.281 PLUG 11.951 LAT21 377.711 PLEN 393.711 PLUG 395.381 GAP 397.51\n")
+    file_.write("  axial  2  6.053 GAP 10.281 PLUG 11.951 LAT26 377.711 PLEN 393.711 PLUG 395.381 GAP 397.51\n")
+    file_.write("  axial  3  6.053 GAP 10.281 PLUG 11.951 LAT31 377.711 PLEN 393.711 PLUG 395.381 GAP 397.51\n")
+    file_.write("\n")
+    file_.write("  grid END inc    3.866 1017 !0.9070 ! grid height (cm), mass (g), loss coef\n")
+    file_.write("  grid MID zirc4  3.810 875  !0.9065 ! grid height (cm), mass (g), loss coef\n")
     file_.write("\n")
     file_.write("  grid_axial\n")
     file_.write("      END  13.884\n")
     file_.write("      MID  75.2\n")
-    file_.write("      MID  127.4\n")
-    file_.write("      MID  179.6\n")
-    file_.write("      MID  231.8\n")
-    file_.write("      MID  284.0\n")
-    file_.write("      MID  336.2\n")
-    file_.write("      END  388.2\n")
+    file_.write("      MID 127.4\n")
+    file_.write("      MID 179.6\n")
+    file_.write("      MID 231.8\n")
+    file_.write("      MID 284.0\n")
+    file_.write("      MID 336.2\n")
+    file_.write("      END 388.2\n")
     file_.write("\n")
     file_.write("  lower_nozzle  ss 6.053 6250.0  ! mat, height, mass (g)\n")
     file_.write("  upper_nozzle  ss 8.827 6250.0  ! mat, height, mass (g)\n")
@@ -372,7 +368,7 @@ def h5_converter(file_name):
     file_.write("  cell P                          0.437 0.484 /                     he ss ! plenum\n")
     file_.write("  cell G                                0.484 /                        ss ! plug/cap\n")
     file_.write("  cell T                                0.538 /                        ss ! thimble plug\n")
-    file_.write("\n")
+    file_.write(" \n")
     file_.write("  rodmap  PY8 \n")
     file_.write("     -\n")
     file_.write("     - -\n")
@@ -593,6 +589,7 @@ def h5_converter(file_name):
     file_.write("     - - - - - - - -\n")
     file_.write("     - - - - - - - - -\n")
     file_.write("\n")
+    file_.write("\n")
     file_.write("  axial   8  13.221 PG8  15.761 PY8  376.441 PL8  383.31 TP8  398.641\n")
     file_.write("  axial  12  13.221 PG12 15.761 PY12 376.441 PL12 383.31 TP12 398.641\n")
     file_.write("  axial  16  13.221 PG16 15.761 PY16 376.441 PL16 383.31 TP16 398.641\n")
@@ -655,9 +652,9 @@ def h5_converter(file_name):
     file_.write("     - - - - - - - - -\n")
     file_.write("\n")
     file_.write("  axial  1    15.131\n")
-    file_.write("        PLUG  17.031 \n")
-    file_.write("         AIC 118.631 \n")
-    file_.write("         B4C 377.711 \n")
+    file_.write("        PLUG  17.031\n") 
+    file_.write("         AIC 118.631\n") 
+    file_.write("         B4C 377.711\n") 
     file_.write("        PLEN 388.411\n")
     file_.write("        PLUG 390.311\n")
     file_.write("\n")
@@ -666,9 +663,8 @@ def h5_converter(file_name):
     file_.write("  npin 17\n")
     file_.write("\n")
     file_.write("  cell 1  0.258 0.382 / he ss\n")
-    file_.write("  cell 2        0.382 /   mod\n")
     file_.write("\n")
-    file_.write("  rodmap  LAT1\n")
+    file_.write("  rodmap  LAT  \n")
     file_.write("     1\n")
     file_.write("     - -\n")
     file_.write("     - - -\n")
@@ -679,19 +675,8 @@ def h5_converter(file_name):
     file_.write("     - - - - - - - -\n")
     file_.write("     - - - - - - - - -\n")
     file_.write("\n")
-    file_.write("  rodmap  LAT2\n")
-    file_.write("     2\n")
-    file_.write("     - -\n")
-    file_.write("     - - -\n")
-    file_.write("     - - - -\n")
-    file_.write("     - - - - -\n")
-    file_.write("     - - - - - -\n")
-    file_.write("     - - - - - - -\n")
-    file_.write("     - - - - - - - -\n")
-    file_.write("     - - - - - - - - -\n")
-    file_.write("\n")
-    file_.write("  axial 1  0.0 LAT1 397.51 \n")
-    file_.write("  axial 2  0.0 LAT2 397.51 \n")
+    file_.write("  axial 1  0.0 LAT 397.51 \n")
+    file_.write("  axial 2  0.0 LAT 397.51 \n")
     file_.write("\n")
     file_.write("[EDITS]\n")
     file_.write("  axial_edit_bounds \n")
@@ -825,7 +810,7 @@ def simulateh5_2_veraH5(vera_name,simulate_file,template_h5):
     print(f"copy {template_h5} {vera_name}")
     os.system(f"copy {template_h5} {vera_name}")
     vera = h5py.File(vera_name,'a')
-    map_ = Maps()
+    map_ = Maps(193)
     for key in key_list:
         print(key)
         if key == 'CORE':
@@ -851,14 +836,11 @@ def vera_writer(sim_file,vera_template):
     h5_converter(sim_file)
     simulateh5_2_veraH5("vera_"+sim_file.replace(".out",".h5"),sim_file.replace(".out",".h5"),vera_template)
 
-
-
-
 class Maps(object):
     """
     Class for the assembly maps used in the simulate extractor.
     """
-    def __init__(self):
+    def __init__(self,number_assemblies):
         self.dict_assembly_map_157 = {}
         self.dict_assembly_map_157[8] =  {8: 1,9:2 ,10:3 ,11:4 ,12:5 ,13:6 , 14:7,15:8 }
         self.dict_assembly_map_157[9] =  {8: 9,9:10,10:11,11:12,12:13,13:14,14:15,15:16}
@@ -868,30 +850,65 @@ class Maps(object):
         self.dict_assembly_map_157[13] = {8:37,9:38,10:39,11:40,12:41}
         self.dict_assembly_map_157[14] = {8:42,9:43,10:44,11:45}
         self.dict_assembly_map_157[15] = {8:46,9:47}
+        
+        self.dict_assembly_map_193 = {}
+        self.dict_assembly_map_193[8] =  {8: 1,9:2 ,10:3 ,11:4 ,12:5 ,13:6 , 14:7,15:8 }
+        self.dict_assembly_map_193[9] =  {8: 9,9:10,10:11,11:12,12:13,13:14,14:15,15:16}
+        self.dict_assembly_map_193[10] = {8:17,9:18,10:19,11:20,12:21,13:22,14:23,15:24}
+        self.dict_assembly_map_193[11] = {8:25,9:26,10:27,11:28,12:29,13:30,14:31,15:32}
+        self.dict_assembly_map_193[12] = {8:33,9:34,10:35,11:36,12:37,13:38,14:39}
+        self.dict_assembly_map_193[13] = {8:40,9:41,10:42,11:43,12:44,13:45,14:46}
+        self.dict_assembly_map_193[14] = {8:47,9:48,10:49,11:50,12:51,13:52}
+        self.dict_assembly_map_193[15] = {8:53,9:54,10:55,11:56}
 
-        array_dict = {0 :{0:None, 1:None,  2:None,  3:None,  4:None,  5:None,  6:47,  7:46,  8:16,  9:None,  10:None  , 11:None, 12:None, 13:None, 14:None},
-                      1 :{0:None, 1:None,  2:None,  3:None,  4:45,    5:44,    6:43,  7:42,  8:15,  9:23,    10:30,     11:None, 12:None, 13:None, 14:None},
-                      2 :{0:None, 1:None,  2:None,  3:41,    4:40,    5:39,    6:38,  7:37,  8:14,  9:22,    10:29,     11:36,   12:None, 13:None, 14:None},
-                      3 :{0:None, 1:None,  2:36,    3:35,    4:34,    5:33,    6:32,  7:31,  8:13,  9:21,    10:28,     11:35,   12:41,   13:None, 14:None},
-                      4 :{0:None, 1:30,    2:29,    3:28,    4:27,    5:26,    6:25,  7:24,  8:12,  9:20,    10:27,     11:34,   12:40,   13:45,   14:None},
-                      5 :{0:None, 1:23,    2:22,    3:21,    4:20,    5:19,    6:18,  7:17,  8:11,  9:19,    10:26,     11:33,   12:39,   13:44,   14:None},
-                      6 :{0:16,   1:15,    2:14,    3:13,    4:12,    5:11,    6:10,  7:9,   8:10,  9:18,    10:25,     11:32,   12:38,   13:43,   14:47},
-                      7 :{0:8,    1:7,     2:6,     3:5,     4:4,     5:3,     6:2,   7:1,   8:2,   9:3,     10:4,      11:5,    12:6,    13:7,    14:8},
-                      8 :{0:47,   1:43,    2:38,    3:32,    4:25,    5:18,    6:10,  7:9,   8:10,  9:11,    10:12,     11:13,   12:14,   13:15,   14:16},                                                           
-                      9 :{0:None, 1:44,    2:39,    3:33,    4:26,    5:19,    6:11,  7:17,  8:18,  9:19,    10:20,     11:21,   12:22,   13:23,   14:None},
-                      10:{0:None, 1:45,    2:40,    3:34,    4:27,    5:20,    6:12,  7:24,  8:25,  9:26,    10:27,     11:28,   12:29,   13:30,   14:None},
-                      11:{0:None, 1:None,  2:41,    3:35,    4:28,    5:21,    6:13,  7:31,  8:32,  9:33,    10:34,     11:35,   12:36,   13:None, 14:None},
-                      12:{0:None, 1:None,  2:None,  3:36,    4:29,    5:22,    6:14,  7:37,  8:38,  9:39,    10:40,     11:41,   12:None, 13:None, 14:None},
-                      13:{0:None, 1:None,  2:None,  3:None,  4:30,    5:23,    6:15,  7:42,  8:43,  9:44,    10:45,     11:None, 12:None, 13:None, 14:None},
-                      14:{0:None, 1:None,  2:None,  3:None,  4:None,  5:None,  6:16,  7:46,  8:47,  9:None,  10:None  , 11:None, 12:None, 13:None, 14:None}} 
+        if number_assemblies == 157:
+            array_dict = {0 :{0:None, 1:None,  2:None,  3:None,  4:None,  5:None,  6:47,  7:46,  8:16,  9:None,  10:None  , 11:None, 12:None, 13:None, 14:None},
+                          1 :{0:None, 1:None,  2:None,  3:None,  4:45,    5:44,    6:43,  7:42,  8:15,  9:23,    10:30,     11:None, 12:None, 13:None, 14:None},
+                          2 :{0:None, 1:None,  2:None,  3:41,    4:40,    5:39,    6:38,  7:37,  8:14,  9:22,    10:29,     11:36,   12:None, 13:None, 14:None},
+                          3 :{0:None, 1:None,  2:36,    3:35,    4:34,    5:33,    6:32,  7:31,  8:13,  9:21,    10:28,     11:35,   12:41,   13:None, 14:None},
+                          4 :{0:None, 1:30,    2:29,    3:28,    4:27,    5:26,    6:25,  7:24,  8:12,  9:20,    10:27,     11:34,   12:40,   13:45,   14:None},
+                          5 :{0:None, 1:23,    2:22,    3:21,    4:20,    5:19,    6:18,  7:17,  8:11,  9:19,    10:26,     11:33,   12:39,   13:44,   14:None},
+                          6 :{0:16,   1:15,    2:14,    3:13,    4:12,    5:11,    6:10,  7:9,   8:10,  9:18,    10:25,     11:32,   12:38,   13:43,   14:47},
+                          7 :{0:8,    1:7,     2:6,     3:5,     4:4,     5:3,     6:2,   7:1,   8:2,   9:3,     10:4,      11:5,    12:6,    13:7,    14:8},
+                          8 :{0:47,   1:43,    2:38,    3:32,    4:25,    5:18,    6:10,  7:9,   8:10,  9:11,    10:12,     11:13,   12:14,   13:15,   14:16},                                                           
+                          9 :{0:None, 1:44,    2:39,    3:33,    4:26,    5:19,    6:11,  7:17,  8:18,  9:19,    10:20,     11:21,   12:22,   13:23,   14:None},
+                          10:{0:None, 1:45,    2:40,    3:34,    4:27,    5:20,    6:12,  7:24,  8:25,  9:26,    10:27,     11:28,   12:29,   13:30,   14:None},
+                          11:{0:None, 1:None,  2:41,    3:35,    4:28,    5:21,    6:13,  7:31,  8:32,  9:33,    10:34,     11:35,   12:36,   13:None, 14:None},
+                          12:{0:None, 1:None,  2:None,  3:36,    4:29,    5:22,    6:14,  7:37,  8:38,  9:39,    10:40,     11:41,   12:None, 13:None, 14:None},
+                          13:{0:None, 1:None,  2:None,  3:None,  4:30,    5:23,    6:15,  7:42,  8:43,  9:44,    10:45,     11:None, 12:None, 13:None, 14:None},
+                          14:{0:None, 1:None,  2:None,  3:None,  4:None,  5:None,  6:16,  7:46,  8:47,  9:None,  10:None  , 11:None, 12:None, 13:None, 14:None}} 
 
-        self.array_assembly_map_15_15 = numpy.zeros([15,15])
-        for i in range(15):
-            for j in range(15):
-                if not array_dict[i][j]:
-                    pass
-                else:
-                    self.array_assembly_map_15_15[i][j] = array_dict[i][j]
+            self.array_assembly_map_15_15 = numpy.zeros([15,15])
+            for i in range(15):
+                for j in range(15):
+                    if not array_dict[i][j]:
+                        pass
+                    else:
+                        self.array_assembly_map_15_15[i][j] = array_dict[i][j]
+        elif number_assemblies == 193:
+            array_dict = {0 :{0:None, 1:None,  2:None,  3:None,  4:56, 5:55, 6:54,  7:53,  8:16,  9:24,  10:32, 11:None, 12:None, 13:None, 14:None},
+                          1 :{0:None, 1:None,  2:52,    3:51,    4:50, 5:49, 6:48,  7:47,  8:15,  9:23,  10:31, 11:39,   12:46,   13:None, 14:None},
+                          2 :{0:None, 1:46,    2:45,    3:44,    4:43, 5:42, 6:41,  7:40,  8:14,  9:22,  10:30, 11:38,   12:45,   13:52,   14:None},
+                          3 :{0:None, 1:39,    2:38,    3:37,    4:36, 5:35, 6:34,  7:33,  8:13,  9:21,  10:29, 11:37,   12:44,   13:51,   14:None},
+                          4 :{0:32,   1:31,    2:30,    3:29,    4:28, 5:27, 6:26,  7:25,  8:12,  9:20,  10:28, 11:36,   12:43,   13:50,   14:56},
+                          5 :{0:24,   1:23,    2:22,    3:21,    4:20, 5:19, 6:18,  7:17,  8:11,  9:19,  10:27, 11:35,   12:42,   13:49,   14:55},
+                          6 :{0:16,   1:15,    2:14,    3:13,    4:12, 5:11, 6:10,  7:9,   8:10,  9:18,  10:26, 11:34,   12:41,   13:48,   14:54},
+                          7 :{0:8,    1:7,     2:6,     3:5,     4:4,  5:3,  6:2,   7:1,   8:2,   9:3,   10:4,  11:5,    12:6,    13:7,    14:8},
+                          8 :{0:54,   1:48,    2:41,    3:34,    4:26, 5:18, 6:10,  7:9,   8:10,  9:11,  10:12, 11:13,   12:14,   13:15,   14:16},                                                           
+                          9 :{0:55,   1:49,    2:42,    3:35,    4:27, 5:19, 6:11,  7:17,  8:18,  9:19,  10:20, 11:21,   12:22,   13:23,   14:24},
+                          10:{0:56,   1:50,    2:43,    3:36,    4:28, 5:20, 6:12,  7:25,  8:26,  9:27,  10:28, 11:29,   12:30,   13:31,   14:32},
+                          11:{0:None, 1:51,    2:44,    3:37,    4:29, 5:21, 6:13,  7:33,  8:34,  9:35,  10:36, 11:37,   12:38,   13:39,  14:None},
+                          12:{0:None, 1:52,    2:45,    3:38,    4:30, 5:22, 6:14,  7:40,  8:41,  9:42,  10:43, 11:44,   12:45,   13:46,  14:None},
+                          13:{0:None, 1:None,  2:46,    3:39,    4:31, 5:23, 6:15,  7:47,  8:48,  9:49,  10:50, 11:51,   12:52,   13:None, 14:None},
+                          14:{0:None, 1:None,  2:None,  3:None,  4:32, 5:24, 6:16,  7:53,  8:54,  9:55,  10:56, 11:None, 12:None, 13:None, 14:None}} 
+
+            self.array_assembly_map_15_15 = numpy.zeros([15,15])
+            for i in range(15):
+                for j in range(15):
+                    if not array_dict[i][j]:
+                        pass
+                    else:
+                        self.array_assembly_map_15_15[i][j] = array_dict[i][j]
 
 class Simulate_Extractor(object):
     """
@@ -1126,7 +1143,7 @@ class Simulate_Extractor(object):
         power_dict = {}
         if rows == 15 and cols == 15:
             number_assemblies = 48
-            core_map = Maps()
+            core_map = Maps(193)
             core_map = core_map.dict_assembly_map_157
         else:
             errmessage = f"The number of assembly rows {rows} and columns {cols} is unrecognized"
@@ -1521,7 +1538,7 @@ class Simulate_Extractor(object):
 
         Written by Brian Andersen. 3/13/2020
         """
-        state_count = -1
+        state_count = 0
         rows = 0
         cols = 0
         axial = 0
@@ -1547,9 +1564,9 @@ class Simulate_Extractor(object):
         
         power_dict = {}
         if rows == 15 and cols == 15:
-            number_assemblies = 47
-            core_map = Maps()
-            core_map = core_map.dict_assembly_map_157
+            number_assemblies = 56
+            core_map = Maps(193)
+            core_map = core_map.dict_assembly_map_193
         else:
             errmessage = f"The number of assembly rows {rows} and columns {cols} is unrecognized"
             return ValueError(errmessage)
@@ -1558,7 +1575,8 @@ class Simulate_Extractor(object):
             power_dict[f"STATE_{(i+1):04d}"] = numpy.zeros([number_pins,number_pins,axial,number_assemblies])
 
         state_list = list(power_dict.keys())
-        state_count = -1
+        print(state_list)
+        state_count = 0
         current_state = state_list[state_count]
         searching_pin_powers = False
         for line in file_lines:
@@ -1576,6 +1594,8 @@ class Simulate_Extractor(object):
                 current_assembly = core_map[int(elems[0])][int(elems[1])] - 1
                 axial_position = int(elems[2]) - 1
             if " Studsvik CMS Steady-State" in line or "PIN.EDT 3PIN  - Peak Pin Power:              Assembly 3D" in line:
+                searching_pin_powers = False
+            elif "PIN.EDT 2PIN  - Peak Pin Power:              Assembly 2D" in line:
                 searching_pin_powers = False
             if searching_pin_powers:
                 line = line.replace(":","")
@@ -1645,7 +1665,6 @@ class Simulate_Extractor(object):
                 searching_heights = False
                 break
             if searching_heights:
-                print(line)
                 line = line.replace("-","")
                 elems = line.strip().split()
                 if elems:
@@ -1725,14 +1744,20 @@ class Calculator(object):
             simulate_midpoints.append((value + simulate_mesh[i+1])/2.)
         for i,value in enumerate(VERA_mesh[:-1]):
             VERA_midpoints.append((value + VERA_mesh[i+1])/2.)
+        print(f"VERA Midpoints {VERA_midpoints}")
         for i,mid in enumerate(VERA_midpoints):
             if mid < simulate_midpoints[0]:
-                VERA_powers[:,:,i,:] = numpy.divide(simulate_powers[:,:,0,:],simulate_midpoints[0])
-                VERA_powers[:,:,i,:] *= mid
+                slope = numpy.divide(simulate_powers[:,:,0,:]-simulate_powers[:,:,1,:],simulate_midpoints[0]-simulate_midpoints[1])
+                intercept = simulate_powers[:,:,1,:] - slope*simulate_midpoints[1]
+                VERA_powers[:,:,i,:] = slope*mid + intercept
             elif mid > simulate_midpoints[-1]:
-                temp = mid - simulate_midpoints[-1]
-                temp /= (simulate_mesh[-1]-simulate_midpoints[-1])
-                VERA_powers[:,:,i,:] = simulate_powers[:,:,-1,:] - simulate_powers[:,:,-1,:]*temp
+                slope = numpy.divide(simulate_powers[:,:,-1,:]-simulate_powers[:,:,-2,:],simulate_midpoints[-1]-simulate_midpoints[-2])
+                intercept = simulate_powers[:,:,-2,:] - slope*simulate_midpoints[-2]
+                VERA_powers[:,:,i,:] = slope*mid + intercept
+                #temp = mid - simulate_midpoints[-1]
+                #temp /= (simulate_mesh[-1]-simulate_midpoints[-1])
+                ##VERA_powers[:,:,i,:] = simulate_powers[:,:,-1,:] - simulate_powers[:,:,-1,:]*temp
+                #VERA_powers[:,:,i,:] = simulate_powers[:,:,-1,:]*temp
             else:
                 for j,value in enumerate(simulate_midpoints):
                     if value < mid and mid < simulate_midpoints[j+1]:
@@ -1743,505 +1768,6 @@ class Calculator(object):
                         break
 
         return VERA_powers
-
-class Full_Core_Cobra_Writer(object):
-    """
-    Writes input files for a full reactor core in CTF utilizing the CTF preprocessor.
-    """
-    def __init__(self):
-        self.directory = None
-        self.radial_assembly_powers = None #The assembly peaking. Not FdeltaH or Fq.
-        self.linear_powers = None #The linear power rate for each assembly
-        self.pin_powers = None    #The three dimensional pin powers of each assembly. 
-        self.rated_powers = None  #The rated power of the reactor core.
-        self.flow_rates = None    #The rated flow rate for the core.
-        self.percent_of_power = None #The percent of rated power the core operated at.
-        self.percent_of_flow = None #The percent of the rated flow which cooled teh core.
-        self.axial_powers = None
-        self.state_list = None
-
-    def extract_h5_data(self,file_name,state):
-        """
-        Opens the provided simulate data file and extracts everything needed to write the CTF preprocessor file.
-        """
-        file_ = h5py.File(file_name,'r')
-
-        self.state_list = list(file_.keys())
-
-
-    def write_input_files(self,state):
-        """
-        Function for writing the CTF preprocessor input files.
-        """
-        os.system(f"cd {self.directory} ; mkdir {state}")
-        self.write_power_file(state)
-        self.write_assembly_file(state)
-        self.write_control_file(state)
-        self.write_geometry_file(state)
-
-    def write_power_file(self,state):
-        """
-        Function for writing the power file for the CTF preprocessor.
-        """
-        f = open(f"{self.directory}/{state}/power.inp",'w')
-        f.write("*************************************************\n")
-        f.write("*       TOTAL POWER AND POWER PROFILES          *\n")
-        f.write("*************************************************\n")
-        f.write("*\n")
-        f.write("******************\n")
-        f.write("*   Total power  *\n")
-        f.write("******************\n")
-        f.write("*\n")
-        f.write("* Power in MWth\n")
-        f.write(f"{self.power.power}\n")
-        f.write("*\n")
-        f.write("************************\n")
-        f.write("*    Power profiles    *\n")
-        f.write("************************\n")
-        f.write("*\n")
-        f.write("* Number of pairs (height/relative power) of axial profile /Heights refered to the beginning of active fuel (BAF)/\n")
-        axial_power_list = self.power.calculate_axial_powers(self.power.assembly_powers)
-        f.write(len(axial_power_list))
-        f.write("*  Height (mm)     Relative power\n")
-        for h,p in zip(self.axial_heights,axial_power_list):
-            f.write(f"{round(h,2)}   {round(p,2)}\n")
-        f.write("*******************************\n")
-        f.write("*Core Radial Power Factors\n")
-        f.write("*******************************\n")
-        f.write("**This specifies the power factors to be\n")
-        f.write("**applied to each whole assembly.  Values\n")
-        f.write("**must normalize to one.\n")
-        a = self.radial_assembly_powers[state]
-        f.write(f"0.000   0.000   0.000   0.000   0.000   0.000   {a[0,47]}   {a[0,46]}   {a[0,47]}   0.000   0.000   0.000   0.000   0.000   0.000\n")           
-        f.write(f"0.000   0.000   0.000   0.000   {a[0,45]}   {a[0,44]}   {a[0,43]}   {a[0,42]}   {a[0,43]}   {a[0,44]}   {a[0,45]}   0.000   0.000   0.000   0.000\n")           
-        f.write(f"0.000   0.000   0.000   {a[0,41]}   {a[0,40]}   {a[0,39]}   {a[0,38]}   {a[0,37]}   {a[0,38]}   {a[0,39]}   {a[0,40]}   {a[0,41]}   0.000   0.000   0.000\n")           
-        f.write(f"0.000   0.000   {a[0,36]}   {a[0,35]}   {a[0,34]}   {a[0,33]}   {a[0,32]}   {a[0,31]}   {a[0,32]}   {a[0,33]}   {a[0,34]}   {a[0,35]}   {a[0,36]}   0.000   0.000\n")           
-        f.write(f"0.000   {a[0,30]}   {a[0,29]}   {a[0,28]}   {a[0,27]}   {a[0,26]}   {a[0,25]}   {a[0,24]}   {a[0,25]}   {a[0,26]}   {a[0,27]}   {a[0,28]}   {a[0,29]}   {a[0,30]}   0.000\n")       
-        f.write(f"0.000   {a[0,23]}   {a[0,22]}   {a[0,21]}   {a[0,20]}   {a[0,19]}   {a[0,18]}   {a[0,17]}   {a[0,18]}   {a[0,19]}   {a[0,20]}   {a[0,21]}   {a[0,22]}   {a[0,23]}   0.000\n")       
-        f.write(f"{a[0,16]}   {a[0,15]}   {a[0,14]}   {a[0,13]}   {a[0,12]}   {a[0,11]}   {a[0,10]}   {a[0,9]}   {a[0,10]}   {a[0,11]}   {a[0,12]}   {a[0,13]}   {a[0,14]}   {a[0,15]}   {a[0,16]}\n")  
-        f.write(f"{a[0,8]}   {a[0,7]}   {a[0,6]}   {a[0,5]}   {a[0,4]}   {a[0,3]}   {a[0,2]}   {a[0,1]}   {a[0,2]}   {a[0,3]}   {a[0,4]}   {a[0,5]}   {a[0,6]}   {a[0,7]}   {a[0,8]}\n")  
-        f.write(f"{a[0,16]}   {a[0,15]}   {a[0,14]}   {a[0,13]}   {a[0,12]}   {a[0,11]}   {a[0,10]}   {a[0,9]}   {a[0,10]}   {a[0,11]}   {a[0,12]}   {a[0,13]}   {a[0,14]}   {a[0,15]}   {a[0,16]}\n")  
-        f.write(f"0.000   {a[0,23]}   {a[0,22]}   {a[0,21]}   {a[0,20]}   {a[0,19]}   {a[0,18]}   {a[0,17]}   {a[0,18]}   {a[0,19]}   {a[0,20]}   {a[0,21]}   {a[0,22]}   {a[0,23]}   0.000\n")  
-        f.write(f"0.000   {a[0,30]}   {a[0,29]}   {a[0,28]}   {a[0,27]}   {a[0,26]}   {a[0,25]}   {a[0,24]}   {a[0,25]}   {a[0,26]}   {a[0,27]}   {a[0,28]}   {a[0,29]}   {a[0,30]}   0.000\n")  
-        f.write(f"0.000   0.000   {a[0,36]}   {a[0,35]}   {a[0,34]}   {a[0,33]}   {a[0,32]}   {a[0,31]}   {a[0,32]}   {a[0,33]}   {a[0,34]}   {a[0,35]}   {a[0,36]}   0.000   0.000\n")      
-        f.write(f"0.000   0.000   0.000   {a[0,41]}   {a[0,40]}   {a[0,39]}   {a[0,38]}   {a[0,37]}   {a[0,38]}   {a[0,39]}   {a[0,40]}   {a[0,41]}   0.000   0.000   0.000\n")      
-        f.write(f"0.000   0.000   0.000   0.000   {a[0,45]}   {a[0,44]}   {a[0,43]}   {a[0,42]}   {a[0,43]}   {a[0,44]}   {a[0,45]}   0.000   0.000   0.000   0.000\n")      
-        f.write(f"0.000   0.000   0.000   0.000   0.000   0.000   {a[0,47]}   {a[0,46]}   {a[0,47]}   0.000   0.000   0.000   0.000   0.000   0.000\n")      
-        f.write("{number of assembly maps}\n")
-        f.write("47\n")
-        f.write("{assembly power factor index map}\n")
-        f.write('0    0    0    0    0    0    47   46   47   0    0    0    0    0    0 \n')     
-        f.write('0    0    0    0    45   44   43   42   43   44   45   0    0    0    0 \n')     
-        f.write('0    0    0    41   40   39   38   37   38   39   40   41   0    0    0 \n')     
-        f.write('0    0    36   35   34   33   32   31   32   33   34   35   36   0    0 \n')     
-        f.write('0    30   29   28   27   26   25   24   25   26   27   28   29   30   0 \n')     
-        f.write('0    23   22   21   20   19   18   17   18   19   20   21   22   23   0 \n')     
-        f.write('16   15   14   13   12   11   10   9    10   11   12   13   14   15   16\n')  
-        f.write('8    7    6    5    4    3    2    1    2    3    4    5    6    7    8 \n') 
-        f.write('16   15   14   13   12   11   10   9    10   11   12   13   14   15   16\n')  
-        f.write('0    23   22   21   20   19   18   17   18   19   20   21   22   23   0 \n')     
-        f.write('0    30   29   28   27   26   25   24   25   26   27   28   29   30   0 \n')     
-        f.write('0    0    36   35   34   33   32   31   32   33   34   35   36   0    0 \n')     
-        f.write('0    0    0    41   40   39   38   37   38   39   40   41   0    0    0 \n')     
-        f.write('0    0    0    0    45   44   43   42   43   44   45   0    0    0    0 \n')     
-        f.write('0    0    0    0    0    0    47   46   47   0    0    0    0    0    0 \n')
-        for i in range(47):
-            two_d_power_map = self.power.calculate_2d_average(self.power.assembly_powers[:,:,:,i])
-            f.write("{"+str(i+1)+"}\n")
-            f.write(two_d_power_map)
-        f.close()
-
-    def write_control_file(self,state):
-        """
-        Writes the control.inp file for the CTF preprocessor.
-        """
-        f = open(f"{self.directory}/{state}/control.inp",'w')
-        f.write("*****************************************************\n")
-        f.write("*                  Main control data                *\n")
-        f.write("*****************************************************\n")
-        f.write("*Title for deck (max 30 characters)\n")
-        f.write("Full Core Training Library\n")
-        f.write("{parallel}\n")
-        f.write("yes\n")
-        f.write("**\n")
-        f.write("*Print Rod/Channel map data to Group 17 on deck.inp?\n")
-        f.write("** MAPS = 1 -- yes\n")
-        f.write("** MAPS = 0 -- no\n")
-        f.write("** MAPS\n")
-        f.write("1\n")
-        f.write("** Name for the HDF5 file - enter if MAPS=1\n")
-        f.write("PWR_FA\n")
-        f.write("** Name for the VTK file - enter if MAPS=1\n")
-        f.write("PWR_FA\n")
-        f.write("**\n")
-        f.write("*Units options\n")
-        f.write("**1 - SI output*\n")
-        f.write("**3 - US output*\n")
-        f.write("1\n")
-        f.write("* EPSO\n")
-        f.write("0.001\n")
-        f.write("* OITMAX\n")
-        f.write("5\n")
-        f.write("* IITMAX\n")
-        f.write("40\n")
-        f.write("* COURANT\n")
-        f.write("0.8\n")
-        f.write("***************************\n")
-        f.write("*        MODELS           *\n")
-        f.write("***************************\n")
-        f.write("*\n")
-        f.write("*******************************************\n")
-        f.write("*     Rod friction factor correlation     *\n")
-        f.write("*******************************************\n")
-        f.write("**1 -- original correlation               \n")
-        f.write("**2 -- COBRA-3C                           \n")
-        f.write("**3 -- FLICA-4                            \n")
-        f.write("2\n")
-        f.write("*******************************************\n")
-        f.write("*    Entrainment and deposition model     *\n")
-        f.write("*******************************************\n")
-        f.write("**0 -- neither entrainment nor deposition \n")
-        f.write("**1 -- original model                     \n")
-        f.write("*******************************************\n")
-        f.write("1\n")
-        f.write("********************************************************************\n")
-        f.write("*                  Mixing and void drift model                     *\n")
-        f.write("********************************************************************\n")
-        f.write("**0 -- neither mixing nor void drift                               \n")
-        f.write("**1 -- user specified constant (two-phase)turbulent mixing coeff.   \n")
-        f.write("**2 -- single-phase mixing coeff. according to Rogers and Rosehart \n")
-        f.write("**3 -- user specified constant single-phase turbulent mixing coeff.\n")
-        f.write("********************************************************************\n")
-        f.write("*IMIX\n")
-        f.write("3\n")
-        f.write("********************************************************************\n")
-        f.write("*        MIXING/VOID DRIFT PARAMETERS - skip if IMIX=0             *\n")
-        f.write("********************************************************************\n")
-        f.write("**AAAK - Equilibrium distribution weighting factor Km in \n")
-        f.write("**void drift model (0.0 void drift inactive / 1.4 suggested value)\n")
-        f.write("**Enter for IMIX=1, 2, and 3\n")
-        f.write("1.4\n")
-        f.write("**BETA  - Constant mixing coefficient, Enter for IMIX=1 and 3\n")
-        f.write("**Mixing coefficient for two-phase if IMIX=1\n")
-        f.write("**Mixing coefficient for single-phase if IMIX=3\n")
-        f.write("0.05\n")
-        f.write("**DFROD - Outside rod diameter, Enter only for IMIX=2\n")
-        f.write("*9.5e-3\n")
-        f.write("**THETM - Ratio between maximun two-phase turbulent mixing coeff. \n")
-        f.write("**and single-phase turbulent mixing coeff. \n")
-        f.write("**Enter only for IMIX=2 and 3\n")
-        f.write("5.0\n")
-        f.write("*\n")
-        f.write("***************************************\n")
-        f.write("*             Solver                  *\n")
-        f.write("***************************************\n")
-        f.write("**0 -- Direct Gaussian                \n")
-        f.write("**1 -- BSGS with ILUT preconditioner  \n")
-        f.write("**2 -- GMRES with no preconditioner   \n")
-        f.write("**3 -- BSGS with no preconditioner    \n")
-        f.write("**4 -- GMRES with ILUT preconditioner \n")
-        f.write("***************************************\n")
-        f.write("5\n")
-        f.write("*\n")
-        f.write("*****************************************\n")
-        f.write("*         INITIAL CONDITIONS            *   \n")
-        f.write("*****************************************\n")
-        f.write("*Initialization mass flow rate (kg/s)\n")
-        f.write("{}\n".format(self.mass_flux))
-        f.write("*Initialization temperature for the rods (C)\n")
-        f.write("{}\n".format(self.rod_temperature))
-        f.write("*Reference pressure (bar)\n")
-        f.write("{}\n".format(self.pressure))
-        f.write("*Reference Temperature [C]\n")
-        f.write("-{}\n".format(self.inlet_temp))
-        f.write("*Reference enthalpy for noncondesables (kJ/kg)\n")
-        f.write("288.42\n")
-        f.write("*Fraction of heat produced by rods that is\n")
-        f.write("*released directly to the coolant (direct heat)\n")
-        f.write("0.02\n")
-        f.write("*****************************************\n")
-        f.write("*      GLOBAL BOUNDARY CONDITIONS       *\n")
-        f.write("*****************************************\n")
-        f.write("**\n")
-        f.write("*************************************\n")
-        f.write("*      BOUNDARY CONDITION TYPE      *\n")
-        f.write("*************************************\n")
-        f.write("**1 -- pressure and enthalpy        \n")
-        f.write("**2 -- mass flow rate and enthalpy  \n")
-        f.write("**3 -- mass flow rate only          \n")
-        f.write("**4 -- mass source                  \n")
-        f.write("**5 -- pressure sink                \n")
-        f.write("*************************************\n")
-        f.write("*Inlet boundary condition type\n")
-        f.write("2\n")
-        f.write("*Outlet boundaty condition type\n")
-        f.write("3\n")
-        f.write("***************************************\n")
-        f.write("*      BOUNDARY CONDITION VALUES      *\n")
-        f.write("***************************************\n")
-        f.write("*Total inlet mass flow rate (kg/s) \n")
-        f.write("*Only if BC type is 2 or 3 at inlet (0.0 otherwise)\n")
-        f.write("{}\n".format(self.mass_flux))
-        f.write("*Inlet Temperature [C]\n")
-        f.write("*Only if BC type is 1 or 2 at inlet (0.0 otherwise)\n")
-        f.write("-{}\n".format(self.inlet_temp))
-        f.write("*Outlet Temperature [C]\n")
-        f.write("*Only if BC type is 1 or 2 at outlet (0.0 otherwise)\n")
-        f.write("0.0\n")
-        f.write("*Inlet Pressure (bar)\n")
-        f.write("*Only if BC type is 1 or 5 at inlet (0.0 otherwise)\n")
-        f.write("0.0\n")
-        f.write("*Outlet Pressure (bar)\n")
-        f.write("*Only if BC type is 1 or 5 at outlet (0.0 otherwise)\n")
-        f.write("0.0\n")
-        f.write("***************************************\n")
-        f.write("*      Time Domain Data               *\n")
-        f.write("***************************************\n")
-        f.write("*DTMIN\n")
-        f.write("0.000001\n")
-        f.write("*DTMAX\n")
-        f.write("0.1\n")
-        f.write("*TEND\n")
-        f.write("0.1\n")
-        f.write("*RTWFP\n")
-        f.write("1000.0\n")
-        f.write("*MAXITS\n")
-        f.write("10000\n")
-        f.write("{convergence criteria}\n")
-        f.write(f"{self.control.convergence}\n")
-        f.write(f"{self.control.convergence}\n")
-        f.write(f"{self.control.convergence}\n")
-        f.write(f"{self.control.convergence}\n")
-        f.write(f"{self.control.convergence}\n")
-        f.write("{edit channels}\n")
-        f.write("1\n")
-        f.write("{edit gaps}\n")
-        f.write("1\n")
-        f.write("{edit rods}\n")
-        f.write("1\n")
-        f.write("{edit dnb}\n")
-        f.write("1\n")
-        f.close()
-
-    def write_geo_file(self,state):
-        """
-        WRites the geo.inp file for the CTF preprocessor
-        """
-        f = open(f"{self.directory}/{state}/geo.inp",'w')
-        f.write("*0 represnets void\n")
-        f.write("*number of fuel assemblies\n")
-        f.write("157\n")
-        f.write("*NUMBER OF FUEL ASSEMBLY TYPES:  \n")
-        f.write("1\n")
-        f.write("*DIMENSION OF CORE MESH (columns (x),rows (y)): \n")
-        f.write("15  15\n")
-        f.write("*OPTION FOR CORE MODELING\n")
-        f.write("** 1 = Model as shown in the following map\n")
-        f.write("** 4 = Model using quarter core symmetry\n")
-        f.write("** 8 = Model using eighth core symmetry\n")
-        f.write("** Note: If using options 4 or 8, make a map of \n")
-        f.write("**       the full core and the preprocessor will\n")
-        f.write("**       take care of breaking it down into quarter\n")
-        f.write("**       or eighth symmetry\n")
-        f.write("{symmetry option}\n")
-        f.write("4\n")
-        f.write("*FUEL ASSEMBLY MAP\n")
-        f.write("** Note: Do not pad this map with zeros around the\n")
-        f.write("**  1   2   3   4   5   6   7   8   9   10  11  12  13  14  15\n")
-        f.write("1   0   0   0   0   0   0   1   1   1   0   0   0   0   0   0 \n")
-        f.write("2   0   0   0   0   1   1   1   1   1   1   1   0   0   0   0 \n")
-        f.write("3   0   0   0   1   1   1   1   1   1   1   1   1   0   0   0 \n")
-        f.write("4   0   0   1   1   1   1   1   1   1   1   1   1   1   0   0 \n")
-        f.write("5   0   1   1   1   1   1   1   1   1   1   1   1   1   1   0 \n")
-        f.write("6   0   1   1   1   1   1   1   1   1   1   1   1   1   1   0 \n")
-        f.write("7   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1\n")
-        f.write("8   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1 \n")
-        f.write("9   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1\n")
-        f.write("10  0   1   1   1   1   1   1   1   1   1   1   1   1   1   0 \n")
-        f.write("11  0   1   1   1   1   1   1   1   1   1   1   1   1   1   0 \n")
-        f.write("12  0   0   1   1   1   1   1   1   1   1   1   1   1   0   0 \n")
-        f.write("13  0   0   0   1   1   1   1   1   1   1   1   1   0   0   0 \n")
-        f.write("14  0   0   0   0   1   1   1   1   1   1   1   0   0   0   0 \n")
-        f.write("15  0   0   0   0   0   0   1   1   1   0   0   0   0   0   0 \n")
-        f.write("*AXIAL MESH INFORMATION\n")
-        f.write("*Number of axial groups\n")
-        f.write("1\n")
-        f.write("*Z(mm) top of group   Number of Scalar Cells from last zone to this point\n")
-        f.write("3657.6    24\n")
-        f.write("*Note that you must put the top of the model as the last group\n")
-        f.write("*ALLOCATION OF FUEL TYPES\n")
-        f.write("assem.inp\n")
-        f.close()
-
-    def write_assembly_file(self,state):
-        """
-        Writest the assembly.inp file for the CTF preprocessor
-        """
-        f = open(f"{self.directory}/{state}/assembly.inp",'w')
-        f.write("**********************************************\n")
-        f.write("*          FUEL ASSEMBLY PARAMETERS          *\n")
-        f.write("**********************************************\n")
-        f.write("*\n")
-        f.write("****************************************\n")
-        f.write("*  General parameter of fuel assembly  *\n")
-        f.write("****************************************\n")
-        f.write("*\n")
-        f.write("*Numer of fuel rods\n")
-        f.write(f"{self.assembly.number_fuel_rods}\n")
-        f.write("*Size of fuel array\n")
-        f.write(f"{self.assembly.size}\n")
-        f.write("*Number of guide tubes/water rods\n")
-        f.write(f"{self.assembly.number_water_rods}\n")
-        f.write("*Active length (mm)\n")
-        f.write(f"{self.assembly.length}\n")
-        f.write("*Start of active length(mm)\n")
-        f.write("*{active region start}\n")
-        f.write(f"*{self.assembly.active_start}\n")
-        f.write("*Bundle pitch (mm)\n")
-        f.write(f"{self.assembly.pitch}\n")
-        f.write("*Walls around bundle?\n")
-        f.write("**0=No\n")
-        f.write("**1=Yes\n")
-        f.write("0\n")
-        f.write("**\n")
-        f.write("*Type of heated elements\n")
-        f.write("**0=Nuclear Fuel Rods\n")
-        f.write("**1=Electric Heater Tubes\n")
-        f.write("0\n")
-        f.write("*Conduction Model Flag\n")
-        f.write("** 0 - No conduction\n")
-        f.write("** 1 - Radial conduction\n")
-        f.write("** 2 - Radial and axial conduction\n")
-        f.write("** 3 - Radial, axial, and azimuthal conduction\n")
-        f.write("1\n")
-        f.write("**\n")
-        f.write("***************************************************\n")
-        f.write("**           Heater Tube Parameters               *\n")
-        f.write("***************************************************\n")
-        f.write("*{heater types}\n")
-        f.write("***************************************************\n")
-        f.write("*        Cladding and fuel pellet parameters      *\n")
-        f.write("**DO NOT ENTER IF THERE ARE NO NUCLEAR FUEL RODS  *\n")
-        f.write("***************************************************\n")
-        f.write("***Fuel pellet diameter (mm)\n")
-        f.write(f"{self.assembly.pin_diameter}\n")
-        f.write("***Radial nodes in the fuel pellet\n")
-        f.write("8\n")
-        f.write("***Cladding inner diameter (mm)\n")
-        f.write(f"{self.assembly.cladding_ID}\n")
-        f.write("***Cladding outer diameter (mm)\n")
-        f.write(f"{self.assembly.cladding_OD}\n")
-        f.write("***Pin pitch (mm)\n")
-        f.write(f"{self.assembly.pin_pitch}\n")
-        f.write("***Therical density of the fuel pellet (%) (/ i.e.: 95%)\n")
-        f.write(f"{self.assembly.theoretical_density}\n")
-        f.write("***Constant gap conductance of the gas (W/m**2-K)\n")
-        f.write(f"{self.assembly.gap_conductance}\n")
-        f.write("***Cladding material\n")
-        f.write("Zircaloy\n")
-        f.write("******************************************\n")
-        f.write("*   Guide tubes / water rods parameters  *\n")
-        f.write("**DO NOT ENTER IF NO GUIDE TUBES         *\n")
-        f.write("******************************************\n")
-        f.write("***Inner diameter of guide tube/water rod (mm)\n")
-        f.write(f"{self.assembly.water_rod_diameter}\n")
-        f.write("***Outer diameter of guide tube/water rod  (mm)\n")
-        f.write(f"{self.assembly.outer_water_diameter}\n")
-        f.write("***Guide tube/water rod material\n")
-        f.write("Zircaloy\n")
-        f.write("**********************************************\n")
-        f.write("***Guide tube positions in the fuel lattice starting from lower left corner\n")
-        f.write("***Use X Y format\n")
-        for x,y in zip(self.assembly.guide_tube_rows,self.assembly.guide_tube_columns):
-            f.write(f" {x}   {y}\n")
-        f.write("******************************\n")
-        f.write("*      Spacer grids data     *\n")
-        f.write("******************************\n")
-        f.write("*\n")
-        f.write("*Number of spacer grids\n")
-        f.write(f"{self.assembly.number_spacer_grids}\n")
-        f.write("*Sp.grid  Initial height (mm)  Final height (mm)   Minor loss coefficient /Heights refered to the beginning of active fuel (BAF)/\n")
-        for i in range(self.assembly.number_spacer_grids):
-            f.write(f"     {i+1}")
-            f.write(f"     {self.assembly.spacer_grid_initial_height[i]}")
-            f.write(f"	   {self.assembly.spacer_grid_final_height[i]}")
-            f.write(f"     {self.assembly.spacer_grid_}\n".format(self.spacerGridLossCoeff[i]))
-        f.write("\n")
-        f.close()
-
-class Assembly(object):
-    """
-    Class to store values for the CTF preprocessor assembly file.
-    """
-    def __init__(self):
-        self.number_fuel_rods = 264
-        self.size = None
-        self.number_water_rods = None
-        self.length = None
-        self.active_start = None
-        self.pitch = None
-        self.pin_diameter = None
-        self.cladding_ID = None        
-        self.cladding_OD = None    
-        self.pin_pitch = None
-        self.theoretical_density = None
-        self.gap_conductance = None
-        self.inner_water_rod_diameter = None
-        self.outer_water_rod_diameter = None    
-        self.guide_tube_columns = None
-        self.guide_tube_rows = None
-        self.number_spacer_grids = None
-        self.spacer_grid_initial_height = None
-        self.spacer_grid_final_height = None
-        self.spacer_grid_loss_ceofficient = None
-
-class Control(object):
-    """
-    Class for the values to store the inputs used to write the control file for the CTF preprocessor.
-    """
-    def __init__(self):
-        self.convergence = None
-        self.inlet_temp = None
-        self.mass_flux = None
-
-class Power(object):
-    """
-    Class for calculating the linear power rate.
-    """
-    def __init__(self):
-        self.assembly_powers = None
-
-    @staticmethod
-    def calculate_2d_average(powers):
-        """
-        Returns the two dimensional string map of averaged assembly
-        powers to be written into the CTF preprocessor.
-        """
-        rows,columns,heights = powers.shape
-        planar_sum = numpy.sum(powers,axis=2)
-        total_average = numpy.average(planar_sum)
-        total_average *= 264./289.
-        map_string = ""
-        for r in range(rows):
-            for c in range(columns):
-                rod_sum = numpy.sum(powers[r,c,:])
-                map_string += "{}  ".format(round(rod_sum/total_average,4))
-            map_string += "\n"
-
-        return map_string
-
-    def calculate_axial_powers(powers):
-        """
-        Calculates the axial power distribution for the core.
-        """
-        rows,columns,heights,assemblies = powers.shape
-        power_list = []
-        for h in heights:
-            power_list.append(numpy.sum(powers[:,:,h,:]))
-        ave_ = numpy.average(power_list)
-        power_list = [power/ave_ for power in power_list]
-
-        return power_list
 
 def get_cell_column(number):
     """
