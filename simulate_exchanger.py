@@ -127,7 +127,8 @@ def h5_converter(file_name):
                 file_.write(f"    power {current_power}\n")
                 file_.write(f"    flow {current_flow}\n")  
                 file_.write(f"    tinlet {current_tinlet} F\n")
-                file_.write("[STATE] deplete EFPD 0.0\n")
+                file_.write("     deplete EFPD 0.0\n")
+                file_.write(f"     boron {boron[i]}")
             else:
                 file_.write("[STATE]  ")
                 if current_tinlet == core_inlet_temps[i]:
@@ -150,7 +151,7 @@ def h5_converter(file_name):
                 else:
                     current_power = power[i]
                     file_.write(f"power {current_power} ; ")
-                file_.write(f" deplete EFPD {exposure_efpds[i]} \n")
+                file_.write(f" deplete EFPD {exposure_efpds[i]} ; boron {boron[i]} \n")
 
     file_.write("[CORE]\n")
     file_.write("  name   WBN\n")
