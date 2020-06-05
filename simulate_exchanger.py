@@ -9,6 +9,7 @@ from matplotlib import pyplot as plt
 def h5_converter(file_name):
     """
     Function for converting simulate output files to an H5 File using the VERA naming conventions.
+    Also generates a VERA Input file based off the read output file. 
     """
     file_ = open(file_name,'r')
     file_lines = file_.readlines()
@@ -49,7 +50,8 @@ def h5_converter(file_name):
     file_ = h5py.File(file_name.replace(".out",".h5"),'w')
     g1 = file_.create_group("CORE")
     g1.create_dataset("apitch",data=apitch)
-    g1.create_dataset("axial_mesh",data=vera_mesh)
+    g1.create_dataset("axial_mesh",data=axial_mesh)
+    #g1.create_dataset("axial_mesh",data=vera_mesh)
     #g1.create_dataset("nominal_linear_heat_rate",data=nominal_linear_power_rate)
     g1.create_dataset('core_map',data=maps.array_assembly_map_15_15.astype(int))
     #g1.create_dataset('rated_flow',data=core_flower)
@@ -64,10 +66,6 @@ def h5_converter(file_name):
         vera_powers = Calculator.interpolate_powers_between_meshes(axial_mesh,
                                                                    vera_mesh,
                                                                    pin_power_dictionary[key])
-        print(axial_mesh)
-        print(pin_power_dictionary[key][0,0,:,9])
-        print(vera_mesh)
-        print(vera_powers[0,0,:,9])
         #g1.create_dataset("pin_powers",data=pin_power_dictionary[key])
         g1.create_dataset("pin_powers",data=vera_powers)
         g1.create_dataset("exposure_efpds",data=exposure_efpds[i])
