@@ -110,7 +110,7 @@ def h5_converter(file_name):
                 file_.write("    feedback    on\n")
                 file_.write("    crud        on\n")
                 file_.write("    search   boron\n")
-                file_.write("!!    cool_chem 35E-6  2.2  0.19  3.5  1.8\n")
+                file_.write("!!    cool_chem 35E-6  2.2  0.19  4.0  1.8\n")
                 file_.write("\n")
                 file_.write("    rodbank SA 230 \nSB 230\n")
                 file_.write("            SC 230\n")
