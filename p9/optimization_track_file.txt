@@ -1,0 +1,2999 @@
+Beginning Optimization 
+Current generation of the optimization 0 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution initial_child_0
+Best Fitness 208.33333333333334
+max_boron for best solution: 590.15  
+PinPowerPeaking for best solution: 2.654  
+FDeltaH for best solution: 1.746  
+Best Solution Genome
+21  21  26p20  21  26p24  21  g1  31p16  26p20  31p8  
+21  26  26p24  i1  21  26p20  26p24  26p16  31p8  21  
+31p8  26p16  21  21  21  31p12  26p24  R  i2  21  
+i2  21  R  R  R  R  R  R  R  R  
+
+Worst Solution initial_parent_52
+Worst Fitness 14.45086705202312
+max_boron for worst solution: 857.805  
+PinPowerPeaking for worst solution: 3.812  
+FDeltaH for worst solution: 2.607  
+Worst Solution Genome
+31p24  21  21  26p16  21  26  21  26  g1  i1  
+21  26p24  21  26p16  21  26p20  g1  26p20  26p24  21  
+21  31p16  21  31p16  21  26  26  R  31p16  i1  
+31p12  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 551.794
+max_boron: Average = 796.5165125
+max_boron: Worst = 1204.296
+PinPowerPeaking: Best = 2.392
+PinPowerPeaking: Average = 3.059725
+PinPowerPeaking: Worst = 4.193
+FDeltaH: Best = 1.646
+FDeltaH: Average = 2.0374375000000002
+FDeltaH: Worst = 2.8
+
+
+
+Current generation of the optimization 0 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_0_40
+Best Fitness 250.0
+max_boron for best solution: 528.712  
+PinPowerPeaking for best solution: 2.631  
+FDeltaH for best solution: 1.734  
+Best Solution Genome
+21  31p8  26p24  26p20  26p16  26p24  26p24  26p16  i1  31p24  
+21  21  21  21  21  31p16  26p20  31p24  31p24  21  
+21  21  21  21  26p20  g2  31p16  R  26  26  
+i2  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_0_70
+Worst Fitness 13.297872340425531
+max_boron for worst solution: 913.667  
+PinPowerPeaking for worst solution: 3.251  
+FDeltaH for worst solution: 2.205  
+Worst Solution Genome
+21  26  21  21  26p20  26  21  26p16  31p12  26p24  
+26p16  21  26p16  21  31  26p24  31p24  31  21  26  
+31p12  31p24  i1  21  31p16  31p12  26p16  R  21  21  
+21  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 528.712
+max_boron: Average = 770.5842500000001
+max_boron: Worst = 1239.627
+PinPowerPeaking: Best = 2.392
+PinPowerPeaking: Average = 2.91875
+PinPowerPeaking: Worst = 4.394
+FDeltaH: Best = 1.646
+FDeltaH: Average = 1.9413125
+FDeltaH: Worst = 2.923
+
+
+
+Current generation of the optimization 1 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_1_17
+Best Fitness 357.14285714285717
+max_boron for best solution: 524.346  
+PinPowerPeaking for best solution: 2.516  
+FDeltaH for best solution: 1.697  
+Best Solution Genome
+21  31p8  26p24  26p20  26p16  31p24  26p24  26p16  i1  26p24  
+21  21  21  21  21  31p16  26p20  31p24  31p24  21  
+21  21  21  21  26p20  g2  31p16  R  26  26  
+i2  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_0_29
+Worst Fitness 13.440860215053764
+max_boron for worst solution: 788.214  
+PinPowerPeaking for worst solution: 3.375  
+FDeltaH for worst solution: 2.212  
+Worst Solution Genome
+i2  31p8  21  21  i1  31p16  31p24  26p24  26  26p24  
+26p20  21  21  31p12  21  21  21  21  21  26p16  
+i1  26p20  21  21  26p20  26p20  31p16  R  26p20  31p24  
+21  26p20  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 458.967
+max_boron: Average = 747.6175375
+max_boron: Worst = 1239.627
+PinPowerPeaking: Best = 2.392
+PinPowerPeaking: Average = 2.8039625
+PinPowerPeaking: Worst = 3.578
+FDeltaH: Best = 1.646
+FDeltaH: Average = 1.8638249999999998
+FDeltaH: Worst = 2.328
+
+
+
+Current generation of the optimization 2 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_2_43
+Best Fitness 476.1904761904762
+max_boron for best solution: 543.133  
+PinPowerPeaking for best solution: 2.483  
+FDeltaH for best solution: 1.645  
+Best Solution Genome
+31p24  21  21  26p20  26p24  21  31p8  i2  26p20  26  
+21  31p24  26p20  26p20  21  26p24  26p24  31p16  21  21  
+21  26  31  g2  21  31  21  R  21  21  
+26  31p24  R  R  R  R  R  R  R  R  
+
+Worst Solution initial_parent_23
+Worst Fitness 14.064697609001406
+max_boron for worst solution: 679.703  
+PinPowerPeaking for worst solution: 3.578  
+FDeltaH for worst solution: 2.328  
+Worst Solution Genome
+21  i1  26p24  21  21  26p24  26p20  31  21  21  
+21  26p24  31p12  21  26p16  g2  g1  26p16  g2  21  
+26p24  i1  26p16  21  21  21  26p20  R  31p24  26p24  
+i2  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 453.048
+max_boron: Average = 717.727875
+max_boron: Worst = 1066.452
+PinPowerPeaking: Best = 2.358
+PinPowerPeaking: Average = 2.7169125000000003
+PinPowerPeaking: Worst = 3.578
+FDeltaH: Best = 1.609
+FDeltaH: Average = 1.8052750000000004
+FDeltaH: Worst = 2.328
+
+
+
+Current generation of the optimization 3 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_2_43
+Best Fitness 277.77777777777777
+max_boron for best solution: 543.133  
+PinPowerPeaking for best solution: 2.483  
+FDeltaH for best solution: 1.645  
+Best Solution Genome
+31p24  21  21  26p20  26p24  21  31p8  i2  26p20  26  
+21  31p24  26p20  26p20  21  26p24  26p24  31p16  21  21  
+21  26  31  g2  21  31  21  R  21  21  
+26  31p24  R  R  R  R  R  R  R  R  
+
+Worst Solution child_3_61
+Worst Fitness 12.300123001230013
+max_boron for worst solution: 841.28  
+PinPowerPeaking for worst solution: 2.967  
+FDeltaH for worst solution: 1.984  
+Worst Solution Genome
+g2  31p16  26p20  i2  21  26  26p20  26p24  26  21  
+21  21  31p16  21  21  21  26p16  21  31p12  31p8  
+21  26p20  21  i2  21  g2  i2  R  26  26  
+21  26  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 453.048
+max_boron: Average = 696.250675
+max_boron: Worst = 1066.452
+PinPowerPeaking: Best = 2.358
+PinPowerPeaking: Average = 2.6867375000000004
+PinPowerPeaking: Worst = 3.343
+FDeltaH: Best = 1.609
+FDeltaH: Average = 1.7824749999999998
+FDeltaH: Worst = 2.171
+
+
+
+Current generation of the optimization 4 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_2_43
+Best Fitness 140.8450704225352
+max_boron for best solution: 543.133  
+PinPowerPeaking for best solution: 2.483  
+FDeltaH for best solution: 1.645  
+Best Solution Genome
+31p24  21  21  26p20  26p24  21  31p8  i2  26p20  26  
+21  31p24  26p20  26p20  21  26p24  26p24  31p16  21  21  
+21  26  31  g2  21  31  21  R  21  21  
+26  31p24  R  R  R  R  R  R  R  R  
+
+Worst Solution child_4_36
+Worst Fitness 11.210762331838565
+max_boron for worst solution: 832.519  
+PinPowerPeaking for worst solution: 3.552  
+FDeltaH for worst solution: 2.384  
+Worst Solution Genome
+21  21  31p12  21  21  26p16  26p24  31p24  21  26  
+i2  31p24  31p12  21  26  26p24  21  31p24  21  21  
+g2  21  31  31p24  26p24  26  26p20  R  21  21  
+26  26p16  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 453.048
+max_boron: Average = 679.8333875000001
+max_boron: Worst = 1066.452
+PinPowerPeaking: Best = 2.319
+PinPowerPeaking: Average = 2.6456125
+PinPowerPeaking: Worst = 3.552
+FDeltaH: Best = 1.609
+FDeltaH: Average = 1.7564500000000003
+FDeltaH: Worst = 2.384
+
+
+
+Current generation of the optimization 5 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_5_33
+Best Fitness 285.7142857142857
+max_boron for best solution: 522.244  
+PinPowerPeaking for best solution: 2.441  
+FDeltaH for best solution: 1.573  
+Best Solution Genome
+26p24  21  21  26p20  26p24  21  31p8  i2  26p20  26  
+21  31p16  26p20  26p20  21  26p24  31p24  31p24  21  21  
+21  26  31  g2  31p24  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_4_71
+Worst Fitness 12.853470437017995
+max_boron for worst solution: 670.041  
+PinPowerPeaking for worst solution: 3.52  
+FDeltaH for worst solution: 2.315  
+Worst Solution Genome
+21  g2  21  21  21  26p20  31p12  21  21  21  
+26p24  26p24  21  26p16  31p16  21  26p20  31p8  26p16  31  
+g2  26p20  21  i1  26p20  26p24  21  R  21  26p24  
+31p16  31p16  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 453.048
+max_boron: Average = 666.2284999999999
+max_boron: Worst = 989.82
+PinPowerPeaking: Best = 2.319
+PinPowerPeaking: Average = 2.58035
+PinPowerPeaking: Worst = 3.52
+FDeltaH: Best = 1.573
+FDeltaH: Average = 1.7178499999999999
+FDeltaH: Worst = 2.315
+
+
+
+Current generation of the optimization 6 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_5_33
+Best Fitness 169.4915254237288
+max_boron for best solution: 522.244  
+PinPowerPeaking for best solution: 2.441  
+FDeltaH for best solution: 1.573  
+Best Solution Genome
+26p24  21  21  26p20  26p24  21  31p8  i2  26p20  26  
+21  31p16  26p20  26p20  21  26p24  31p24  31p24  21  21  
+21  26  31  g2  31p24  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_6_41
+Worst Fitness 14.367816091954023
+max_boron for worst solution: 585.288  
+PinPowerPeaking for worst solution: 2.927  
+FDeltaH for worst solution: 1.893  
+Worst Solution Genome
+21  26p24  21  31p24  26p20  31p16  31  21  31p16  21  
+21  26p24  26p24  i2  21  21  26p24  31  21  21  
+i2  26p24  21  31p12  26  31p24  26p20  R  26p20  21  
+26p20  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 469.321
+max_boron: Average = 663.6472125
+max_boron: Worst = 989.82
+PinPowerPeaking: Best = 2.319
+PinPowerPeaking: Average = 2.5307
+PinPowerPeaking: Worst = 3.013
+FDeltaH: Best = 1.573
+FDeltaH: Average = 1.6880499999999998
+FDeltaH: Worst = 1.934
+
+
+
+Current generation of the optimization 7 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_5_33
+Best Fitness 151.5151515151515
+max_boron for best solution: 522.244  
+PinPowerPeaking for best solution: 2.441  
+FDeltaH for best solution: 1.573  
+Best Solution Genome
+26p24  21  21  26p20  26p24  21  31p8  i2  26p20  26  
+21  31p16  26p20  26p20  21  26p24  31p24  31p24  21  21  
+21  26  31  g2  31p24  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_7_24
+Worst Fitness 15.479876160990711
+max_boron for worst solution: 621.43  
+PinPowerPeaking for worst solution: 2.644  
+FDeltaH for worst solution: 1.745  
+Worst Solution Genome
+21  21  26p20  21  26p24  21  g1  31p16  26p20  31p8  
+21  26  26p16  i1  21  26p20  26p24  26p16  31p8  21  
+31p8  26p24  21  21  21  31p12  26p24  R  i2  21  
+i2  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 474.094
+max_boron: Average = 628.8573625
+max_boron: Worst = 989.82
+PinPowerPeaking: Best = 2.319
+PinPowerPeaking: Average = 2.5047875
+PinPowerPeaking: Worst = 2.833
+FDeltaH: Best = 1.573
+FDeltaH: Average = 1.6671
+FDeltaH: Worst = 1.812
+
+
+
+Current generation of the optimization 8 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_5_33
+Best Fitness 121.95121951219512
+max_boron for best solution: 522.244  
+PinPowerPeaking for best solution: 2.441  
+FDeltaH for best solution: 1.573  
+Best Solution Genome
+26p24  21  21  26p20  26p24  21  31p8  i2  26p20  26  
+21  31p16  26p20  26p20  21  26p24  31p24  31p24  21  21  
+21  26  31  g2  31p24  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_8_77
+Worst Fitness 13.003901170351105
+max_boron for worst solution: 623.799  
+PinPowerPeaking for worst solution: 2.865  
+FDeltaH for worst solution: 1.861  
+Worst Solution Genome
+26  26p16  i2  i2  31p12  21  26p20  g2  i2  21  
+26p24  21  31p16  26p20  21  21  31p16  26p20  21  31p8  
+21  26  21  26  21  g2  26p20  R  21  26  
+21  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 469.391
+max_boron: Average = 627.3213374999999
+max_boron: Worst = 986.495
+PinPowerPeaking: Best = 2.319
+PinPowerPeaking: Average = 2.500825
+PinPowerPeaking: Worst = 3.081
+FDeltaH: Best = 1.573
+FDeltaH: Average = 1.6655000000000002
+FDeltaH: Worst = 1.861
+
+
+
+Current generation of the optimization 9 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_5_33
+Best Fitness 107.52688172043011
+max_boron for best solution: 522.244  
+PinPowerPeaking for best solution: 2.441  
+FDeltaH for best solution: 1.573  
+Best Solution Genome
+26p24  21  21  26p20  26p24  21  31p8  i2  26p20  26  
+21  31p16  26p20  26p20  21  26p24  31p24  31p24  21  21  
+21  26  31  g2  31p24  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_9_22
+Worst Fitness 14.184397163120567
+max_boron for worst solution: 605.085  
+PinPowerPeaking for worst solution: 2.65  
+FDeltaH for worst solution: 1.748  
+Worst Solution Genome
+21  21  26p20  21  26p16  i2  g1  31p16  26p20  31p8  
+21  26  26p24  i1  21  26p20  26p24  26p16  31p8  21  
+i1  26p16  21  21  21  31p12  26p24  R  21  21  
+g1  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 471.537
+max_boron: Average = 640.5578625
+max_boron: Worst = 986.495
+PinPowerPeaking: Best = 2.319
+PinPowerPeaking: Average = 2.466975
+PinPowerPeaking: Worst = 2.794
+FDeltaH: Best = 1.573
+FDeltaH: Average = 1.6522374999999996
+FDeltaH: Worst = 1.81
+
+
+
+Current generation of the optimization 10 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_10_47
+Best Fitness 178.57142857142858
+max_boron for best solution: 515.792  
+PinPowerPeaking for best solution: 2.355  
+FDeltaH for best solution: 1.571  
+Best Solution Genome
+26p24  21  21  26p20  26p24  21  31p8  i2  26p20  26  
+21  31p16  26p20  26p20  21  26p24  31p24  31p24  21  21  
+21  21  31  g2  31p24  31  26  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_10_38
+Worst Fitness 12.755102040816327
+max_boron for worst solution: 647.773  
+PinPowerPeaking for worst solution: 3.336  
+FDeltaH for worst solution: 2.12  
+Worst Solution Genome
+21  21  31p24  26p20  26p24  21  31p8  i2  26p20  26  
+21  31p24  26p20  26  21  26p24  26p24  31p16  21  21  
+21  26p16  31  g2  21  31  21  R  21  21  
+26  31p24  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 474.094
+max_boron: Average = 618.1159625
+max_boron: Worst = 986.495
+PinPowerPeaking: Best = 2.31
+PinPowerPeaking: Average = 2.4810875
+PinPowerPeaking: Worst = 3.336
+FDeltaH: Best = 1.571
+FDeltaH: Average = 1.6538875000000002
+FDeltaH: Worst = 2.12
+
+
+
+Current generation of the optimization 11 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_10_47
+Best Fitness 129.87012987012986
+max_boron for best solution: 515.792  
+PinPowerPeaking for best solution: 2.355  
+FDeltaH for best solution: 1.571  
+Best Solution Genome
+26p24  21  21  26p20  26p24  21  31p8  i2  26p20  26  
+21  31p16  26p20  26p20  21  26p24  31p24  31p24  21  21  
+21  21  31  g2  31p24  31  26  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_11_35
+Worst Fitness 14.880952380952381
+max_boron for worst solution: 748.119  
+PinPowerPeaking for worst solution: 2.478  
+FDeltaH for worst solution: 1.68  
+Worst Solution Genome
+26p16  31p24  31p24  31p24  26  21  21  26p24  26p24  21  
+26p20  21  26p20  21  31p12  31p16  21  21  31p12  31p8  
+26p16  i1  21  21  21  21  26  R  26  31p12  
+21  26p24  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 449.502
+max_boron: Average = 610.2492875
+max_boron: Worst = 957.507
+PinPowerPeaking: Best = 2.237
+PinPowerPeaking: Average = 2.4544
+PinPowerPeaking: Worst = 2.671
+FDeltaH: Best = 1.536
+FDeltaH: Average = 1.6373375000000003
+FDeltaH: Worst = 1.743
+
+
+
+Current generation of the optimization 12 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_5_33
+Best Fitness 70.4225352112676
+max_boron for best solution: 522.244  
+PinPowerPeaking for best solution: 2.441  
+FDeltaH for best solution: 1.573  
+Best Solution Genome
+26p24  21  21  26p20  26p24  21  31p8  i2  26p20  26  
+21  31p16  26p20  26p20  21  26p24  31p24  31p24  21  21  
+21  26  31  g2  31p24  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_12_45
+Worst Fitness 12.578616352201259
+max_boron for worst solution: 729.596  
+PinPowerPeaking for worst solution: 2.566  
+FDeltaH for worst solution: 1.715  
+Worst Solution Genome
+31p16  26p20  31p24  31p8  26  21  21  26p24  26p24  21  
+26p20  21  31p24  21  31p12  26p24  21  21  31p12  31p8  
+26p16  i1  21  21  21  26p24  31p12  R  26  26p16  
+21  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 449.502
+max_boron: Average = 599.667825
+max_boron: Worst = 957.507
+PinPowerPeaking: Best = 2.237
+PinPowerPeaking: Average = 2.4522375
+PinPowerPeaking: Worst = 2.929
+FDeltaH: Best = 1.536
+FDeltaH: Average = 1.6277250000000003
+FDeltaH: Worst = 1.859
+
+
+
+Current generation of the optimization 13 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_5_33
+Best Fitness 66.2251655629139
+max_boron for best solution: 522.244  
+PinPowerPeaking for best solution: 2.441  
+FDeltaH for best solution: 1.573  
+Best Solution Genome
+26p24  21  21  26p20  26p24  21  31p8  i2  26p20  26  
+21  31p16  26p20  26p20  21  26p24  31p24  31p24  21  21  
+21  26  31  g2  31p24  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_13_36
+Worst Fitness 15.723270440251572
+max_boron for worst solution: 476.936  
+PinPowerPeaking for worst solution: 2.921  
+FDeltaH for worst solution: 1.85  
+Worst Solution Genome
+21  21  26p20  21  26p24  i2  31p16  31p16  26p20  31p8  
+21  26  26p24  i1  21  26p20  26p20  26p16  g2  21  
+31p8  26p16  21  21  21  31p12  26p24  R  21  21  
+i2  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 441.448
+max_boron: Average = 602.8736
+max_boron: Worst = 957.507
+PinPowerPeaking: Best = 2.215
+PinPowerPeaking: Average = 2.4365250000000005
+PinPowerPeaking: Worst = 2.921
+FDeltaH: Best = 1.536
+FDeltaH: Average = 1.6225625000000001
+FDeltaH: Worst = 1.85
+
+
+
+Current generation of the optimization 14 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_14_23
+Best Fitness 74.07407407407408
+max_boron for best solution: 545.714  
+PinPowerPeaking for best solution: 2.372  
+FDeltaH for best solution: 1.56  
+Best Solution Genome
+26p24  21  21  26p20  26p24  21  31p8  i2  26p20  26  
+21  31p16  26p20  26p16  21  26p24  31p24  31p24  21  21  
+21  26  31  g2  31p24  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_14_1
+Worst Fitness 14.204545454545455
+max_boron for worst solution: 546.019  
+PinPowerPeaking for worst solution: 2.807  
+FDeltaH for worst solution: 1.821  
+Worst Solution Genome
+21  21  21  26p20  26p24  21  31p8  i2  26p20  26  
+21  31p24  26p20  26p20  21  26p24  26p24  31p16  21  21  
+21  26  31  g2  21  31  21  R  21  31p24  
+26  31p8  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 431.419
+max_boron: Average = 600.6788375
+max_boron: Worst = 957.507
+PinPowerPeaking: Best = 2.215
+PinPowerPeaking: Average = 2.4346
+PinPowerPeaking: Worst = 2.807
+FDeltaH: Best = 1.536
+FDeltaH: Average = 1.6171125
+FDeltaH: Worst = 1.821
+
+
+
+Current generation of the optimization 15 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_14_23
+Best Fitness 73.52941176470588
+max_boron for best solution: 545.714  
+PinPowerPeaking for best solution: 2.372  
+FDeltaH for best solution: 1.56  
+Best Solution Genome
+26p24  21  21  26p20  26p24  21  31p8  i2  26p20  26  
+21  31p16  26p20  26p16  21  26p24  31p24  31p24  21  21  
+21  26  31  g2  31p24  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_15_28
+Worst Fitness 13.089005235602095
+max_boron for worst solution: 597.105  
+PinPowerPeaking for worst solution: 2.94  
+FDeltaH for worst solution: 1.909  
+Worst Solution Genome
+21  31p8  26p24  26p24  26p24  21  26p24  26p20  26p20  26p16  
+21  21  21  21  21  31p16  31p24  31p24  31p8  21  
+21  26p16  21  21  31p16  i1  31p16  R  26  26  
+31p24  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 440.368
+max_boron: Average = 600.7990875
+max_boron: Worst = 957.507
+PinPowerPeaking: Best = 2.215
+PinPowerPeaking: Average = 2.4179375
+PinPowerPeaking: Worst = 2.94
+FDeltaH: Best = 1.534
+FDeltaH: Average = 1.6071750000000002
+FDeltaH: Worst = 1.909
+
+
+
+Current generation of the optimization 16 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_16_73
+Best Fitness 117.6470588235294
+max_boron for best solution: 542.184  
+PinPowerPeaking for best solution: 2.334  
+FDeltaH for best solution: 1.518  
+Best Solution Genome
+26p24  21  21  26p20  26p24  21  31p8  31p24  26p20  26  
+21  31p16  26p20  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p24  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_16_17
+Worst Fitness 13.071895424836601
+max_boron for worst solution: 642.977  
+PinPowerPeaking for worst solution: 2.59  
+FDeltaH for worst solution: 1.722  
+Worst Solution Genome
+31p24  21  21  26p20  26p24  21  31p8  31p8  26p20  26  
+21  31p24  26p20  26p20  21  26p20  26p24  21  21  21  
+21  26  31  g2  31p16  31  21  R  21  21  
+26  31p24  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 440.368
+max_boron: Average = 599.0732125000001
+max_boron: Worst = 957.507
+PinPowerPeaking: Best = 2.231
+PinPowerPeaking: Average = 2.4130499999999997
+PinPowerPeaking: Worst = 2.966
+FDeltaH: Best = 1.511
+FDeltaH: Average = 1.602475
+FDeltaH: Worst = 1.915
+
+
+
+Current generation of the optimization 17 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_16_73
+Best Fitness 112.35955056179775
+max_boron for best solution: 542.184  
+PinPowerPeaking for best solution: 2.334  
+FDeltaH for best solution: 1.518  
+Best Solution Genome
+26p24  21  21  26p20  26p24  21  31p8  31p24  26p20  26  
+21  31p16  26p20  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p24  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_17_68
+Worst Fitness 11.049723756906078
+max_boron for worst solution: 742.704  
+PinPowerPeaking for worst solution: 2.951  
+FDeltaH for worst solution: 1.951  
+Worst Solution Genome
+21  21  26p24  26p20  26p16  21  26p24  26p16  i1  26p24  
+21  21  21  21  21  31p12  26p20  31p24  31  21  
+21  i2  21  21  26  31p24  31p16  R  26  26  
+g2  31p8  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 440.368
+max_boron: Average = 585.1145124999999
+max_boron: Worst = 785.981
+PinPowerPeaking: Best = 2.278
+PinPowerPeaking: Average = 2.4279625000000005
+PinPowerPeaking: Worst = 4.418
+FDeltaH: Best = 1.511
+FDeltaH: Average = 1.608075
+FDeltaH: Worst = 2.848
+
+
+
+Current generation of the optimization 18 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_16_73
+Best Fitness 104.16666666666667
+max_boron for best solution: 542.184  
+PinPowerPeaking for best solution: 2.334  
+FDeltaH for best solution: 1.518  
+Best Solution Genome
+26p24  21  21  26p20  26p24  21  31p8  31p24  26p20  26  
+21  31p16  26p20  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p24  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_18_68
+Worst Fitness 13.297872340425531
+max_boron for worst solution: 588.824  
+PinPowerPeaking for worst solution: 2.571  
+FDeltaH for worst solution: 1.685  
+Worst Solution Genome
+31p24  21  26p20  g2  26p24  21  26  21  26p20  31p8  
+21  31p24  21  26p20  21  31p8  26p24  31p16  31p8  21  
+21  26  i2  26p20  21  31  21  R  21  21  
+26p16  26p24  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 433.291
+max_boron: Average = 577.8485625000001
+max_boron: Worst = 785.981
+PinPowerPeaking: Best = 2.278
+PinPowerPeaking: Average = 2.3899
+PinPowerPeaking: Worst = 2.82
+FDeltaH: Best = 1.511
+FDeltaH: Average = 1.5805125
+FDeltaH: Worst = 1.8
+
+
+
+Current generation of the optimization 19 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_19_60
+Best Fitness 125.0
+max_boron for best solution: 536.925  
+PinPowerPeaking for best solution: 2.281  
+FDeltaH for best solution: 1.522  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p24  26p20  26p20  26p20  
+21  21  21  21  21  31p16  31p24  31p24  i2  21  
+21  26p16  21  21  g1  i1  31p16  R  26  26  
+31p8  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_19_69
+Worst Fitness 11.402508551881414
+max_boron for worst solution: 648.272  
+PinPowerPeaking for worst solution: 2.715  
+FDeltaH for worst solution: 1.786  
+Worst Solution Genome
+21  31p24  26p24  26p20  26p24  21  26p20  26p20  i1  31p12  
+21  21  21  21  26p20  31p16  26p16  31p8  31p16  21  
+21  i1  21  21  i2  26p24  31p24  R  26  26  
+21  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 463.72
+max_boron: Average = 571.8909375000001
+max_boron: Worst = 669.172
+PinPowerPeaking: Best = 2.221
+PinPowerPeaking: Average = 2.3848
+PinPowerPeaking: Worst = 2.715
+FDeltaH: Best = 1.5
+FDeltaH: Average = 1.5756625
+FDeltaH: Worst = 1.786
+
+
+
+Current generation of the optimization 20 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_19_60
+Best Fitness 125.0
+max_boron for best solution: 536.925  
+PinPowerPeaking for best solution: 2.281  
+FDeltaH for best solution: 1.522  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p24  26p20  26p20  26p20  
+21  21  21  21  21  31p16  31p24  31p24  i2  21  
+21  26p16  21  21  g1  i1  31p16  R  26  26  
+31p8  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_20_37
+Worst Fitness 12.787723785166241
+max_boron for worst solution: 605.385  
+PinPowerPeaking for worst solution: 2.529  
+FDeltaH for worst solution: 1.667  
+Worst Solution Genome
+26p24  21  21  26p16  26p24  21  31p8  31p16  26p20  26  
+21  31p16  26p20  26p20  21  26p24  g1  31p24  21  21  
+21  21  31  g2  31p24  31  26p16  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 463.72
+max_boron: Average = 572.4454250000001
+max_boron: Worst = 669.172
+PinPowerPeaking: Best = 2.221
+PinPowerPeaking: Average = 2.3680375
+PinPowerPeaking: Worst = 2.616
+FDeltaH: Best = 1.5
+FDeltaH: Average = 1.5653875000000002
+FDeltaH: Worst = 1.669
+
+
+
+Current generation of the optimization 21 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_19_60
+Best Fitness 117.6470588235294
+max_boron for best solution: 536.925  
+PinPowerPeaking for best solution: 2.281  
+FDeltaH for best solution: 1.522  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p24  26p20  26p20  26p20  
+21  21  21  21  21  31p16  31p24  31p24  i2  21  
+21  26p16  21  21  g1  i1  31p16  R  26  26  
+31p8  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_21_23
+Worst Fitness 15.45595054095827
+max_boron for worst solution: 645.301  
+PinPowerPeaking for worst solution: 2.364  
+FDeltaH for worst solution: 1.581  
+Worst Solution Genome
+26p24  21  31p16  26p20  26p24  21  31p8  21  26p20  26  
+21  31p16  26p20  26p16  21  26p24  31p24  31p24  21  21  
+21  26  31  g2  21  31  21  R  21  31p16  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 497.422
+max_boron: Average = 575.78265
+max_boron: Worst = 710.068
+PinPowerPeaking: Best = 2.176
+PinPowerPeaking: Average = 2.348
+PinPowerPeaking: Worst = 2.544
+FDeltaH: Best = 1.486
+FDeltaH: Average = 1.554675
+FDeltaH: Worst = 1.629
+
+
+
+Current generation of the optimization 22 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_19_60
+Best Fitness 86.95652173913044
+max_boron for best solution: 536.925  
+PinPowerPeaking for best solution: 2.281  
+FDeltaH for best solution: 1.522  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p24  26p20  26p20  26p20  
+21  21  21  21  21  31p16  31p24  31p24  i2  21  
+21  26p16  21  21  g1  i1  31p16  R  26  26  
+31p8  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_22_30
+Worst Fitness 14.771048744460856
+max_boron for worst solution: 538.68  
+PinPowerPeaking for worst solution: 2.571  
+FDeltaH for worst solution: 1.673  
+Worst Solution Genome
+26p24  21  21  26p20  26p20  21  31p8  31p24  26p16  26  
+21  31p16  26p20  26p24  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p24  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 483.042
+max_boron: Average = 573.839275
+max_boron: Worst = 725.16
+PinPowerPeaking: Best = 2.159
+PinPowerPeaking: Average = 2.349875
+PinPowerPeaking: Worst = 2.598
+FDeltaH: Best = 1.48
+FDeltaH: Average = 1.555175
+FDeltaH: Worst = 1.682
+
+
+
+Current generation of the optimization 23 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_19_60
+Best Fitness 76.92307692307692
+max_boron for best solution: 536.925  
+PinPowerPeaking for best solution: 2.281  
+FDeltaH for best solution: 1.522  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p24  26p20  26p20  26p20  
+21  21  21  21  21  31p16  31p24  31p24  i2  21  
+21  26p16  21  21  g1  i1  31p16  R  26  26  
+31p8  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_23_19
+Worst Fitness 15.24390243902439
+max_boron for worst solution: 562.739  
+PinPowerPeaking for worst solution: 2.42  
+FDeltaH for worst solution: 1.61  
+Worst Solution Genome
+21  31p8  26p24  26p20  26p24  21  26p24  26p16  i1  26p24  
+21  21  21  21  21  31p16  26p20  31p16  31p24  21  
+21  i1  21  21  i2  31p12  31p16  R  26  26  
+26p24  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 483.042
+max_boron: Average = 576.8455124999999
+max_boron: Worst = 725.16
+PinPowerPeaking: Best = 2.159
+PinPowerPeaking: Average = 2.335975
+PinPowerPeaking: Worst = 2.598
+FDeltaH: Best = 1.48
+FDeltaH: Average = 1.5485250000000002
+FDeltaH: Worst = 1.682
+
+
+
+Current generation of the optimization 24 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_19_60
+Best Fitness 68.4931506849315
+max_boron for best solution: 536.925  
+PinPowerPeaking for best solution: 2.281  
+FDeltaH for best solution: 1.522  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p24  26p20  26p20  26p20  
+21  21  21  21  21  31p16  31p24  31p24  i2  21  
+21  26p16  21  21  g1  i1  31p16  R  26  26  
+31p8  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_24_52
+Worst Fitness 13.717421124828531
+max_boron for worst solution: 593.894  
+PinPowerPeaking for worst solution: 2.451  
+FDeltaH for worst solution: 1.612  
+Worst Solution Genome
+26p24  21  21  26p20  26p24  21  31p8  g1  26p20  26  
+21  31p16  26p24  26p16  21  26p24  31p24  31p24  21  21  
+21  26  31  g2  31p24  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 490.45
+max_boron: Average = 573.8132750000001
+max_boron: Worst = 725.16
+PinPowerPeaking: Best = 2.159
+PinPowerPeaking: Average = 2.3254875000000004
+PinPowerPeaking: Worst = 2.568
+FDeltaH: Best = 1.48
+FDeltaH: Average = 1.5423125
+FDeltaH: Worst = 1.636
+
+
+
+Current generation of the optimization 25 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_19_60
+Best Fitness 53.763440860215056
+max_boron for best solution: 536.925  
+PinPowerPeaking for best solution: 2.281  
+FDeltaH for best solution: 1.522  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p24  26p20  26p20  26p20  
+21  21  21  21  21  31p16  31p24  31p24  i2  21  
+21  26p16  21  21  g1  i1  31p16  R  26  26  
+31p8  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_25_4
+Worst Fitness 13.054830287206267
+max_boron for worst solution: 633.31  
+PinPowerPeaking for worst solution: 2.451  
+FDeltaH for worst solution: 1.601  
+Worst Solution Genome
+26p24  21  i2  26p20  26p20  21  31p8  21  26p20  26  
+21  31p24  26p20  26p20  21  26p24  31p16  31p24  21  21  
+21  26  31  g2  21  31  21  R  21  31p8  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 500.181
+max_boron: Average = 574.0435625
+max_boron: Worst = 725.16
+PinPowerPeaking: Best = 2.159
+PinPowerPeaking: Average = 2.321925
+PinPowerPeaking: Worst = 2.547
+FDeltaH: Best = 1.48
+FDeltaH: Average = 1.5393124999999999
+FDeltaH: Worst = 1.637
+
+
+
+Current generation of the optimization 26 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_25_33
+Best Fitness 50.25125628140704
+max_boron for best solution: 565.415  
+PinPowerPeaking for best solution: 2.276  
+FDeltaH for best solution: 1.492  
+Best Solution Genome
+26p24  21  21  26p20  26p24  21  31p8  31p24  26p16  26  
+21  31p16  26p20  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  i2  31p24  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_26_62
+Worst Fitness 12.853470437017995
+max_boron for worst solution: 581.909  
+PinPowerPeaking for worst solution: 2.569  
+FDeltaH for worst solution: 1.696  
+Worst Solution Genome
+21  31p8  26p24  26p24  26p16  21  26  26p20  26p20  26p16  
+21  21  21  21  21  31p16  31p24  31p24  i2  21  
+21  26p16  21  21  i1  i1  31p16  R  26p20  26  
+31p8  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 440.77
+max_boron: Average = 570.9684125
+max_boron: Worst = 697.716
+PinPowerPeaking: Best = 2.168
+PinPowerPeaking: Average = 2.3264875
+PinPowerPeaking: Worst = 2.775
+FDeltaH: Best = 1.486
+FDeltaH: Average = 1.5401125
+FDeltaH: Worst = 1.773
+
+
+
+Current generation of the optimization 27 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_25_33
+Best Fitness 47.39336492890995
+max_boron for best solution: 565.415  
+PinPowerPeaking for best solution: 2.276  
+FDeltaH for best solution: 1.492  
+Best Solution Genome
+26p24  21  21  26p20  26p24  21  31p8  31p24  26p16  26  
+21  31p16  26p20  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  i2  31p24  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_27_49
+Worst Fitness 11.061946902654867
+max_boron for worst solution: 664.327  
+PinPowerPeaking for worst solution: 2.973  
+FDeltaH for worst solution: 1.949  
+Worst Solution Genome
+21  31p8  26p24  26p24  26  21  26p24  26p16  26p20  26p16  
+21  21  21  21  21  31p16  31p24  31p24  i2  21  
+21  26p16  21  21  31p12  i1  31p16  R  26  26  
+31p8  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 440.77
+max_boron: Average = 569.7896875
+max_boron: Worst = 702.854
+PinPowerPeaking: Best = 2.168
+PinPowerPeaking: Average = 2.3331125
+PinPowerPeaking: Worst = 2.973
+FDeltaH: Best = 1.486
+FDeltaH: Average = 1.5432625
+FDeltaH: Worst = 1.949
+
+
+
+Current generation of the optimization 28 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_25_33
+Best Fitness 48.78048780487805
+max_boron for best solution: 565.415  
+PinPowerPeaking for best solution: 2.276  
+FDeltaH for best solution: 1.492  
+Best Solution Genome
+26p24  21  21  26p20  26p24  21  31p8  31p24  26p16  26  
+21  31p16  26p20  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  i2  31p24  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_28_35
+Worst Fitness 11.750881316098708
+max_boron for worst solution: 661.27  
+PinPowerPeaking for worst solution: 2.658  
+FDeltaH for worst solution: 1.762  
+Worst Solution Genome
+21  31  26p24  26p20  26p24  21  26p24  26p16  i1  26p24  
+21  21  21  21  21  31p16  26p20  31p16  g2  21  
+21  i1  21  21  31p8  g1  g1  R  26  26  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 474.652
+max_boron: Average = 577.5696624999999
+max_boron: Worst = 702.854
+PinPowerPeaking: Best = 2.16
+PinPowerPeaking: Average = 2.3136625
+PinPowerPeaking: Worst = 2.658
+FDeltaH: Best = 1.466
+FDeltaH: Average = 1.5349
+FDeltaH: Worst = 1.762
+
+
+
+Current generation of the optimization 29 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_29_17
+Best Fitness 81.9672131147541
+max_boron for best solution: 535.466  
+PinPowerPeaking for best solution: 2.234  
+FDeltaH for best solution: 1.493  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p24  26p20  26p20  26p20  
+21  21  21  21  21  31p16  g2  31p24  i2  21  
+21  26p16  21  21  g1  i1  31p16  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_29_27
+Worst Fitness 12.048192771084338
+max_boron for worst solution: 643.776  
+PinPowerPeaking for worst solution: 2.452  
+FDeltaH for worst solution: 1.642  
+Worst Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p24  26p20  26p20  26p16  
+21  21  21  21  21  31p16  31p24  31p8  i2  21  
+21  26p16  21  21  31p12  i1  31p16  R  26  26  
+31p8  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 473.474
+max_boron: Average = 584.0556375
+max_boron: Worst = 719.429
+PinPowerPeaking: Best = 2.16
+PinPowerPeaking: Average = 2.2913875
+PinPowerPeaking: Worst = 2.482
+FDeltaH: Best = 1.466
+FDeltaH: Average = 1.5239
+FDeltaH: Worst = 1.642
+
+
+
+Current generation of the optimization 30 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_29_17
+Best Fitness 93.45794392523365
+max_boron for best solution: 535.466  
+PinPowerPeaking for best solution: 2.234  
+FDeltaH for best solution: 1.493  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p24  26p20  26p20  26p20  
+21  21  21  21  21  31p16  g2  31p24  i2  21  
+21  26p16  21  21  g1  i1  31p16  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_30_16
+Worst Fitness 11.918951132300357
+max_boron for worst solution: 606.083  
+PinPowerPeaking for worst solution: 4.011  
+FDeltaH for worst solution: 2.564  
+Worst Solution Genome
+21  31p8  26  26p24  26p16  21  26p24  26p20  26p20  26p24  
+21  21  21  21  21  31p16  31p24  31p24  i2  21  
+21  26p16  21  21  g1  i1  31p16  R  26  26  
+31p8  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 473.474
+max_boron: Average = 580.8901375
+max_boron: Worst = 712.777
+PinPowerPeaking: Best = 2.16
+PinPowerPeaking: Average = 2.3099499999999997
+PinPowerPeaking: Worst = 4.011
+FDeltaH: Best = 1.466
+FDeltaH: Average = 1.5337125
+FDeltaH: Worst = 2.564
+
+
+
+Current generation of the optimization 31 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_30_48
+Best Fitness 68.96551724137932
+max_boron for best solution: 532.92  
+PinPowerPeaking for best solution: 2.234  
+FDeltaH for best solution: 1.496  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p24  26p20  26p20  26p20  
+21  21  21  21  21  i1  g2  31p24  i2  21  
+21  26p16  21  21  g1  i1  31p16  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_31_37
+Worst Fitness 15.060240963855422
+max_boron for worst solution: 566.341  
+PinPowerPeaking for worst solution: 2.417  
+FDeltaH for worst solution: 1.6  
+Worst Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p24  26p20  26p20  26p24  
+21  21  21  21  21  31p16  i1  31p24  i2  21  
+21  26p16  21  21  g1  i1  31p16  R  26  26  
+31p8  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 496.094
+max_boron: Average = 587.2037250000001
+max_boron: Worst = 744.582
+PinPowerPeaking: Best = 2.163
+PinPowerPeaking: Average = 2.2767625
+PinPowerPeaking: Worst = 2.464
+FDeltaH: Best = 1.459
+FDeltaH: Average = 1.5120375
+FDeltaH: Worst = 1.6
+
+
+
+Current generation of the optimization 32 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_30_48
+Best Fitness 61.34969325153374
+max_boron for best solution: 532.92  
+PinPowerPeaking for best solution: 2.234  
+FDeltaH for best solution: 1.496  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p24  26p20  26p20  26p20  
+21  21  21  21  21  i1  g2  31p24  i2  21  
+21  26p16  21  21  g1  i1  31p16  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_32_4
+Worst Fitness 10.582010582010582
+max_boron for worst solution: 753.137  
+PinPowerPeaking for worst solution: 3.243  
+FDeltaH for worst solution: 2.137  
+Worst Solution Genome
+26p24  21  21  26p24  26  21  31p8  31p24  26p16  26  
+21  31p16  26p20  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p12  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 496.094
+max_boron: Average = 600.8310250000001
+max_boron: Worst = 758.491
+PinPowerPeaking: Best = 2.129
+PinPowerPeaking: Average = 2.280125
+PinPowerPeaking: Worst = 3.243
+FDeltaH: Best = 1.459
+FDeltaH: Average = 1.5182375000000001
+FDeltaH: Worst = 2.137
+
+
+
+Current generation of the optimization 33 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_29_17
+Best Fitness 53.763440860215056
+max_boron for best solution: 535.466  
+PinPowerPeaking for best solution: 2.234  
+FDeltaH for best solution: 1.493  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p24  26p20  26p20  26p20  
+21  21  21  21  21  31p16  g2  31p24  i2  21  
+21  26p16  21  21  g1  i1  31p16  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_33_32
+Worst Fitness 12.391573729863692
+max_boron for worst solution: 716.092  
+PinPowerPeaking for worst solution: 2.329  
+FDeltaH for worst solution: 1.58  
+Worst Solution Genome
+21  31p8  26p16  26p20  26p16  21  26p20  26p16  i1  26p24  
+21  21  21  21  21  31p16  26p20  31p16  g2  21  
+21  i1  21  21  31p8  31p8  31  R  26  26  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 440.523
+max_boron: Average = 600.851275
+max_boron: Worst = 758.491
+PinPowerPeaking: Best = 2.129
+PinPowerPeaking: Average = 2.2627499999999996
+PinPowerPeaking: Worst = 2.586
+FDeltaH: Best = 1.459
+FDeltaH: Average = 1.507025
+FDeltaH: Worst = 1.691
+
+
+
+Current generation of the optimization 34 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_31_50
+Best Fitness 45.45454545454545
+max_boron for best solution: 593.153  
+PinPowerPeaking for best solution: 2.214  
+FDeltaH for best solution: 1.468  
+Best Solution Genome
+26p24  21  21  26p24  26p20  21  31p8  31p24  26p16  26  
+21  31p16  26p24  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p12  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_34_31
+Worst Fitness 14.409221902017292
+max_boron for worst solution: 668.283  
+PinPowerPeaking for worst solution: 2.302  
+FDeltaH for worst solution: 1.536  
+Worst Solution Genome
+26p24  21  21  26p20  26p24  21  31p8  31p16  26p20  26  
+21  31p16  26p16  26p16  21  26p24  31p24  31p8  21  21  
+21  26  31p16  g2  31p8  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 481.611
+max_boron: Average = 600.0929750000001
+max_boron: Worst = 758.491
+PinPowerPeaking: Best = 2.129
+PinPowerPeaking: Average = 2.2576500000000004
+PinPowerPeaking: Worst = 2.704
+FDeltaH: Best = 1.459
+FDeltaH: Average = 1.5050374999999998
+FDeltaH: Worst = 1.737
+
+
+
+Current generation of the optimization 35 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_31_50
+Best Fitness 42.3728813559322
+max_boron for best solution: 593.153  
+PinPowerPeaking for best solution: 2.214  
+FDeltaH for best solution: 1.468  
+Best Solution Genome
+26p24  21  21  26p24  26p20  21  31p8  31p24  26p16  26  
+21  31p16  26p24  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p12  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_35_44
+Worst Fitness 14.836795252225519
+max_boron for worst solution: 644.119  
+PinPowerPeaking for worst solution: 2.308  
+FDeltaH for worst solution: 1.537  
+Worst Solution Genome
+26p24  21  21  26p24  26p20  21  31p8  31p16  26p16  26  
+21  31p16  26p20  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p12  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 496.094
+max_boron: Average = 598.3350875
+max_boron: Worst = 744.582
+PinPowerPeaking: Best = 2.136
+PinPowerPeaking: Average = 2.253975
+PinPowerPeaking: Worst = 2.704
+FDeltaH: Best = 1.432
+FDeltaH: Average = 1.50135
+FDeltaH: Worst = 1.737
+
+
+
+Current generation of the optimization 36 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_31_50
+Best Fitness 46.08294930875576
+max_boron for best solution: 593.153  
+PinPowerPeaking for best solution: 2.214  
+FDeltaH for best solution: 1.468  
+Best Solution Genome
+26p24  21  21  26p24  26p20  21  31p8  31p24  26p16  26  
+21  31p16  26p24  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p12  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_36_72
+Worst Fitness 12.515644555694617
+max_boron for worst solution: 649.4  
+PinPowerPeaking for worst solution: 2.497  
+FDeltaH for worst solution: 1.663  
+Worst Solution Genome
+26p24  21  21  26p24  26p20  21  31p8  26p16  26p16  26  
+21  31p16  26p20  31p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p12  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 477.842
+max_boron: Average = 597.9457375
+max_boron: Worst = 744.582
+PinPowerPeaking: Best = 2.136
+PinPowerPeaking: Average = 2.2565999999999997
+PinPowerPeaking: Worst = 2.607
+FDeltaH: Best = 1.432
+FDeltaH: Average = 1.5021125000000002
+FDeltaH: Worst = 1.695
+
+
+
+Current generation of the optimization 37 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_31_50
+Best Fitness 44.642857142857146
+max_boron for best solution: 593.153  
+PinPowerPeaking for best solution: 2.214  
+FDeltaH for best solution: 1.468  
+Best Solution Genome
+26p24  21  21  26p24  26p20  21  31p8  31p24  26p16  26  
+21  31p16  26p24  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p12  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_37_18
+Worst Fitness 14.144271570014144
+max_boron for worst solution: 566.101  
+PinPowerPeaking for worst solution: 2.663  
+FDeltaH for worst solution: 1.725  
+Worst Solution Genome
+26p24  21  21  26p24  26p24  21  31p8  26p24  26p20  26  
+21  31p16  26p20  31p24  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31  31  21  R  21  21  
+26p16  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 490.814
+max_boron: Average = 591.06035
+max_boron: Worst = 744.582
+PinPowerPeaking: Best = 2.136
+PinPowerPeaking: Average = 2.27425
+PinPowerPeaking: Worst = 2.663
+FDeltaH: Best = 1.432
+FDeltaH: Average = 1.5063625000000003
+FDeltaH: Worst = 1.73
+
+
+
+Current generation of the optimization 38 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_31_50
+Best Fitness 41.32231404958678
+max_boron for best solution: 593.153  
+PinPowerPeaking for best solution: 2.214  
+FDeltaH for best solution: 1.468  
+Best Solution Genome
+26p24  21  21  26p24  26p20  21  31p8  31p24  26p16  26  
+21  31p16  26p24  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p12  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_38_67
+Worst Fitness 14.43001443001443
+max_boron for worst solution: 546.711  
+PinPowerPeaking for worst solution: 2.603  
+FDeltaH for worst solution: 1.72  
+Worst Solution Genome
+21  31p8  26p16  26p24  26p16  21  26p24  26p20  26p20  26p20  
+21  21  21  21  21  i1  26p20  31p24  i2  21  
+21  g2  21  21  g1  i1  i1  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 476.231
+max_boron: Average = 597.4179125
+max_boron: Worst = 744.582
+PinPowerPeaking: Best = 2.136
+PinPowerPeaking: Average = 2.258875
+PinPowerPeaking: Worst = 2.607
+FDeltaH: Best = 1.432
+FDeltaH: Average = 1.4989125
+FDeltaH: Worst = 1.72
+
+
+
+Current generation of the optimization 39 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_31_50
+Best Fitness 43.10344827586207
+max_boron for best solution: 593.153  
+PinPowerPeaking for best solution: 2.214  
+FDeltaH for best solution: 1.468  
+Best Solution Genome
+26p24  21  21  26p24  26p20  21  31p8  31p24  26p16  26  
+21  31p16  26p24  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p12  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_39_68
+Worst Fitness 11.695906432748538
+max_boron for worst solution: 678.215  
+PinPowerPeaking for worst solution: 2.453  
+FDeltaH for worst solution: 1.635  
+Worst Solution Genome
+26p16  21  21  26p24  26p24  21  31p8  31p8  26p16  26  
+21  31p16  26p20  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p12  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 474.502
+max_boron: Average = 599.3873875000002
+max_boron: Worst = 744.582
+PinPowerPeaking: Best = 2.136
+PinPowerPeaking: Average = 2.2523875
+PinPowerPeaking: Worst = 2.498
+FDeltaH: Best = 1.432
+FDeltaH: Average = 1.494575
+FDeltaH: Worst = 1.635
+
+
+
+Current generation of the optimization 40 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_31_50
+Best Fitness 46.728971962616825
+max_boron for best solution: 593.153  
+PinPowerPeaking for best solution: 2.214  
+FDeltaH for best solution: 1.468  
+Best Solution Genome
+26p24  21  21  26p24  26p20  21  31p8  31p24  26p16  26  
+21  31p16  26p24  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p12  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_40_34
+Worst Fitness 14.245014245014245
+max_boron for worst solution: 638.81  
+PinPowerPeaking for worst solution: 2.354  
+FDeltaH for worst solution: 1.553  
+Worst Solution Genome
+26p24  21  21  26p24  26p20  21  31p8  31p24  26p20  26  
+21  31p16  26p20  26p16  21  26p24  i1  31p24  21  21  
+21  26  31  g2  31p12  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 474.502
+max_boron: Average = 593.4138500000001
+max_boron: Worst = 744.582
+PinPowerPeaking: Best = 2.136
+PinPowerPeaking: Average = 2.2584000000000004
+PinPowerPeaking: Worst = 2.46
+FDeltaH: Best = 1.432
+FDeltaH: Average = 1.498275
+FDeltaH: Worst = 1.62
+
+
+
+Current generation of the optimization 41 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_31_50
+Best Fitness 43.47826086956522
+max_boron for best solution: 593.153  
+PinPowerPeaking for best solution: 2.214  
+FDeltaH for best solution: 1.468  
+Best Solution Genome
+26p24  21  21  26p24  26p20  21  31p8  31p24  26p16  26  
+21  31p16  26p24  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p12  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_41_2
+Worst Fitness 13.175230566534914
+max_boron for worst solution: 584.23  
+PinPowerPeaking for worst solution: 3.342  
+FDeltaH for worst solution: 2.152  
+Worst Solution Genome
+26  21  21  26p24  26p24  21  31p8  31p24  26p16  26  
+21  31p16  26p20  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  i2  31p24  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 472.486
+max_boron: Average = 602.0409999999999
+max_boron: Worst = 762.301
+PinPowerPeaking: Best = 2.121
+PinPowerPeaking: Average = 2.2597125
+PinPowerPeaking: Worst = 3.342
+FDeltaH: Best = 1.432
+FDeltaH: Average = 1.5011125
+FDeltaH: Worst = 2.152
+
+
+
+Current generation of the optimization 42 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_31_50
+Best Fitness 44.84304932735426
+max_boron for best solution: 593.153  
+PinPowerPeaking for best solution: 2.214  
+FDeltaH for best solution: 1.468  
+Best Solution Genome
+26p24  21  21  26p24  26p20  21  31p8  31p24  26p16  26  
+21  31p16  26p24  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p12  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_41_2
+Worst Fitness 13.440860215053764
+max_boron for worst solution: 584.23  
+PinPowerPeaking for worst solution: 3.342  
+FDeltaH for worst solution: 2.152  
+Worst Solution Genome
+26  21  21  26p24  26p24  21  31p8  31p24  26p16  26  
+21  31p16  26p20  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  i2  31p24  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 472.486
+max_boron: Average = 601.292675
+max_boron: Worst = 762.301
+PinPowerPeaking: Best = 2.121
+PinPowerPeaking: Average = 2.262575
+PinPowerPeaking: Worst = 3.342
+FDeltaH: Best = 1.432
+FDeltaH: Average = 1.50575
+FDeltaH: Worst = 2.152
+
+
+
+Current generation of the optimization 43 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_30_22
+Best Fitness 40.48582995951417
+max_boron for best solution: 593.153  
+PinPowerPeaking for best solution: 2.214  
+FDeltaH for best solution: 1.468  
+Best Solution Genome
+26p24  21  21  26p24  26p20  21  31p8  31p24  26p16  26  
+21  31p16  26p24  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p12  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_43_67
+Worst Fitness 16.129032258064516
+max_boron for worst solution: 589.897  
+PinPowerPeaking for worst solution: 2.357  
+FDeltaH for worst solution: 1.55  
+Worst Solution Genome
+26p24  21  21  26p20  26p24  21  31p8  31p24  26p16  26p20  
+21  31p8  26p20  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  i2  31p12  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 479.116
+max_boron: Average = 597.4070125000001
+max_boron: Worst = 751.829
+PinPowerPeaking: Best = 2.121
+PinPowerPeaking: Average = 2.2459374999999997
+PinPowerPeaking: Worst = 2.7
+FDeltaH: Best = 1.432
+FDeltaH: Average = 1.4948374999999998
+FDeltaH: Worst = 1.723
+
+
+
+Current generation of the optimization 44 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_44_30
+Best Fitness 39.52569169960474
+max_boron for best solution: 625.452  
+PinPowerPeaking for best solution: 2.191  
+FDeltaH for best solution: 1.456  
+Best Solution Genome
+26p24  21  21  26p16  26p24  21  31p8  31p24  26p16  26  
+21  31p16  26p20  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p8  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_44_39
+Worst Fitness 16.52892561983471
+max_boron for worst solution: 526.361  
+PinPowerPeaking for worst solution: 2.488  
+FDeltaH for worst solution: 1.623  
+Worst Solution Genome
+26p24  21  21  26p24  26p20  21  31p8  31p24  26p16  26  
+21  31p16  26p24  26p16  21  26p24  31p24  g2  21  21  
+21  26  g1  g2  31p12  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 492.981
+max_boron: Average = 597.763925
+max_boron: Worst = 751.829
+PinPowerPeaking: Best = 2.121
+PinPowerPeaking: Average = 2.238975
+PinPowerPeaking: Worst = 2.498
+FDeltaH: Best = 1.432
+FDeltaH: Average = 1.49135
+FDeltaH: Worst = 1.627
+
+
+
+Current generation of the optimization 45 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_44_30
+Best Fitness 40.16064257028113
+max_boron for best solution: 625.452  
+PinPowerPeaking for best solution: 2.191  
+FDeltaH for best solution: 1.456  
+Best Solution Genome
+26p24  21  21  26p16  26p24  21  31p8  31p24  26p16  26  
+21  31p16  26p20  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p8  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_45_50
+Worst Fitness 13.140604467805518
+max_boron for worst solution: 681.08  
+PinPowerPeaking for worst solution: 2.363  
+FDeltaH for worst solution: 1.565  
+Worst Solution Genome
+26p24  21  21  26p20  26p20  21  31p8  31p24  26p20  26  
+21  31p12  26p20  26p16  21  26p24  g1  g2  21  21  
+21  26  31  g2  31p8  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 492.981
+max_boron: Average = 601.2730625
+max_boron: Worst = 751.829
+PinPowerPeaking: Best = 2.116
+PinPowerPeaking: Average = 2.2418875
+PinPowerPeaking: Worst = 2.461
+FDeltaH: Best = 1.432
+FDeltaH: Average = 1.4946375
+FDeltaH: Worst = 1.627
+
+
+
+Current generation of the optimization 46 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_44_30
+Best Fitness 38.31417624521073
+max_boron for best solution: 625.452  
+PinPowerPeaking for best solution: 2.191  
+FDeltaH for best solution: 1.456  
+Best Solution Genome
+26p24  21  21  26p16  26p24  21  31p8  31p24  26p16  26  
+21  31p16  26p20  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p8  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_46_0
+Worst Fitness 11.025358324145534
+max_boron for worst solution: 702.133  
+PinPowerPeaking for worst solution: 2.705  
+FDeltaH for worst solution: 1.782  
+Worst Solution Genome
+26p24  21  21  26p24  26p20  21  31p8  31p24  26  26  
+21  31p16  26p24  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p12  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 480.726
+max_boron: Average = 605.7791500000001
+max_boron: Worst = 751.829
+PinPowerPeaking: Best = 2.11
+PinPowerPeaking: Average = 2.2348125
+PinPowerPeaking: Worst = 2.705
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.49245
+FDeltaH: Worst = 1.782
+
+
+
+Current generation of the optimization 47 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_44_30
+Best Fitness 39.0625
+max_boron for best solution: 625.452  
+PinPowerPeaking for best solution: 2.191  
+FDeltaH for best solution: 1.456  
+Best Solution Genome
+26p24  21  21  26p16  26p24  21  31p8  31p24  26p16  26  
+21  31p16  26p20  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p8  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_47_65
+Worst Fitness 13.717421124828531
+max_boron for worst solution: 635.304  
+PinPowerPeaking for worst solution: 2.405  
+FDeltaH for worst solution: 1.602  
+Worst Solution Genome
+26p24  21  21  26p20  26p16  21  31p8  31p24  26p20  26p20  
+21  31p16  26  26p16  21  26p24  31p24  i1  21  21  
+21  26  31p16  g2  31p8  31  21  R  21  21  
+26p20  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 452.378
+max_boron: Average = 606.0669625
+max_boron: Worst = 742.07
+PinPowerPeaking: Best = 2.11
+PinPowerPeaking: Average = 2.228575
+PinPowerPeaking: Worst = 2.64
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.4894500000000002
+FDeltaH: Worst = 1.712
+
+
+
+Current generation of the optimization 48 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_45_53
+Best Fitness 39.52569169960474
+max_boron for best solution: 646.442  
+PinPowerPeaking for best solution: 2.116  
+FDeltaH for best solution: 1.457  
+Best Solution Genome
+21  31p8  26p20  26p24  26p16  21  26p24  26p16  26p16  26p24  
+21  21  21  21  21  i1  i2  31p16  i2  21  
+21  26p16  21  21  i1  31  i1  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_48_60
+Worst Fitness 11.45475372279496
+max_boron for worst solution: 830.322  
+PinPowerPeaking for worst solution: 2.504  
+FDeltaH for worst solution: 1.651  
+Worst Solution Genome
+26p24  21  21  26p20  26p16  21  31p8  31p24  26p20  26p20  
+21  i2  26  26p16  21  26p24  31p24  i1  21  21  
+21  26  31  31  31p8  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 452.378
+max_boron: Average = 612.6144750000001
+max_boron: Worst = 830.322
+PinPowerPeaking: Best = 2.11
+PinPowerPeaking: Average = 2.2293875
+PinPowerPeaking: Worst = 2.64
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.4908375
+FDeltaH: Worst = 1.712
+
+
+
+Current generation of the optimization 49 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_49_59
+Best Fitness 40.48582995951417
+max_boron for best solution: 625.452  
+PinPowerPeaking for best solution: 2.191  
+FDeltaH for best solution: 1.456  
+Best Solution Genome
+26p24  21  21  26p16  26p24  21  31p8  31p24  26p16  26  
+21  31p16  26p20  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p8  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_49_8
+Worst Fitness 14.005602240896359
+max_boron for worst solution: 731.149  
+PinPowerPeaking for worst solution: 2.264  
+FDeltaH for worst solution: 1.528  
+Worst Solution Genome
+26p24  21  21  26p24  26p20  21  31p8  g1  26p16  26  
+21  31p16  26p16  26p16  21  26p24  31p24  g1  21  21  
+21  26  31  g2  g1  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 492.587
+max_boron: Average = 620.6356874999999
+max_boron: Worst = 790.084
+PinPowerPeaking: Best = 2.095
+PinPowerPeaking: Average = 2.21515
+PinPowerPeaking: Worst = 2.385
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.4837624999999999
+FDeltaH: Worst = 1.56
+
+
+
+Current generation of the optimization 50 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_49_59
+Best Fitness 41.84100418410042
+max_boron for best solution: 625.452  
+PinPowerPeaking for best solution: 2.191  
+FDeltaH for best solution: 1.456  
+Best Solution Genome
+26p24  21  21  26p16  26p24  21  31p8  31p24  26p16  26  
+21  31p16  26p20  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p8  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_50_77
+Worst Fitness 10.857763300760043
+max_boron for worst solution: 706.531  
+PinPowerPeaking for worst solution: 4.252  
+FDeltaH for worst solution: 2.811  
+Worst Solution Genome
+26p24  21  31  21  26p16  21  31p8  31p24  26p20  26  
+21  31p16  26p20  26p16  21  31p12  31p24  i1  21  21  
+21  26  21  31p24  26p24  31  26  R  21  26p20  
+21  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 492.587
+max_boron: Average = 627.2699749999999
+max_boron: Worst = 795.431
+PinPowerPeaking: Best = 2.095
+PinPowerPeaking: Average = 2.2334375
+PinPowerPeaking: Worst = 4.252
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.4964
+FDeltaH: Worst = 2.811
+
+
+
+Current generation of the optimization 51 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_49_59
+Best Fitness 42.016806722689076
+max_boron for best solution: 625.452  
+PinPowerPeaking for best solution: 2.191  
+FDeltaH for best solution: 1.456  
+Best Solution Genome
+26p24  21  21  26p16  26p24  21  31p8  31p24  26p16  26  
+21  31p16  26p20  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p8  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_51_3
+Worst Fitness 11.1731843575419
+max_boron for worst solution: 720.422  
+PinPowerPeaking for worst solution: 2.634  
+FDeltaH for worst solution: 1.769  
+Worst Solution Genome
+21  31p8  26p20  26p24  26p16  21  26p24  26p16  26p16  26  
+21  21  21  21  21  i1  i2  31p16  i2  21  
+21  26p16  21  21  i1  31  i1  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 472.445
+max_boron: Average = 621.3898624999999
+max_boron: Worst = 720.422
+PinPowerPeaking: Best = 2.109
+PinPowerPeaking: Average = 2.2165375
+PinPowerPeaking: Worst = 2.674
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.4860125000000002
+FDeltaH: Worst = 1.769
+
+
+
+Current generation of the optimization 52 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_52_27
+Best Fitness 45.662100456621005
+max_boron for best solution: 638.661  
+PinPowerPeaking for best solution: 2.13  
+FDeltaH for best solution: 1.452  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p16  26p24  
+21  21  21  21  21  i1  i2  31p16  i2  21  
+21  26p20  21  21  i1  31  i1  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_52_74
+Worst Fitness 11.135857461024498
+max_boron for worst solution: 690.792  
+PinPowerPeaking for worst solution: 2.764  
+FDeltaH for worst solution: 1.817  
+Worst Solution Genome
+26p24  21  21  26p20  26p24  21  31p8  31p24  26  26  
+21  31p16  26p20  26p16  21  26p24  g2  g2  21  21  
+21  26p16  31  31p12  i1  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 472.445
+max_boron: Average = 620.2633875
+max_boron: Worst = 715.908
+PinPowerPeaking: Best = 2.109
+PinPowerPeaking: Average = 2.2159874999999998
+PinPowerPeaking: Worst = 2.764
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.4859375000000001
+FDeltaH: Worst = 1.817
+
+
+
+Current generation of the optimization 53 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_52_27
+Best Fitness 44.84304932735426
+max_boron for best solution: 638.661  
+PinPowerPeaking for best solution: 2.13  
+FDeltaH for best solution: 1.452  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p16  26p24  
+21  21  21  21  21  i1  i2  31p16  i2  21  
+21  26p20  21  21  i1  31  i1  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_53_46
+Worst Fitness 15.174506828528072
+max_boron for worst solution: 600.887  
+PinPowerPeaking for worst solution: 2.443  
+FDeltaH for worst solution: 1.61  
+Worst Solution Genome
+26p24  21  21  26p20  26p24  21  31p8  31p12  26p16  26p20  
+21  31p16  26p20  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p12  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 472.445
+max_boron: Average = 615.8457000000001
+max_boron: Worst = 711.055
+PinPowerPeaking: Best = 2.109
+PinPowerPeaking: Average = 2.2156624999999996
+PinPowerPeaking: Worst = 2.488
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.4860875
+FDeltaH: Worst = 1.63
+
+
+
+Current generation of the optimization 54 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_54_12
+Best Fitness 45.248868778280546
+max_boron for best solution: 627.296  
+PinPowerPeaking for best solution: 2.142  
+FDeltaH for best solution: 1.449  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p16  26p24  
+21  21  21  21  21  31p16  g2  31p16  i2  21  
+21  26p20  21  21  i1  31  i1  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_54_32
+Worst Fitness 15.337423312883436
+max_boron for worst solution: 633.792  
+PinPowerPeaking for worst solution: 2.322  
+FDeltaH for worst solution: 1.547  
+Worst Solution Genome
+26p24  21  21  26p20  26p16  21  31p8  31p24  26p20  26  
+21  31p16  26p20  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  g2  31p8  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 512.935
+max_boron: Average = 620.3397375
+max_boron: Worst = 790.084
+PinPowerPeaking: Best = 2.109
+PinPowerPeaking: Average = 2.2064125
+PinPowerPeaking: Worst = 2.569
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.4805125
+FDeltaH: Worst = 1.693
+
+
+
+Current generation of the optimization 55 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_54_12
+Best Fitness 44.642857142857146
+max_boron for best solution: 627.296  
+PinPowerPeaking for best solution: 2.142  
+FDeltaH for best solution: 1.449  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p16  26p24  
+21  21  21  21  21  31p16  g2  31p16  i2  21  
+21  26p20  21  21  i1  31  i1  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_55_70
+Worst Fitness 14.104372355430183
+max_boron for worst solution: 658.725  
+PinPowerPeaking for worst solution: 2.29  
+FDeltaH for worst solution: 1.557  
+Worst Solution Genome
+21  31p8  26p16  26p24  26p16  21  26p24  26p16  26p16  26p20  
+21  21  21  21  21  31p16  i2  31p16  i2  21  
+21  26p16  21  21  i1  31  i1  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 476.088
+max_boron: Average = 621.271725
+max_boron: Worst = 762.945
+PinPowerPeaking: Best = 2.109
+PinPowerPeaking: Average = 2.2030374999999998
+PinPowerPeaking: Worst = 2.609
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.4796624999999999
+FDeltaH: Worst = 1.669
+
+
+
+Current generation of the optimization 56 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_54_12
+Best Fitness 46.51162790697674
+max_boron for best solution: 627.296  
+PinPowerPeaking for best solution: 2.142  
+FDeltaH for best solution: 1.449  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p16  26p24  
+21  21  21  21  21  31p16  g2  31p16  i2  21  
+21  26p20  21  21  i1  31  i1  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_56_18
+Worst Fitness 14.836795252225519
+max_boron for worst solution: 594.319  
+PinPowerPeaking for worst solution: 2.465  
+FDeltaH for worst solution: 1.619  
+Worst Solution Genome
+21  31p8  26p24  26p20  26p16  21  26p20  26p24  26p20  26p24  
+21  21  21  21  21  i1  g2  31p24  i2  21  
+21  26  21  21  g1  i1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 514.049
+max_boron: Average = 621.9484625
+max_boron: Worst = 704.682
+PinPowerPeaking: Best = 2.109
+PinPowerPeaking: Average = 2.194875
+PinPowerPeaking: Worst = 2.465
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.475075
+FDeltaH: Worst = 1.619
+
+
+
+Current generation of the optimization 57 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_57_44
+Best Fitness 52.35602094240838
+max_boron for best solution: 614.109  
+PinPowerPeaking for best solution: 2.127  
+FDeltaH for best solution: 1.444  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p16  26p24  
+21  21  21  21  21  31p16  g2  31p16  i2  21  
+21  26p20  21  21  i1  g1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_57_37
+Worst Fitness 11.037527593818984
+max_boron for worst solution: 791.618  
+PinPowerPeaking for worst solution: 2.453  
+FDeltaH for worst solution: 1.658  
+Worst Solution Genome
+26p24  21  21  26p20  26p16  21  31p8  31p24  26p16  26  
+21  31  26p20  26p16  21  26p24  31p24  i1  21  21  
+21  26  31  g2  31p8  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 514.479
+max_boron: Average = 627.3583000000001
+max_boron: Worst = 791.618
+PinPowerPeaking: Best = 2.101
+PinPowerPeaking: Average = 2.1895625
+PinPowerPeaking: Worst = 2.453
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.47385
+FDeltaH: Worst = 1.658
+
+
+
+Current generation of the optimization 58 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_57_44
+Best Fitness 59.171597633136095
+max_boron for best solution: 614.109  
+PinPowerPeaking for best solution: 2.127  
+FDeltaH for best solution: 1.444  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p16  26p24  
+21  21  21  21  21  31p16  g2  31p16  i2  21  
+21  26p20  21  21  i1  g1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_58_58
+Worst Fitness 12.5
+max_boron for worst solution: 713.45  
+PinPowerPeaking for worst solution: 2.291  
+FDeltaH for worst solution: 1.548  
+Worst Solution Genome
+26p24  21  21  26p24  26p16  21  31  31p24  26p20  26  
+21  31p16  26p16  26p16  21  26p24  31p24  i1  21  21  
+21  26  31  g2  31p8  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 497.511
+max_boron: Average = 620.822675
+max_boron: Worst = 714.912
+PinPowerPeaking: Best = 2.101
+PinPowerPeaking: Average = 2.1928624999999995
+PinPowerPeaking: Worst = 2.558
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.4751625000000002
+FDeltaH: Worst = 1.679
+
+
+
+Current generation of the optimization 59 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_57_44
+Best Fitness 50.25125628140704
+max_boron for best solution: 614.109  
+PinPowerPeaking for best solution: 2.127  
+FDeltaH for best solution: 1.444  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p16  26p24  
+21  21  21  21  21  31p16  g2  31p16  i2  21  
+21  26p20  21  21  i1  g1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_59_59
+Worst Fitness 12.15066828675577
+max_boron for worst solution: 720.032  
+PinPowerPeaking for worst solution: 2.315  
+FDeltaH for worst solution: 1.555  
+Worst Solution Genome
+26p16  21  21  26p20  26p24  21  31p8  31p24  26p16  26  
+21  31p16  26  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  i2  31p12  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 507.796
+max_boron: Average = 621.7786625
+max_boron: Worst = 720.032
+PinPowerPeaking: Best = 2.101
+PinPowerPeaking: Average = 2.1880499999999996
+PinPowerPeaking: Worst = 2.537
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.4744875
+FDeltaH: Worst = 1.656
+
+
+
+Current generation of the optimization 60 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_57_44
+Best Fitness 46.51162790697674
+max_boron for best solution: 614.109  
+PinPowerPeaking for best solution: 2.127  
+FDeltaH for best solution: 1.444  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p16  26p24  
+21  21  21  21  21  31p16  g2  31p16  i2  21  
+21  26p20  21  21  i1  g1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_60_28
+Worst Fitness 12.738853503184714
+max_boron for worst solution: 752.159  
+PinPowerPeaking for worst solution: 2.295  
+FDeltaH for worst solution: 1.548  
+Worst Solution Genome
+26p16  21  21  26p20  26p24  21  31p8  i1  26p16  26  
+21  31p16  26  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  i2  31p12  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 517.89
+max_boron: Average = 623.490175
+max_boron: Worst = 752.159
+PinPowerPeaking: Best = 2.101
+PinPowerPeaking: Average = 2.2012875000000003
+PinPowerPeaking: Worst = 2.602
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.4834749999999999
+FDeltaH: Worst = 1.729
+
+
+
+Current generation of the optimization 61 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_57_44
+Best Fitness 44.84304932735426
+max_boron for best solution: 614.109  
+PinPowerPeaking for best solution: 2.127  
+FDeltaH for best solution: 1.444  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p16  26p24  
+21  21  21  21  21  31p16  g2  31p16  i2  21  
+21  26p20  21  21  i1  g1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_60_60
+Worst Fitness 13.986013986013987
+max_boron for worst solution: 659.73  
+PinPowerPeaking for worst solution: 2.341  
+FDeltaH for worst solution: 1.549  
+Worst Solution Genome
+26p24  21  21  26p20  26p24  21  31p8  31p24  26p16  26  
+21  31p16  26p20  26p16  21  26p24  31p24  g2  21  21  
+21  26  31  i2  31  31  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 509.156
+max_boron: Average = 624.443025
+max_boron: Worst = 697.527
+PinPowerPeaking: Best = 2.101
+PinPowerPeaking: Average = 2.1789875000000003
+PinPowerPeaking: Worst = 2.51
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.4699
+FDeltaH: Worst = 1.613
+
+
+
+Current generation of the optimization 62 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_57_44
+Best Fitness 46.51162790697674
+max_boron for best solution: 614.109  
+PinPowerPeaking for best solution: 2.127  
+FDeltaH for best solution: 1.444  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p16  26p24  
+21  21  21  21  21  31p16  g2  31p16  i2  21  
+21  26p20  21  21  i1  g1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_62_44
+Worst Fitness 11.273957158962796
+max_boron for worst solution: 686.536  
+PinPowerPeaking for worst solution: 2.659  
+FDeltaH for worst solution: 1.776  
+Worst Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p16  26p24  
+21  21  21  21  21  i1  g2  26p24  31p8  21  
+21  31p16  21  21  i1  31  i1  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 518.406
+max_boron: Average = 617.6356750000001
+max_boron: Worst = 735.677
+PinPowerPeaking: Best = 2.101
+PinPowerPeaking: Average = 2.1822125
+PinPowerPeaking: Worst = 2.659
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.4738499999999999
+FDeltaH: Worst = 1.776
+
+
+
+Current generation of the optimization 63 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_57_44
+Best Fitness 45.04504504504504
+max_boron for best solution: 614.109  
+PinPowerPeaking for best solution: 2.127  
+FDeltaH for best solution: 1.444  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p16  26p24  
+21  21  21  21  21  31p16  g2  31p16  i2  21  
+21  26p20  21  21  i1  g1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_63_20
+Worst Fitness 15.19756838905775
+max_boron for worst solution: 612.722  
+PinPowerPeaking for worst solution: 2.289  
+FDeltaH for worst solution: 1.54  
+Worst Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p16  26p16  
+21  21  21  21  21  31p24  g2  31p16  i2  21  
+21  26p20  21  21  g1  31p12  i1  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 511.546
+max_boron: Average = 612.6303625
+max_boron: Worst = 697.527
+PinPowerPeaking: Best = 2.101
+PinPowerPeaking: Average = 2.1741875
+PinPowerPeaking: Worst = 2.377
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.4714874999999998
+FDeltaH: Worst = 1.586
+
+
+
+Current generation of the optimization 64 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_64_22
+Best Fitness 49.26108374384236
+max_boron for best solution: 594.937  
+PinPowerPeaking for best solution: 2.139  
+FDeltaH for best solution: 1.448  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p20  26p24  
+21  21  21  21  21  31p16  g2  31p16  i2  21  
+21  26p20  21  21  i1  g1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_64_27
+Worst Fitness 11.299435028248588
+max_boron for worst solution: 660.108  
+PinPowerPeaking for worst solution: 2.62  
+FDeltaH for worst solution: 1.755  
+Worst Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p16  26p24  
+21  21  21  21  21  31  g2  31p16  i2  21  
+21  26p20  21  21  g1  31p12  i1  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 473.941
+max_boron: Average = 611.950475
+max_boron: Worst = 736.202
+PinPowerPeaking: Best = 2.101
+PinPowerPeaking: Average = 2.185125
+PinPowerPeaking: Worst = 2.62
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.4772500000000002
+FDeltaH: Worst = 1.755
+
+
+
+Current generation of the optimization 65 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_64_22
+Best Fitness 53.191489361702125
+max_boron for best solution: 594.937  
+PinPowerPeaking for best solution: 2.139  
+FDeltaH for best solution: 1.448  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p20  26p24  
+21  21  21  21  21  31p16  g2  31p16  i2  21  
+21  26p20  21  21  i1  g1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_65_74
+Worst Fitness 11.806375442739078
+max_boron for worst solution: 691.382  
+PinPowerPeaking for worst solution: 2.586  
+FDeltaH for worst solution: 1.728  
+Worst Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p16  26p24  
+21  21  21  21  21  31p16  g1  31p16  i2  21  
+21  26  21  21  i1  g2  31p16  R  26p24  26  
+31  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 473.941
+max_boron: Average = 608.4081249999999
+max_boron: Worst = 697.527
+PinPowerPeaking: Best = 2.101
+PinPowerPeaking: Average = 2.1884749999999995
+PinPowerPeaking: Worst = 2.809
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.478375
+FDeltaH: Worst = 1.857
+
+
+
+Current generation of the optimization 66 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_64_22
+Best Fitness 50.25125628140704
+max_boron for best solution: 594.937  
+PinPowerPeaking for best solution: 2.139  
+FDeltaH for best solution: 1.448  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p20  26p24  
+21  21  21  21  21  31p16  g2  31p16  i2  21  
+21  26p20  21  21  i1  g1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_66_56
+Worst Fitness 12.15066828675577
+max_boron for worst solution: 712.26  
+PinPowerPeaking for worst solution: 2.325  
+FDeltaH for worst solution: 1.575  
+Worst Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p24  26  26p16  26p24  
+21  21  21  21  21  i1  g2  31p16  i2  21  
+21  26p20  21  21  i1  31  i1  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 496.037
+max_boron: Average = 607.2958875
+max_boron: Worst = 712.26
+PinPowerPeaking: Best = 2.101
+PinPowerPeaking: Average = 2.179875
+PinPowerPeaking: Worst = 2.403
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.4739124999999997
+FDeltaH: Worst = 1.596
+
+
+
+Current generation of the optimization 67 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_64_22
+Best Fitness 48.309178743961354
+max_boron for best solution: 594.937  
+PinPowerPeaking for best solution: 2.139  
+FDeltaH for best solution: 1.448  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p20  26p24  
+21  21  21  21  21  31p16  g2  31p16  i2  21  
+21  26p20  21  21  i1  g1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_67_34
+Worst Fitness 11.947431302270012
+max_boron for worst solution: 656.508  
+PinPowerPeaking for worst solution: 2.406  
+FDeltaH for worst solution: 1.615  
+Worst Solution Genome
+21  31p8  26p24  26p20  26p16  21  26p20  26  26p24  26p24  
+21  21  21  21  21  31p16  g2  31p24  i2  21  
+21  26p16  21  21  g1  i1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 499.528
+max_boron: Average = 609.5791125
+max_boron: Worst = 699.966
+PinPowerPeaking: Best = 2.101
+PinPowerPeaking: Average = 2.1753875000000003
+PinPowerPeaking: Worst = 2.406
+FDeltaH: Best = 1.421
+FDeltaH: Average = 1.4690375
+FDeltaH: Worst = 1.615
+
+
+
+Current generation of the optimization 68 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_64_22
+Best Fitness 48.309178743961354
+max_boron for best solution: 594.937  
+PinPowerPeaking for best solution: 2.139  
+FDeltaH for best solution: 1.448  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p20  26p24  
+21  21  21  21  21  31p16  g2  31p16  i2  21  
+21  26p20  21  21  i1  g1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_68_18
+Worst Fitness 13.227513227513228
+max_boron for worst solution: 624.773  
+PinPowerPeaking for worst solution: 2.426  
+FDeltaH for worst solution: 1.614  
+Worst Solution Genome
+26p24  21  21  26p20  26p16  21  31p8  31p24  26p20  26  
+21  31p16  26p16  26p16  21  26p24  31p24  i1  21  21  
+21  26  31  g2  31p16  31p16  21  R  21  21  
+26  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 497.39
+max_boron: Average = 605.2311874999999
+max_boron: Worst = 699.966
+PinPowerPeaking: Best = 2.095
+PinPowerPeaking: Average = 2.1786125
+PinPowerPeaking: Worst = 2.426
+FDeltaH: Best = 1.421
+FDeltaH: Average = 1.4716625
+FDeltaH: Worst = 1.614
+
+
+
+Current generation of the optimization 69 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_64_22
+Best Fitness 52.083333333333336
+max_boron for best solution: 594.937  
+PinPowerPeaking for best solution: 2.139  
+FDeltaH for best solution: 1.448  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p20  26p24  
+21  21  21  21  21  31p16  g2  31p16  i2  21  
+21  26p20  21  21  i1  g1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_69_46
+Worst Fitness 11.350737797956867
+max_boron for worst solution: 649.407  
+PinPowerPeaking for worst solution: 3.005  
+FDeltaH for worst solution: 1.968  
+Worst Solution Genome
+21  31p8  26p24  26p20  26  21  26p20  26p24  26p16  26p24  
+21  21  21  21  21  i1  g2  31p24  i2  21  
+21  26p16  21  21  g1  i1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 510.029
+max_boron: Average = 601.84335
+max_boron: Worst = 700.441
+PinPowerPeaking: Best = 2.095
+PinPowerPeaking: Average = 2.2050124999999996
+PinPowerPeaking: Worst = 3.005
+FDeltaH: Best = 1.421
+FDeltaH: Average = 1.4893625
+FDeltaH: Worst = 1.968
+
+
+
+Current generation of the optimization 70 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_64_22
+Best Fitness 49.504950495049506
+max_boron for best solution: 594.937  
+PinPowerPeaking for best solution: 2.139  
+FDeltaH for best solution: 1.448  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p20  26p24  
+21  21  21  21  21  31p16  g2  31p16  i2  21  
+21  26p20  21  21  i1  g1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_69_46
+Worst Fitness 11.507479861910241
+max_boron for worst solution: 649.407  
+PinPowerPeaking for worst solution: 3.005  
+FDeltaH for worst solution: 1.968  
+Worst Solution Genome
+21  31p8  26p24  26p20  26  21  26p20  26p24  26p16  26p24  
+21  21  21  21  21  i1  g2  31p24  i2  21  
+21  26p16  21  21  g1  i1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 520.422
+max_boron: Average = 604.5416124999999
+max_boron: Worst = 753.63
+PinPowerPeaking: Best = 2.095
+PinPowerPeaking: Average = 2.200475
+PinPowerPeaking: Worst = 3.005
+FDeltaH: Best = 1.421
+FDeltaH: Average = 1.4850875000000001
+FDeltaH: Worst = 1.968
+
+
+
+Current generation of the optimization 71 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_64_22
+Best Fitness 49.75124378109453
+max_boron for best solution: 594.937  
+PinPowerPeaking for best solution: 2.139  
+FDeltaH for best solution: 1.448  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p20  26p24  
+21  21  21  21  21  31p16  g2  31p16  i2  21  
+21  26p20  21  21  i1  g1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_71_67
+Worst Fitness 12.254901960784315
+max_boron for worst solution: 630.33  
+PinPowerPeaking for worst solution: 2.492  
+FDeltaH for worst solution: 1.67  
+Worst Solution Genome
+21  26p24  26p24  26p24  26p16  21  26p20  26p16  31p8  26p24  
+21  21  21  21  21  i1  i2  g2  i2  21  
+21  26p20  21  21  g1  31  i1  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 521.959
+max_boron: Average = 595.0912375
+max_boron: Worst = 734.207
+PinPowerPeaking: Best = 2.11
+PinPowerPeaking: Average = 2.1925
+PinPowerPeaking: Worst = 2.492
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.4758749999999998
+FDeltaH: Worst = 1.67
+
+
+
+Current generation of the optimization 72 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_64_22
+Best Fitness 48.78048780487805
+max_boron for best solution: 594.937  
+PinPowerPeaking for best solution: 2.139  
+FDeltaH for best solution: 1.448  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p20  26p24  
+21  21  21  21  21  31p16  g2  31p16  i2  21  
+21  26p20  21  21  i1  g1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_72_9
+Worst Fitness 11.350737797956867
+max_boron for worst solution: 744.962  
+PinPowerPeaking for worst solution: 2.449  
+FDeltaH for worst solution: 1.654  
+Worst Solution Genome
+21  31p8  26p20  26p24  26p16  21  26p20  26p16  26  26p24  
+21  21  21  21  21  i1  i2  31p16  i2  21  
+21  26p20  21  21  i1  31  i1  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 521.959
+max_boron: Average = 596.175925
+max_boron: Worst = 744.962
+PinPowerPeaking: Best = 2.11
+PinPowerPeaking: Average = 2.21595
+PinPowerPeaking: Worst = 4.004
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.4888375
+FDeltaH: Worst = 2.567
+
+
+
+Current generation of the optimization 73 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_64_22
+Best Fitness 48.309178743961354
+max_boron for best solution: 594.937  
+PinPowerPeaking for best solution: 2.139  
+FDeltaH for best solution: 1.448  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p20  26p24  
+21  21  21  21  21  31p16  g2  31p16  i2  21  
+21  26p20  21  21  i1  g1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_73_1
+Worst Fitness 11.428571428571429
+max_boron for worst solution: 676.775  
+PinPowerPeaking for worst solution: 2.539  
+FDeltaH for worst solution: 1.71  
+Worst Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p16  26p24  
+21  21  21  21  21  31  g2  31p16  i2  21  
+21  26p20  21  21  i1  31  i1  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 498.592
+max_boron: Average = 593.8643500000001
+max_boron: Worst = 700.187
+PinPowerPeaking: Best = 2.091
+PinPowerPeaking: Average = 2.1999249999999995
+PinPowerPeaking: Worst = 2.694
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.4801750000000002
+FDeltaH: Worst = 1.785
+
+
+
+Current generation of the optimization 74 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_64_22
+Best Fitness 46.08294930875576
+max_boron for best solution: 594.937  
+PinPowerPeaking for best solution: 2.139  
+FDeltaH for best solution: 1.448  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p20  26p24  
+21  21  21  21  21  31p16  g2  31p16  i2  21  
+21  26p20  21  21  i1  g1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_74_49
+Worst Fitness 11.123470522803114
+max_boron for worst solution: 655.104  
+PinPowerPeaking for worst solution: 3.841  
+FDeltaH for worst solution: 2.484  
+Worst Solution Genome
+21  31p8  26  26p24  26p16  21  26p20  26p16  26p20  26p24  
+21  21  21  21  21  31p16  g2  31p16  i2  21  
+21  26p20  21  21  g1  i2  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 497.347
+max_boron: Average = 592.9886125
+max_boron: Worst = 709.365
+PinPowerPeaking: Best = 2.091
+PinPowerPeaking: Average = 2.2460125
+PinPowerPeaking: Worst = 3.93
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.50745
+FDeltaH: Worst = 2.531
+
+
+
+Current generation of the optimization 75 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_64_22
+Best Fitness 45.87155963302752
+max_boron for best solution: 594.937  
+PinPowerPeaking for best solution: 2.139  
+FDeltaH for best solution: 1.448  
+Best Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p20  26p16  26p20  26p24  
+21  21  21  21  21  31p16  g2  31p16  i2  21  
+21  26p20  21  21  i1  g1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_75_21
+Worst Fitness 12.269938650306749
+max_boron for worst solution: 619.363  
+PinPowerPeaking for worst solution: 2.698  
+FDeltaH for worst solution: 1.789  
+Worst Solution Genome
+21  31p8  26p24  26p20  26p16  21  26p20  26p24  26p20  26p24  
+21  21  21  21  21  i1  i2  g2  31p12  21  
+21  26p20  21  21  31p8  i1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 497.347
+max_boron: Average = 589.9876999999999
+max_boron: Worst = 700.187
+PinPowerPeaking: Best = 2.091
+PinPowerPeaking: Average = 2.1985625000000004
+PinPowerPeaking: Worst = 2.698
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.4777
+FDeltaH: Worst = 1.789
+
+
+
+Current generation of the optimization 76 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_76_49
+Best Fitness 49.75124378109453
+max_boron for best solution: 590.107  
+PinPowerPeaking for best solution: 2.156  
+FDeltaH for best solution: 1.442  
+Best Solution Genome
+21  31p8  26p24  26p20  26p16  21  26p16  26p20  26p24  26p24  
+21  21  21  21  21  i1  i2  g2  i2  21  
+21  26p20  21  21  31  i1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_76_59
+Worst Fitness 11.587485515643106
+max_boron for worst solution: 735.893  
+PinPowerPeaking for worst solution: 2.404  
+FDeltaH for worst solution: 1.626  
+Worst Solution Genome
+21  31p8  26p24  26p24  26p16  21  26p16  26  26p16  26p24  
+21  21  21  21  21  31p16  g2  31p16  i2  21  
+21  26p20  21  21  i1  31  i1  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 503.96
+max_boron: Average = 599.7126625
+max_boron: Worst = 735.893
+PinPowerPeaking: Best = 2.091
+PinPowerPeaking: Average = 2.1934
+PinPowerPeaking: Worst = 2.693
+FDeltaH: Best = 1.43
+FDeltaH: Average = 1.4774
+FDeltaH: Worst = 1.785
+
+
+
+Current generation of the optimization 77 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_76_49
+Best Fitness 50.76142131979695
+max_boron for best solution: 590.107  
+PinPowerPeaking for best solution: 2.156  
+FDeltaH for best solution: 1.442  
+Best Solution Genome
+21  31p8  26p24  26p20  26p16  21  26p16  26p20  26p24  26p24  
+21  21  21  21  21  i1  i2  g2  i2  21  
+21  26p20  21  21  31  i1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_77_15
+Worst Fitness 11.160714285714286
+max_boron for worst solution: 705.877  
+PinPowerPeaking for worst solution: 2.474  
+FDeltaH for worst solution: 1.674  
+Worst Solution Genome
+21  31p8  26p24  26p20  26p16  21  26p20  26p16  26p16  26p24  
+21  21  21  21  21  31p16  g2  31p16  g1  21  
+21  26p20  21  21  i1  31  i1  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 529.757
+max_boron: Average = 593.0231125
+max_boron: Worst = 705.877
+PinPowerPeaking: Best = 2.098
+PinPowerPeaking: Average = 2.198975
+PinPowerPeaking: Worst = 2.693
+FDeltaH: Best = 1.421
+FDeltaH: Average = 1.480125
+FDeltaH: Worst = 1.785
+
+
+
+Current generation of the optimization 78 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_76_49
+Best Fitness 48.54368932038835
+max_boron for best solution: 590.107  
+PinPowerPeaking for best solution: 2.156  
+FDeltaH for best solution: 1.442  
+Best Solution Genome
+21  31p8  26p24  26p20  26p16  21  26p16  26p20  26p24  26p24  
+21  21  21  21  21  i1  i2  g2  i2  21  
+21  26p20  21  21  31  i1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_78_4
+Worst Fitness 11.26126126126126
+max_boron for worst solution: 713.966  
+PinPowerPeaking for worst solution: 2.445  
+FDeltaH for worst solution: 1.658  
+Worst Solution Genome
+21  31p8  26p24  26p20  26p16  21  26p16  26p16  26p16  26p24  
+21  21  21  21  21  31p16  g2  31p16  g1  21  
+21  26p20  21  21  i1  31  i1  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 504.275
+max_boron: Average = 587.2143125
+max_boron: Worst = 713.966
+PinPowerPeaking: Best = 2.098
+PinPowerPeaking: Average = 2.2051625
+PinPowerPeaking: Worst = 2.445
+FDeltaH: Best = 1.421
+FDeltaH: Average = 1.4807875
+FDeltaH: Worst = 1.658
+
+
+
+Current generation of the optimization 79 
+Size of Parent Population 80 
+Size of Child Population 0 
+Best Solution child_76_49
+Best Fitness 44.642857142857146
+max_boron for best solution: 590.107  
+PinPowerPeaking for best solution: 2.156  
+FDeltaH for best solution: 1.442  
+Best Solution Genome
+21  31p8  26p24  26p20  26p16  21  26p16  26p20  26p24  26p24  
+21  21  21  21  21  i1  i2  g2  i2  21  
+21  26p20  21  21  31  i1  31  R  26  26  
+31  21  R  R  R  R  R  R  R  R  
+
+Worst Solution child_78_40
+Worst Fitness 14.265335235378032
+max_boron for worst solution: 628.484  
+PinPowerPeaking for worst solution: 2.277  
+FDeltaH for worst solution: 1.54  
+Worst Solution Genome
+21  31p8  26p24  26p16  26p16  21  26p20  26p16  26p16  26p24  
+21  21  21  21  21  31p16  g2  31p12  i2  21  
+21  26p20  21  21  g1  31  i1  R  26  26p24  
+31  21  R  R  R  R  R  R  R  R  
+
+max_boron: Best = 457.597
+max_boron: Average = 587.3647374999999
+max_boron: Worst = 699.966
+PinPowerPeaking: Best = 2.098
+PinPowerPeaking: Average = 2.1991625
+PinPowerPeaking: Worst = 2.44
+FDeltaH: Best = 1.421
+FDeltaH: Average = 1.4765125000000001
+FDeltaH: Worst = 1.629
+
+
+
+End of Optimization 
