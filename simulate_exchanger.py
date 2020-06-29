@@ -1754,7 +1754,7 @@ class Calculator(object):
             simulate_midpoints.append((value + simulate_mesh[i+1])/2.)
         for i,value in enumerate(VERA_mesh[:-1]):
             VERA_midpoints.append((value + VERA_mesh[i+1])/2.)
-        print(f"VERA Midpoints {VERA_midpoints}")
+
         for i,mid in enumerate(VERA_midpoints):
             if mid < simulate_midpoints[0]:
                 slope = numpy.divide(simulate_powers[:,:,0,:]-simulate_powers[:,:,1,:],simulate_midpoints[0]-simulate_midpoints[1])
