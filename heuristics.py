@@ -26,16 +26,19 @@ if __name__ == "__main__":
 
     for line in file_lines:
         name = line.strip()
-        file_ = h5py.File(name+"/deck.ctf.h5",'r')
-        for state in state_list:
-            if state in file_.keys():
-                for key in value_dictionary:
-                    if key in file_[state].keys():
-                        value_dictionary[key][state].append(file_[state][key][()])
-                    else:
-                        value_dictionary[key][state].append(0.)            
-            else:
-                value_dictionary[key][state].append(0.)
+        if os.path.isfile(name+"/deck.ctf.h5"):
+            file_ = h5py.File(name+"/deck.ctf.h5",'r')
+            for state in state_list:
+                if state in file_.keys():
+                    for key in value_dictionary:
+                        if key in file_[state].keys():
+                            value_dictionary[key][state].append(file_[state][key][()])
+                        else:
+                            value_dictionary[key][state].append(0.)            
+                else:
+                    value_dictionary[key][state].append(0.)
+        else:
+            print(name)
 
     for key in value_dictionary:
         min_list = []
