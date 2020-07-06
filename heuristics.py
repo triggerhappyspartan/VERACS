@@ -7,7 +7,8 @@ from matplotlib import pyplot
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument(required=True,type=str,help="File listing the directories to open for heuristic analysis")
+    parser.add_argument('--input',help="The name of the text file containing the list of solutions to read.",
+                        required=True,type=str)
     args = parser.parse_args()
     file_ = open(args.input,'r')
     file_lines = file_.readlines()
