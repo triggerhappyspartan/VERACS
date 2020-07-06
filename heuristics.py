@@ -25,7 +25,7 @@ if __name__ == "__main__":
 
     for line in file_lines:
         name = line.strip()
-        file_ = h5py.File(name,'r')
+        file_ = h5py.File(name+"/deck.ctf.h5",'r')
         for state in state_list:
             if state in file_.keys():
                 for key in value_dictionary:
