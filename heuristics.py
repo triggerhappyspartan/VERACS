@@ -30,7 +30,10 @@ if __name__ == "__main__":
         for state in state_list:
             if state in file_.keys():
                 for key in value_dictionary:
-                    value_dictionary[key][state].append(file_[state][key][()])
+                    if key in file_[state].keys():
+                        value_dictionary[key][state].append(file_[state][key][()])
+                    else:
+                        value_dictionary[key][state].append(0.)            
             else:
                 value_dictionary[key][state].append(0.)
 
