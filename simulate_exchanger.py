@@ -4,6 +4,7 @@ import h5py
 import numpy
 import argparse
 import openpyxl
+import random
 from matplotlib import pyplot as plt
 
 def h5_converter(file_name):
@@ -752,8 +753,10 @@ def h5_converter(file_name):
     file_.write("  !!chimney_vf  0.90\n")
     file_.write("  chem_mass_bal   1  \n")
     file_.write("  li_table  2000  3.5\n       1600  3.5\n       0.0  0.3\n")
-    file_.write("  steam_generator_age  7.8\n")
-    file_.write("  sg_mass  1.2\n")
+    age = 25.*random.random()+5.5
+    previous = 10.*random.random() + 1.2
+    file_.write(f"  steam_generator_age  {age}\n")
+    file_.write(f"  sg_mass  {previous}\n")
     file_.write("  sg_mult  0.95\n")
     file_.close()
 
