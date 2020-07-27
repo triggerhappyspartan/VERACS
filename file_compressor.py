@@ -1,4 +1,5 @@
 import os
+import numpy
 import argparse
 import h5py
 
@@ -238,11 +239,11 @@ class Simulate_Extractor(object):
             core_map = Maps(193)
             core_map = core_map.dict_assembly_map_157
         else:
-            errmessage = f"The number of assembly rows {rows} and columns {cols} is unrecognized"
+            errmessage = "The number of assembly rows {} and columns {} is unrecognized".format(rows,cols)
             return ValueError(errmessage)
 
         for i in range(state_count):
-            power_dict[f"STATE_{(i+1):04d}"] = numpy.zeros([axial,number_assemblies])
+            power_dict["STATE_{}".format((i+1):04d)] = numpy.zeros([axial,number_assemblies])
 
         state_list = list(power_dict.keys())
         state_count = -1
@@ -366,11 +367,11 @@ class Simulate_Extractor(object):
             core_map = Maps()
             core_map = core_map.dict_assembly_map_15_15
         else:
-            errmessage = f"The number of assembly rows {rows} and columns {cols} is unrecognized"
+            errmessage = "The number of assembly rows {} and columns {} is unrecognized".format(rows,cols)
             return ValueError(errmessage)
         
         for i in range(state_count):
-            power_dict[f"STATE_{(i+1):04d}"] = numpy.zeros([1,number_assemblies])
+            power_dict["STATE_{}".format((i+1):04d)] = numpy.zeros([1,number_assemblies])
 
         state_list = list(power_dict.keys())
         state_count = -1
@@ -421,11 +422,11 @@ class Simulate_Extractor(object):
             core_map = Maps()
             core_map = core_map.dict_assembly_map_15_15
         else:
-            errmessage = f"The number of assembly rows {rows} and columns {cols} is unrecognized"
+            errmessage = "The number of assembly rows {} and columns {} is unrecognized".format(rows,cols)
             return ValueError(errmessage)
         
         for i in range(state_count):
-            power_dict[f"STATE_{(i+1):04d}"] = numpy.zeros([1,number_assemblies])
+            power_dict["STATE_{}".format((i+1):04d)] = numpy.zeros([1,number_assemblies])
 
         state_list = list(power_dict.keys())
         state_count = -1
@@ -660,11 +661,11 @@ class Simulate_Extractor(object):
             core_map = Maps(193)
             core_map = core_map.dict_assembly_map_193
         else:
-            errmessage = f"The number of assembly rows {rows} and columns {cols} is unrecognized"
+            errmessage = "The number of assembly rows {} and columns {} is unrecognized".format(rows,cols)
             return ValueError(errmessage)
         
         for i in range(state_count):
-            power_dict[f"STATE_{(i+1):04d}"] = numpy.zeros([number_pins,number_pins,axial,number_assemblies])
+            power_dict["STATE_{}".format((i+1):04d)] = numpy.zeros([number_pins,number_pins,axial,number_assemblies])
 
         state_list = list(power_dict.keys())
         print(state_list)
