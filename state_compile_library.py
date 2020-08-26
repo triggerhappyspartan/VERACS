@@ -40,7 +40,7 @@ def extract_data(case):
     
     all_params = True
     for key in key_params:
-        if key not in case[state].keys():
+        if key not in case.keys():
             all_params = False    
     if all_params:    
         for assem in position_map:
@@ -50,12 +50,12 @@ def extract_data(case):
             y2 = position_map[assem]['y'][1]    
             regular_pin_matrix[tcc,x1:x2,y1:y2,:] = case['pin_powers'][:,:,:,assem]
             crud_matrix[tcc,x1:x2,y1:y2,:]  = case['pin_avg_crud_massdensity'][:,:,:,assem]
-        core_parameters[tcc,0] = case['cool_boron']
-        core_parameters[tcc,1] = case['cool_nickel_particulate']
-        core_parameters[tcc,2] = case['EFPD'] 
+        core_parameters[tcc,0] = case['cool_boron'][()]
+        core_parameters[tcc,1] = case['cool_nickel_particulate'][()]
+        core_parameters[tcc,2] = case['EFPD'][()] 
 
 if __name__ == "__main__":
-    data_file = h5py.File('cycle_10_compiled.h5','r')
+    data_file = h5py.File('E:cycle_10_compiled.h5','r')
     
     state_list = ['STATE_0001','STATE_0002','STATE_0003','STATE_0004','STATE_0005','STATE_0006','STATE_0007','STATE_0008',
                   'STATE_0009','STATE_0010','STATE_0011','STATE_0012','STATE_0013','STATE_0014','STATE_0015','STATE_0016',
@@ -68,7 +68,7 @@ if __name__ == "__main__":
     crud_matrix  = numpy.zeros([len(key_list),17*8,17*8,49])
     core_parameters    = numpy.zeros([len(key_list),3])
 
-    outfile = h5py.File('test_library.h5','w')
+    outfile = h5py.File('E:test_library.h5','w')
     for state in state_list:
         for tcc,key in enumerate(data_file.keys()):
             if state in data_file[key]:
